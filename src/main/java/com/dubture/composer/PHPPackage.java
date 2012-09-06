@@ -26,9 +26,10 @@ import com.google.gson.GsonBuilder;
  * @author Robert Gruendler <r.gruendler@gmail.com>
  *
  */
-public class PHPPackage
+public class PHPPackage implements PackageInterface
 {
-    public String name;
+
+	public String name;
     public String type;
     public String description;
     public String homepage;
@@ -100,25 +101,17 @@ public class PHPPackage
     }
     
 
-    /**
-     * Returns the first available version by default.
-     * TODO: check the specs about how to resolve this ...
-     * 
-     * @return String the default version
-     */
+    /* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getDefaultVersion()
+	 */
     public String getDefaultVersion()
     {
         return versions.keySet().iterator().next();
     }
 
-    /**
-     * 
-     * Returns the package name suitable for passing it to "composer.phar require"
-     * 
-     * @param version
-     * @return String the package/version combination
-     * @throws Exception
-     */
+    /* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getPackageName(java.lang.String)
+	 */
     public String getPackageName(String version) throws Exception
     {
         if (!versions.containsKey(version)) {
@@ -140,4 +133,129 @@ public class PHPPackage
     	public PHPPackage phpPackage;
     	
     }
+    
+    
+    /* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getName()
+	 */
+    public String getName() {
+		return name;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getType()
+	 */
+	public String getType() {
+		return type;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getDescription()
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getHomepage()
+	 */
+	public String getHomepage() {
+		return homepage;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getUrl()
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getFullPath()
+	 */
+	public String getFullPath() {
+		return fullPath;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getRequire()
+	 */
+	public Map<String, String> getRequire() {
+		return require;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getRequireDev()
+	 */
+	public Map<String, String> getRequireDev() {
+		return requireDev;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getAutoload()
+	 */
+	public Autoload getAutoload() {
+		return autoload;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getTargetDir()
+	 */
+	public String getTargetDir() {
+		return targetDir;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getVersion()
+	 */
+	public String getVersion() {
+		return version;
+	}
+
+
+	public String getVersionNormalized() {
+		return versionNormalized;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getLicense()
+	 */
+	public License getLicense() {
+		return license;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getKeywords()
+	 */
+	public String[] getKeywords() {
+		return keywords;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getVersions()
+	 */
+	public Map<String, PHPPackage> getVersions() {
+		return versions;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.dubture.composer.PackageInterface#getAuthors()
+	 */
+	public Author[] getAuthors() {
+		return authors;
+	}    
 }

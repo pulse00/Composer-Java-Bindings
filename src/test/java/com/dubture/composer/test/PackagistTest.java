@@ -7,6 +7,7 @@
  ******************************************************************************/
 package com.dubture.composer.test;
 
+import java.io.IOException;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -14,6 +15,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 
 import com.dubture.composer.PHPPackage;
+import com.dubture.composer.PackageInterface;
 import com.dubture.composer.core.packagist.PackageDownloader;
 import com.dubture.composer.core.packagist.SearchResultDownloader;
 
@@ -42,21 +44,26 @@ public class PackagistTest extends TestCase {
 	public void testSearch() {
 		
 		try {
-			SearchResultDownloader downloader = new SearchResultDownloader();
-			List<? extends PHPPackage> packages = downloader.searchPackages("html");
-
-			assertNotNull(packages);
-			assertTrue(packages.size() > 0);
-			
-			for (PHPPackage phpPackage : packages) {
-				assertNotNull(phpPackage);
-				assertNotNull(phpPackage.name);
-				assertNotNull(phpPackage.description);
-			}
-			
+			assertSearchResult("html");
+			assertSearchResult("react");
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
+		}
+	}
+	
+	protected void assertSearchResult(String query) throws IOException {
+		
+		SearchResultDownloader downloader = new SearchResultDownloader();
+		List<PackageInterface> packages = downloader.searchPackages(query);
+
+		assertNotNull(packages);
+		assertTrue(packages.size() > 0);
+		
+		for (PackageInterface phpPackage : packages) {
+			assertNotNull(phpPackage);
+			assertNotNull(phpPackage.getName());
+			assertNotNull(phpPackage.getDescription());
 		}
 	}
 }

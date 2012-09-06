@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: composer
+Bundle-SymbolicName: composer
+Bundle-Version: 1.0.0.qualifier
+Export-Package: com.dubture.composer;uses:="com.google.gson",
+ com.dubture.composer.core.packagist;uses:="com.dubture.composer",
+ com.dubture.composer.test;uses:="junit.framework"
+Require-Bundle: com.google.gson;bundle-version="2.1.0",
+ org.apache.commons.httpclient;bundle-version="3.1.0"

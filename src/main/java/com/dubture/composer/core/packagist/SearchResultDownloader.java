@@ -15,6 +15,7 @@ import java.util.List;
 
 import com.dubture.composer.ComposerConstants;
 import com.dubture.composer.PHPPackage;
+import com.dubture.composer.PackageInterface;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
@@ -26,20 +27,20 @@ public class SearchResultDownloader extends Downloader
         super(ComposerConstants.searchURL);
     }
 
-    public List<? extends PHPPackage> searchPackages(String query) throws IOException
+    public List<PackageInterface> searchPackages(String query) throws IOException
     {
-        List<PHPPackage> packages = new ArrayList<PHPPackage>();
+        List<PackageInterface> packages = new ArrayList<PackageInterface>();
         setUrl(String.format(ComposerConstants.searchURL, query));
         
         SearchResult result = loadPackages(getUrl());
-        packages =  result.results;
-        
         int limit = 5;
         int current = 0;
         
         //TODO: implement paging results
         while(result.next != null && result.next.length() > 0) {
             result = loadPackages(result.next);
+            
+            System.err.println("search has " + result.total + "  hits");
             if ( (result.results != null && result.results.size() == 0) || result.next == null || current++ > limit) {
                 break;
             }
@@ -52,6 +53,7 @@ public class SearchResultDownloader extends Downloader
     protected SearchResult loadPackages(String url) throws IOException {
 
         setUrl(url);
+        System.err.println("downloading packages from " + url);
         InputStream resource = downloadResource();
         InputStreamReader reader = new InputStreamReader(resource);
         JsonReader jsonReader = new JsonReader(reader);
