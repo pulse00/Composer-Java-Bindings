@@ -1,3 +1,10 @@
+/*******************************************************************************
+ * Copyright (c) 2012 The PDT Extension Group (https://github.com/pdt-eg)
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ ******************************************************************************/
 package com.dubture.composer.test;
 
 import java.io.File;
@@ -18,6 +25,8 @@ public class JsonParserTest extends TestCase {
 		try {
 			PHPPackage phpPackage = PHPPackage.fromJson(loadFile("composer.json"));
 			
+			assertNotNull(phpPackage);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -28,7 +37,12 @@ public class JsonParserTest extends TestCase {
 	public void testPackagistJson() {
 
 		try {
-			PHPPackage phpPackage = PHPPackage.fromJson(loadFile("packagist.json"));
+			PHPPackage phpPackage = PHPPackage.fromPackagist(loadFile("packagist.json"));
+			assertNotNull(phpPackage);
+			
+			System.err.println(phpPackage.name);
+			assertEquals("friendsofsymfony/user-bundle", phpPackage.name);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
