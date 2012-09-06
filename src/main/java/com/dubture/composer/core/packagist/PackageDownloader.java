@@ -16,40 +16,36 @@ import com.dubture.composer.PHPPackage;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
-public class PackageDownloader extends Downloader
-{
-    private String packageName;
+public class PackageDownloader extends Downloader {
+	private String packageName;
 
-	public PackageDownloader(String packageName)
-    {
-        super(ComposerConstants.packageURL);
-        
-        //TODO: validate packageName
+	public PackageDownloader(String packageName) {
+		super(ComposerConstants.packageURL);
+
+		// TODO: validate packageName
 		this.packageName = packageName;
-    }
+	}
 
-    public PHPPackage getPackage() throws IOException
-    {
-        if (!url.endsWith(".json")) {
-            url += ".json";
-        }
-        
-        url = String.format(ComposerConstants.packageURL, packageName);
-        
-        System.err.println("Downloading from url " + url);
-        
-        InputStream resource = downloadResource();
-        InputStreamReader reader = new InputStreamReader(resource);
-        JsonReader jsonReader = new JsonReader(reader);
-        
-        Gson gson = PHPPackage.getBuilder();
-        Package pack = gson.fromJson(jsonReader, Package.class);
-        return pack.phpPackage;
+	public PHPPackage getPackage() throws IOException {
+		if (!url.endsWith(".json")) {
+			url += ".json";
+		}
 
-    }
+		url = String.format(ComposerConstants.packageURL, packageName);
 
-    public static class Package
-    {
-        public PHPPackage phpPackage;
-    }
+		System.err.println("Downloading from url " + url);
+
+		InputStream resource = downloadResource();
+		InputStreamReader reader = new InputStreamReader(resource);
+		JsonReader jsonReader = new JsonReader(reader);
+
+		Gson gson = PHPPackage.getBuilder();
+		Package pack = gson.fromJson(jsonReader, Package.class);
+		return pack.phpPackage;
+
+	}
+
+	public static class Package {
+		public PHPPackage phpPackage;
+	}
 }

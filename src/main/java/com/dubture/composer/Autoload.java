@@ -14,29 +14,25 @@ import java.util.Map;
  * 
  * @author Robert Gruendler <r.gruendler@gmail.com>
  */
-public class Autoload
-{
-    private Map<String, String> psr_0;
-    
-    public String getPSR0Path()
-    {
-        if (psr_0 == null) {
-            return null;
-        }
-        Iterator<String> it = getPsr_0().keySet().iterator();
-        while(it.hasNext()) {
-            return psr_0.get(it.next());
-        }
-        return null;
-    }
+public class Autoload {
+	private Map<String, String> psr_0;
 
-    public Map<String, String> getPsr_0()
-    {
-        return psr_0;
-    }
+	public String getPSR0Path() {
+		if (psr_0 == null) {
+			return null;
+		}
+		Iterator<String> it = getPsr_0().keySet().iterator();
+		while (it.hasNext()) {
+			return psr_0.get(it.next());
+		}
+		return null;
+	}
 
-    public void setPsr_0(Map<String, String> psr_0)
-    {
-        this.psr_0 = psr_0;
-    }
+	public Map<String, String> getPsr_0() {
+		return psr_0;
+	}
+
+	public void setPsr_0(Map<String, String> psr_0) {
+		this.psr_0 = psr_0;
+	}
 }

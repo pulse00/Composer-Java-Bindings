@@ -8,10 +8,10 @@
 package com.dubture.composer;
 
 public class License {
-	
-	public  String[] names;
-	
+
+	public String[] names;
+
 	public License() {
-		names = new String[]{};
+		names = new String[] {};
 	}
 }

@@ -23,7 +23,7 @@ import com.dubture.composer.ProgressListener;
 /**
  * 
  * @author Robert Gruendler <r.gruendler@gmail.com>
- *
+ * 
  */
 public class Downloader {
 	protected String url;
@@ -36,9 +36,9 @@ public class Downloader {
 	}
 
 	public void addProgressListener(ProgressListener listener) {
-		
+
 		listeners.add(listener);
-		
+
 	}
 
 	public void removeProgressListener(ProgressListener listener) {
@@ -51,11 +51,11 @@ public class Downloader {
 		for (ProgressListener listener : listeners) {
 			listener.setTotalWork(4);
 		}
-		
+
 		HttpClient client = new DefaultHttpClient();
 		HttpGet get = new HttpGet(getUrl());
 		HttpResponse response = client.execute(get);
-		
+
 		for (ProgressListener listener : listeners) {
 			listener.progressChanged(1);
 		}
@@ -63,15 +63,15 @@ public class Downloader {
 		try {
 			HttpEntity entity = response.getEntity();
 			InputStream content = entity.getContent();
-			
+
 			for (ProgressListener listener : listeners) {
 				listener.progressChanged(1);
 			}
-			
+
 			for (ProgressListener listener : listeners) {
 				listener.worked();
 			}
-			
+
 			return content;
 
 		} catch (Exception e) {

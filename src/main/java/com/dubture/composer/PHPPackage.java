@@ -24,238 +24,252 @@ import com.google.gson.GsonBuilder;
  * See fromJson / fromPackagist for details.
  * 
  * @author Robert Gruendler <r.gruendler@gmail.com>
- *
+ * 
  */
-public class PHPPackage implements PackageInterface
-{
+public class PHPPackage implements PackageInterface {
 
 	public String name;
-    public String type;
-    public String description;
-    public String homepage;
-    public String url;
-    public String fullPath;
-    public Map<String, String> require;
-    public Map<String, String> requireDev;
-    public Autoload autoload;
-    public String targetDir;
-    public String version;
-    public String versionNormalized;
-    public License license;
-    public String[] keywords;
-    public Map<String, PHPPackage> versions;
-    public Author[] authors;
-    
-    public String toString()
-    {
-        return name;
-    }
+	public String type;
+	public String description;
+	public String homepage;
+	public String url;
+	public String fullPath;
+	public Map<String, String> require;
+	public Map<String, String> requireDev;
+	public Autoload autoload;
+	public String targetDir;
+	public String version;
+	public String versionNormalized;
+	public License license;
+	public String[] keywords;
+	public Map<String, PHPPackage> versions;
+	public Author[] authors;
 
-
-    /**
-     * Deserializes a package from a composer.json file
-     * 
-     * @param input
-     * @return {@link PHPPackage} the deserialized package
-     * @throws FileNotFoundException
-     */
-    public static PHPPackage fromJson(File input) throws FileNotFoundException 
-    {
-        Gson gson = getBuilder();
-        InputStream stream = new FileInputStream(input);
-        InputStreamReader reader = new InputStreamReader(stream);
-        PHPPackage pHPPackage = gson.fromJson(reader, PHPPackage.class);
-        pHPPackage.fullPath = input.getAbsolutePath();
-        
-        return pHPPackage;
-    }
-
-    /**
-     * Deserializes a package from packagist.org, e.g. http://packagist.org/packages/react/react.json
-     * 
-     * @param input
-     * @return {@link PHPPackage} the deserialized package
-     * @throws FileNotFoundException
-     */
-    public static PHPPackage fromPackagist(File input) throws FileNotFoundException
-    {
-        Gson gson = getBuilder();
-        InputStream stream = new FileInputStream(input);
-        InputStreamReader reader = new InputStreamReader(stream);
-        PackagistPackage packagistPackage = gson.fromJson(reader, PackagistPackage.class);
-        
-        return packagistPackage.phpPackage;
-    }
-    
-    /**
-     * Retrieve a Gson with the proper TypeAdapters and FieldNamingStrategy
-     * 
-     * @return {@link Gson}
-     */
-    public static Gson getBuilder() 
-    {
-        return new GsonBuilder()
-        	.registerTypeAdapter(License.class, new LicenseDeserializer())
-            .setFieldNamingStrategy(new ComposerFieldNamingStrategy())
-            .create();
-    }
-    
-
-    /* (non-Javadoc)
-	 * @see com.dubture.composer.PackageInterface#getDefaultVersion()
-	 */
-    public String getDefaultVersion()
-    {
-        return versions.keySet().iterator().next();
-    }
-
-    /* (non-Javadoc)
-	 * @see com.dubture.composer.PackageInterface#getPackageName(java.lang.String)
-	 */
-    public String getPackageName(String version) throws Exception
-    {
-        if (!versions.containsKey(version)) {
-            throw new Exception("Invalid version " + version + " for package " + name);
-        }
-        
-        return String.format("%s:%s", name, version);
-    }
-
-    /**
-     * 
-     * Helper class for deserializing a packagist.org json object.
-     * 
-     * @author Robert Gruendler <r.gruendler@gmail.com>
-     *
-     */
-    public class PackagistPackage {
-
-    	public PHPPackage phpPackage;
-    	
-    }
-    
-    
-    /* (non-Javadoc)
-	 * @see com.dubture.composer.PackageInterface#getName()
-	 */
-    public String getName() {
+	public String toString() {
 		return name;
 	}
 
+	/**
+	 * Deserializes a package from a composer.json file
+	 * 
+	 * @param input
+	 * @return {@link PHPPackage} the deserialized package
+	 * @throws FileNotFoundException
+	 */
+	public static PHPPackage fromJson(File input) throws FileNotFoundException {
+		Gson gson = getBuilder();
+		InputStream stream = new FileInputStream(input);
+		InputStreamReader reader = new InputStreamReader(stream);
+		PHPPackage pHPPackage = gson.fromJson(reader, PHPPackage.class);
+		pHPPackage.fullPath = input.getAbsolutePath();
 
-	/* (non-Javadoc)
+		return pHPPackage;
+	}
+
+	/**
+	 * Deserializes a package from packagist.org, e.g.
+	 * http://packagist.org/packages/react/react.json
+	 * 
+	 * @param input
+	 * @return {@link PHPPackage} the deserialized package
+	 * @throws FileNotFoundException
+	 */
+	public static PHPPackage fromPackagist(File input)
+			throws FileNotFoundException {
+		Gson gson = getBuilder();
+		InputStream stream = new FileInputStream(input);
+		InputStreamReader reader = new InputStreamReader(stream);
+		PackagistPackage packagistPackage = gson.fromJson(reader,
+				PackagistPackage.class);
+
+		return packagistPackage.phpPackage;
+	}
+
+	/**
+	 * Retrieve a Gson with the proper TypeAdapters and FieldNamingStrategy
+	 * 
+	 * @return {@link Gson}
+	 */
+	public static Gson getBuilder() {
+		return new GsonBuilder()
+				.registerTypeAdapter(License.class, new LicenseDeserializer())
+				.setFieldNamingStrategy(new ComposerFieldNamingStrategy())
+				.create();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.dubture.composer.PackageInterface#getDefaultVersion()
+	 */
+	public String getDefaultVersion() {
+		return versions.keySet().iterator().next();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.dubture.composer.PackageInterface#getPackageName(java.lang.String)
+	 */
+	public String getPackageName(String version) throws Exception {
+		if (!versions.containsKey(version)) {
+			throw new Exception("Invalid version " + version + " for package "
+					+ name);
+		}
+
+		return String.format("%s:%s", name, version);
+	}
+
+	/**
+	 * 
+	 * Helper class for deserializing a packagist.org json object.
+	 * 
+	 * @author Robert Gruendler <r.gruendler@gmail.com>
+	 * 
+	 */
+	public class PackagistPackage {
+
+		public PHPPackage phpPackage;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.dubture.composer.PackageInterface#getName()
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getType()
 	 */
 	public String getType() {
 		return type;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getDescription()
 	 */
 	public String getDescription() {
 		return description;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getHomepage()
 	 */
 	public String getHomepage() {
 		return homepage;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getUrl()
 	 */
 	public String getUrl() {
 		return url;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getFullPath()
 	 */
 	public String getFullPath() {
 		return fullPath;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getRequire()
 	 */
 	public Map<String, String> getRequire() {
 		return require;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getRequireDev()
 	 */
 	public Map<String, String> getRequireDev() {
 		return requireDev;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getAutoload()
 	 */
 	public Autoload getAutoload() {
 		return autoload;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getTargetDir()
 	 */
 	public String getTargetDir() {
 		return targetDir;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getVersion()
 	 */
 	public String getVersion() {
 		return version;
 	}
 
-
 	public String getVersionNormalized() {
 		return versionNormalized;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getLicense()
 	 */
 	public License getLicense() {
 		return license;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getKeywords()
 	 */
 	public String[] getKeywords() {
 		return keywords;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getVersions()
 	 */
 	public Map<String, PHPPackage> getVersions() {
 		return versions;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.dubture.composer.PackageInterface#getAuthors()
 	 */
 	public Author[] getAuthors() {
 		return authors;
-	}    
+	}
 }

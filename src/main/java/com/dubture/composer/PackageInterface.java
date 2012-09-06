@@ -5,8 +5,8 @@ import java.util.Map;
 public interface PackageInterface {
 
 	/**
-	 * Returns the first available version by default.
-	 * TODO: check the specs about how to resolve this ...
+	 * Returns the first available version by default. TODO: check the specs
+	 * about how to resolve this ...
 	 * 
 	 * @return String the default version
 	 */
@@ -14,7 +14,8 @@ public interface PackageInterface {
 
 	/**
 	 * 
-	 * Returns the package name suitable for passing it to "composer.phar require"
+	 * Returns the package name suitable for passing it to
+	 * "composer.phar require"
 	 * 
 	 * @param version
 	 * @return String the package/version combination
