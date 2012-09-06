@@ -11,4 +11,7 @@ public class ComposerConstants
 {
     public static final String searchURL = "http://packagist.org/search.json?q=%s";
     public static final String packageURL = "http://packagist.org/packages/%s.json";
+    
+    // TODO: https ? 
+    public static final String pharURL = "http://getcomposer.org/composer.phar";
 }
