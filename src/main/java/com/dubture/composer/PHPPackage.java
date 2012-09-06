@@ -18,6 +18,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 /**
+ * Represents a composer package. The source can either be a composer.json file
+ * or a json response from packagist.org.
+ * 
+ * See fromJson / fromPackagist for details.
+ * 
+ * @author Robert Gruendler <r.gruendler@gmail.com>
  *
  */
 public class PHPPackage
@@ -37,6 +43,7 @@ public class PHPPackage
     public License license;
     public String[] keywords;
     public Map<String, PHPPackage> versions;
+    public Author[] authors;
     
     public String toString()
     {
@@ -44,6 +51,13 @@ public class PHPPackage
     }
 
 
+    /**
+     * Deserializes a package from a composer.json file
+     * 
+     * @param input
+     * @return {@link PHPPackage} the deserialized package
+     * @throws FileNotFoundException
+     */
     public static PHPPackage fromJson(File input) throws FileNotFoundException 
     {
         Gson gson = getBuilder();
@@ -53,9 +67,15 @@ public class PHPPackage
         pHPPackage.fullPath = input.getAbsolutePath();
         
         return pHPPackage;
-
     }
-    
+
+    /**
+     * Deserializes a package from packagist.org, e.g. http://packagist.org/packages/react/react.json
+     * 
+     * @param input
+     * @return {@link PHPPackage} the deserialized package
+     * @throws FileNotFoundException
+     */
     public static PHPPackage fromPackagist(File input) throws FileNotFoundException
     {
         Gson gson = getBuilder();
@@ -66,6 +86,11 @@ public class PHPPackage
         return packagistPackage.phpPackage;
     }
     
+    /**
+     * Retrieve a Gson with the proper TypeAdapters and FieldNamingStrategy
+     * 
+     * @return {@link Gson}
+     */
     public static Gson getBuilder() 
     {
         return new GsonBuilder()
@@ -75,11 +100,25 @@ public class PHPPackage
     }
     
 
+    /**
+     * Returns the first available version by default.
+     * TODO: check the specs about how to resolve this ...
+     * 
+     * @return String the default version
+     */
     public String getDefaultVersion()
     {
         return versions.keySet().iterator().next();
     }
-    
+
+    /**
+     * 
+     * Returns the package name suitable for passing it to "composer.phar require"
+     * 
+     * @param version
+     * @return String the package/version combination
+     * @throws Exception
+     */
     public String getPackageName(String version) throws Exception
     {
         if (!versions.containsKey(version)) {
@@ -88,7 +127,14 @@ public class PHPPackage
         
         return String.format("%s:%s", name, version);
     }
-    
+
+    /**
+     * 
+     * Helper class for deserializing a packagist.org json object.
+     * 
+     * @author Robert Gruendler <r.gruendler@gmail.com>
+     *
+     */
     public class PackagistPackage {
 
     	public PHPPackage phpPackage;

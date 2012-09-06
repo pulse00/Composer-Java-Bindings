@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import com.google.gson.FieldNamingStrategy;
 
 /**
+ * Process non-standard java fields from json attributes.
  * 
  * @author Robert Gruendler <r.gruendler@gmail.com>
  */

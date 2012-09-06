@@ -38,9 +38,9 @@ public class LicenseDeserializer implements JsonDeserializer<License> {
 			for (JsonElement child : jsonArray) {
 				licenses[i++] = child.getAsString();
 			}
-			license.setNames(licenses);
+			license.names = licenses;
 		} else {
-			license.setNames(new String[]{element.getAsString()});
+			license.names = new String[]{element.getAsString()};
 		}
 		
 		return license;

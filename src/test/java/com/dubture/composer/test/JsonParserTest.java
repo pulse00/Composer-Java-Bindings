@@ -10,6 +10,8 @@ package com.dubture.composer.test;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Iterator;
+import java.util.Map;
 
 import junit.framework.TestCase;
 
@@ -20,12 +22,31 @@ import com.dubture.composer.PHPPackage;
 public class JsonParserTest extends TestCase {
 
 	@Test
+	@SuppressWarnings("rawtypes")
 	public void testComposerJson() {
 
 		try {
+			
 			PHPPackage phpPackage = PHPPackage.fromJson(loadFile("composer.json"));
 			
 			assertNotNull(phpPackage);
+			assertEquals(3, phpPackage.authors.length);
+			assertEquals(1, phpPackage.license.names.length);
+			assertEquals(1,  phpPackage.keywords.length);
+			assertEquals(3, phpPackage.require.size());
+			
+			Map<String, String> require = phpPackage.require;
+			Iterator it = require.keySet().iterator();
+			
+			while(it.hasNext()) {
+				String key = (String) it.next();
+				String value = require.get(key);
+				assertNotNull(key);
+				assertNotNull(value);
+			}
+			
+			assertNotNull(phpPackage.autoload);
+			assertEquals("FOS\\UserBundle", phpPackage.autoload.getPsr_0().keySet().iterator().next());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -40,8 +61,10 @@ public class JsonParserTest extends TestCase {
 			PHPPackage phpPackage = PHPPackage.fromPackagist(loadFile("packagist.json"));
 			assertNotNull(phpPackage);
 			
-			System.err.println(phpPackage.name);
 			assertEquals("friendsofsymfony/user-bundle", phpPackage.name);
+			assertEquals("Symfony FOSUserBundle", phpPackage.description);
+			assertNotNull(phpPackage.versions);
+			assertTrue(phpPackage.versions.size() > 0);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
