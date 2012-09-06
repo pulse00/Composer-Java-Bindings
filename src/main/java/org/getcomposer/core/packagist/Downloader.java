@@ -76,9 +76,9 @@ public class Downloader {
 
 		} catch (Exception e) {
 			// TODO: log exception
-			if (get != null) {
-				get.releaseConnection();
-			}
+//			if (get != null) {
+//				get.releaseConnection();
+//			}
 		} finally {
 			for (ProgressListener listener : listeners) {
 				listener.worked();

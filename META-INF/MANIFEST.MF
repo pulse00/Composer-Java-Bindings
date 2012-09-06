@@ -9,4 +9,5 @@ Export-Package: org.getcomposer.core,
  org.getcomposer.core.packagist
 Require-Bundle: org.apache.httpcomponents.httpclient,
  org.apache.httpcomponents.httpcore,
- com.dubture.indexing.gson
+ com.dubture.indexing.gson,
+ org.junit
