@@ -5,19 +5,19 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package com.dubture.composer.test;
+package org.getcomposer.test;
 
 import java.io.IOException;
 import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.getcomposer.core.PHPPackage;
+import org.getcomposer.core.PackageInterface;
+import org.getcomposer.core.packagist.PackageDownloader;
+import org.getcomposer.core.packagist.SearchResultDownloader;
 import org.junit.Test;
 
-import com.dubture.composer.PHPPackage;
-import com.dubture.composer.PackageInterface;
-import com.dubture.composer.core.packagist.PackageDownloader;
-import com.dubture.composer.core.packagist.SearchResultDownloader;
 
 public class PackagistTest extends TestCase {
 	

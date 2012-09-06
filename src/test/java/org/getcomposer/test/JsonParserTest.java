@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package com.dubture.composer.test;
+package org.getcomposer.test;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -15,9 +15,9 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
+import org.getcomposer.core.PHPPackage;
 import org.junit.Test;
 
-import com.dubture.composer.PHPPackage;
 
 public class JsonParserTest extends TestCase {
 

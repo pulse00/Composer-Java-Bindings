@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package com.dubture.composer;
+package org.getcomposer.core;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -100,7 +100,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getDefaultVersion()
+	 * @see org.getcomposer.core.PackageInterface#getDefaultVersion()
 	 */
 	public String getDefaultVersion() {
 		return versions.keySet().iterator().next();
@@ -110,7 +110,7 @@ public class PHPPackage implements PackageInterface {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * com.dubture.composer.PackageInterface#getPackageName(java.lang.String)
+	 * org.getcomposer.core.PackageInterface#getPackageName(java.lang.String)
 	 */
 	public String getPackageName(String version) throws Exception {
 		if (!versions.containsKey(version)) {
@@ -137,7 +137,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getName()
+	 * @see org.getcomposer.core.PackageInterface#getName()
 	 */
 	public String getName() {
 		return name;
@@ -146,7 +146,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getType()
+	 * @see org.getcomposer.core.PackageInterface#getType()
 	 */
 	public String getType() {
 		return type;
@@ -155,7 +155,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getDescription()
+	 * @see org.getcomposer.core.PackageInterface#getDescription()
 	 */
 	public String getDescription() {
 		return description;
@@ -164,7 +164,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getHomepage()
+	 * @see org.getcomposer.core.PackageInterface#getHomepage()
 	 */
 	public String getHomepage() {
 		return homepage;
@@ -173,7 +173,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getUrl()
+	 * @see org.getcomposer.core.PackageInterface#getUrl()
 	 */
 	public String getUrl() {
 		return url;
@@ -182,7 +182,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getFullPath()
+	 * @see org.getcomposer.core.PackageInterface#getFullPath()
 	 */
 	public String getFullPath() {
 		return fullPath;
@@ -191,7 +191,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getRequire()
+	 * @see org.getcomposer.core.PackageInterface#getRequire()
 	 */
 	public Map<String, String> getRequire() {
 		return require;
@@ -200,7 +200,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getRequireDev()
+	 * @see org.getcomposer.core.PackageInterface#getRequireDev()
 	 */
 	public Map<String, String> getRequireDev() {
 		return requireDev;
@@ -209,7 +209,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getAutoload()
+	 * @see org.getcomposer.core.PackageInterface#getAutoload()
 	 */
 	public Autoload getAutoload() {
 		return autoload;
@@ -218,7 +218,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getTargetDir()
+	 * @see org.getcomposer.core.PackageInterface#getTargetDir()
 	 */
 	public String getTargetDir() {
 		return targetDir;
@@ -227,7 +227,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getVersion()
+	 * @see org.getcomposer.core.PackageInterface#getVersion()
 	 */
 	public String getVersion() {
 		return version;
@@ -240,7 +240,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getLicense()
+	 * @see org.getcomposer.core.PackageInterface#getLicense()
 	 */
 	public License getLicense() {
 		return license;
@@ -249,7 +249,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getKeywords()
+	 * @see org.getcomposer.core.PackageInterface#getKeywords()
 	 */
 	public String[] getKeywords() {
 		return keywords;
@@ -258,7 +258,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getVersions()
+	 * @see org.getcomposer.core.PackageInterface#getVersions()
 	 */
 	public Map<String, PHPPackage> getVersions() {
 		return versions;
@@ -267,7 +267,7 @@ public class PHPPackage implements PackageInterface {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.dubture.composer.PackageInterface#getAuthors()
+	 * @see org.getcomposer.core.PackageInterface#getAuthors()
 	 */
 	public Author[] getAuthors() {
 		return authors;

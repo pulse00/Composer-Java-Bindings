@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package com.dubture.composer.core.packagist;
+package org.getcomposer.core.packagist;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,9 +13,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dubture.composer.ComposerConstants;
-import com.dubture.composer.PHPPackage;
-import com.dubture.composer.PackageInterface;
+import org.getcomposer.core.ComposerConstants;
+import org.getcomposer.core.PHPPackage;
+import org.getcomposer.core.PackageInterface;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;

@@ -46,7 +46,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.dubture.composer.Searcher</mainClass>
+							<mainClass>org.getcomposer.core.Searcher</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

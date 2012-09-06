@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package com.dubture.composer;
+package org.getcomposer.core;
 
 public class ComposerConstants {
 	public static final String searchURL = "http://packagist.org/search.json?q=%s";

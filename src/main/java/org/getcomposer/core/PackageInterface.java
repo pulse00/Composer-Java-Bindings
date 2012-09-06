@@ -1,4 +1,4 @@
-package com.dubture.composer;
+package org.getcomposer.core;
 
 import java.util.Map;
 

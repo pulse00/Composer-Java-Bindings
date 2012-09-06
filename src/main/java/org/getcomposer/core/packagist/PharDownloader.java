@@ -1,6 +1,6 @@
-package com.dubture.composer.core.packagist;
+package org.getcomposer.core.packagist;
 
-import com.dubture.composer.ComposerConstants;
+import org.getcomposer.core.ComposerConstants;
 
 public class PharDownloader extends Downloader {
 
