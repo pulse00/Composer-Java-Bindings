@@ -18,7 +18,6 @@ import junit.framework.TestCase;
 import org.getcomposer.core.PHPPackage;
 import org.junit.Test;
 
-
 public class JsonParserTest extends TestCase {
 
 	@Test
@@ -26,52 +25,76 @@ public class JsonParserTest extends TestCase {
 	public void testComposerJson() {
 
 		try {
-			
-			PHPPackage phpPackage = PHPPackage.fromJson(loadFile("composer.json"));
-			
+
+			PHPPackage phpPackage = PHPPackage
+					.fromJson(loadFile("composer.json"));
+
 			assertNotNull(phpPackage);
 			assertEquals(3, phpPackage.authors.length);
 			assertEquals(1, phpPackage.license.names.length);
-			assertEquals(1,  phpPackage.keywords.length);
+			assertEquals(1, phpPackage.keywords.length);
 			assertEquals(3, phpPackage.require.size());
-			
+
 			Map<String, String> require = phpPackage.require;
 			Iterator it = require.keySet().iterator();
-			
-			while(it.hasNext()) {
+
+			while (it.hasNext()) {
 				String key = (String) it.next();
 				String value = require.get(key);
 				assertNotNull(key);
 				assertNotNull(value);
 			}
-			
+
 			assertNotNull(phpPackage.autoload);
-			assertEquals("FOS\\UserBundle", phpPackage.autoload.getPsr_0().keySet().iterator().next());
-			
+			assertEquals("FOS\\UserBundle", phpPackage.autoload.getPsr_0()
+					.keySet().iterator().next());
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
 	}
-	
+
 	@Test
 	public void testPackagistJson() {
 
 		try {
-			PHPPackage phpPackage = PHPPackage.fromPackagist(loadFile("packagist.json"));
+			PHPPackage phpPackage = PHPPackage
+					.fromPackagist(loadFile("packagist.json"));
 			assertNotNull(phpPackage);
-			
+
 			assertEquals("friendsofsymfony/user-bundle", phpPackage.name);
 			assertEquals("Symfony FOSUserBundle", phpPackage.description);
 			assertNotNull(phpPackage.versions);
 			assertTrue(phpPackage.versions.size() > 0);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
-		} 
+		}
 	}
-	
+
+	@Test
+	public void testReactJson() {
+
+		try {
+
+			PHPPackage phpPackage = PHPPackage
+					.fromPackagist(loadFile("react.json"));
+			assertNotNull(phpPackage);
+
+			assertEquals("react/react", phpPackage.name);
+			assertEquals("Nuclear Reactor written in PHP.",
+					phpPackage.description);
+			assertNotNull(phpPackage.versions);
+			assertTrue(phpPackage.versions.size() > 0);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+
 	protected File loadFile(String name) throws URISyntaxException {
 
 		ClassLoader loader = getClass().getClassLoader();

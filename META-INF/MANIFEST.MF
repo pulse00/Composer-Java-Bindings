@@ -7,7 +7,7 @@ Bundle-Vendor: https://github.com/pulse00
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.getcomposer.core,
  org.getcomposer.core.packagist
-Require-Bundle: org.apache.httpcomponents.httpclient,
- org.apache.httpcomponents.httpcore,
- com.dubture.indexing.gson,
- org.junit
+Require-Bundle: org.junit,
+ com.google.gson,
+ org.apache.httpcomponents.httpclient;bundle-version="4.1.2",
+ org.apache.httpcomponents.httpcore;bundle-version="4.1.4"
