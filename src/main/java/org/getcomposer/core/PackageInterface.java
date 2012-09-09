@@ -32,6 +32,8 @@ public interface PackageInterface {
 	public abstract String getHomepage();
 
 	public abstract String getUrl();
+	
+	public abstract String getMinimumStability();
 
 	public abstract String getFullPath();
 

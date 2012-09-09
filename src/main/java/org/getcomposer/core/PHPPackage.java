@@ -34,6 +34,7 @@ public class PHPPackage implements PackageInterface {
 	public String homepage;
 	public String url;
 	public String fullPath;
+	public String minimumStability;
 	public Map<String, String> require;
 	public Map<String, String> requireDev;
 	public Autoload autoload;
@@ -271,5 +272,9 @@ public class PHPPackage implements PackageInterface {
 	 */
 	public Author[] getAuthors() {
 		return authors;
+	}
+
+	public String getMinimumStability() {
+		return minimumStability;
 	}
 }
