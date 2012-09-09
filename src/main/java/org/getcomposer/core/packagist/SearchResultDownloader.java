@@ -32,6 +32,11 @@ public class SearchResultDownloader extends Downloader {
 		setUrl(String.format(ComposerConstants.searchURL, query));
 
 		SearchResult result = loadPackages(getUrl());
+		
+		if (result != null && result.results != null) {
+			packages.addAll(result.results);
+		}
+		
 		int limit = 5;
 		int current = 0;
 

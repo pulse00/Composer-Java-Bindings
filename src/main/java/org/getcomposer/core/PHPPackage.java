@@ -121,7 +121,7 @@ public class PHPPackage implements PackageInterface {
 
 		return String.format("%s:%s", name, version);
 	}
-
+	
 	/**
 	 * 
 	 * Helper class for deserializing a packagist.org json object.
