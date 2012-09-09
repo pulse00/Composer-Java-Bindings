@@ -39,7 +39,6 @@ public class SearchResultDownloader extends Downloader {
 		while (result.next != null && result.next.length() > 0) {
 			result = loadPackages(result.next);
 
-			System.err.println("search has " + result.total + "  hits");
 			if ((result.results != null && result.results.size() == 0)
 					|| result.next == null || current++ > limit) {
 				break;
@@ -53,7 +52,6 @@ public class SearchResultDownloader extends Downloader {
 	protected SearchResult loadPackages(String url) throws IOException {
 
 		setUrl(url);
-		System.err.println("downloading packages from " + url);
 		InputStream resource = downloadResource();
 		InputStreamReader reader = new InputStreamReader(resource);
 		JsonReader jsonReader = new JsonReader(reader);
