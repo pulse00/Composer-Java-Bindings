@@ -11,30 +11,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.getcomposer.core.ComposerConstants;
 import org.getcomposer.core.PHPPackage;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 public class PackageDownloader extends Downloader {
-	private String packageName;
-
+	
 	public PackageDownloader(String packageName) {
-		super(ComposerConstants.packageURL);
-
-		// TODO: validate packageName
-		this.packageName = packageName;
+		super(packageName);
 	}
 
 	public PHPPackage getPackage() throws IOException {
 		if (!url.endsWith(".json")) {
 			url += ".json";
 		}
-
-		url = String.format(ComposerConstants.packageURL, packageName);
-
-		System.err.println("Downloading from url " + url);
 
 		InputStream resource = downloadResource();
 		InputStreamReader reader = new InputStreamReader(resource);
