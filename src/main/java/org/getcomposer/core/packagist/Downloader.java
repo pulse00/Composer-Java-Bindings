@@ -30,6 +30,8 @@ public class Downloader {
 
 	protected List<ProgressListener> listeners;
 
+	private HttpGet httpGet;
+
 	public Downloader(String url) {
 		this.setUrl(url);
 		listeners = new ArrayList<ProgressListener>();
@@ -53,8 +55,9 @@ public class Downloader {
 		}
 
 		HttpClient client = new DefaultHttpClient();
-		HttpGet get = new HttpGet(getUrl());
-		HttpResponse response = client.execute(get);
+		
+		httpGet = new HttpGet(getUrl());
+		HttpResponse response = client.execute(httpGet);
 
 		for (ProgressListener listener : listeners) {
 			listener.progressChanged(1);
@@ -75,10 +78,7 @@ public class Downloader {
 			return content;
 
 		} catch (Exception e) {
-			// TODO: log exception
-//			if (get != null) {
-//				get.releaseConnection();
-//			}
+			//TODO: log
 		} finally {
 			for (ProgressListener listener : listeners) {
 				listener.worked();
@@ -94,5 +94,12 @@ public class Downloader {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	
+	public void abort() {
+		
+		if (httpGet != null) {
+			httpGet.abort();
+		}
 	}
 }
