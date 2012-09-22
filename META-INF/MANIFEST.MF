@@ -9,5 +9,5 @@ Export-Package: org.getcomposer.core,
  org.getcomposer.core.packagist
 Require-Bundle: org.junit,
  com.google.gson,
- org.apache.httpcomponents.httpclient;bundle-version="4.1.2",
- org.apache.httpcomponents.httpcore;bundle-version="4.1.4"
+ org.apache.httpcomponents.httpclient,
+ org.apache.httpcomponents.httpcore
