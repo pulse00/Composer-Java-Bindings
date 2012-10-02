@@ -6,6 +6,13 @@ public class Author {
 	public String email;
 	public String homepage;
 
+	/**
+	 * We need an empty ctor for gson deserialization.
+	 */
+	public Author() {
+		
+	}
+	
 	public Author(String name) {
 		this.name = name;
 	}
