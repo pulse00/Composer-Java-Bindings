@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
@@ -73,7 +74,14 @@ public class Downloader {
 		}
 		
 		httpGet = new HttpGet(url);
-		HttpResponse response = client.execute(httpGet);
+		HttpResponse response = null;
+		
+		try {
+			response = client.execute(httpGet);
+		} catch (SSLException e) {
+			e.printStackTrace();
+			throw e;
+		}
 
 		for (ProgressListener listener : listeners) {
 			listener.progressChanged(1);
@@ -110,7 +118,7 @@ public class Downloader {
 			X509TrustManager tm = new ComposerTrustManager();
 			SSLContext ctx = SSLContext.getInstance("TLS");
 			ctx.init(null,  new TrustManager[]{tm}, null);
-			SSLSocketFactory ssf = new SSLSocketFactory(ctx);
+			SSLSocketFactory ssf = new SSLSocketFactory(ctx, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 			ClientConnectionManager ccm = client.getConnectionManager();
 			SchemeRegistry sr = ccm.getSchemeRegistry();
 			sr.register(new Scheme("https", 443, ssf));

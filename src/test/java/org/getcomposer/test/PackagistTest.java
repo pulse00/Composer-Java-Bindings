@@ -8,6 +8,7 @@
 package org.getcomposer.test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -15,17 +16,30 @@ import junit.framework.TestCase;
 import org.getcomposer.core.PHPPackage;
 import org.getcomposer.core.PackageInterface;
 import org.getcomposer.core.packagist.PackageDownloader;
+import org.getcomposer.core.packagist.PharDownloader;
 import org.getcomposer.core.packagist.SearchResultDownloader;
 import org.junit.Test;
 
 
 public class PackagistTest extends TestCase {
+
+	public void testComposerDownload() {
+		
+		try {
+			PharDownloader downloader = new PharDownloader();
+			InputStream resource = downloader.downloadResource();
+			assertNotNull(resource);
+		} catch (IOException e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
 	
 	@Test
 	public void testPackage() {
 		
 		try {
-			PackageDownloader downloader = new PackageDownloader("react/react");
+			PackageDownloader downloader = new PackageDownloader("https://packagist.org/packages/react/react.json");
 			PHPPackage resource = downloader.getPackage();
 			
 			assertTrue(resource != null);
