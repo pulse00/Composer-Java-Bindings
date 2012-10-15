@@ -15,6 +15,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
 
 /**
  * 
@@ -29,8 +30,20 @@ public class LicenseDeserializer implements JsonDeserializer<License> {
 
 		License license = new License();
 
-		if (type instanceof GenericArrayType) {
-
+		if (element instanceof JsonArray) {
+			JsonArray array = (JsonArray) element;
+			String[] licences  = new String[array.size()];
+			int i=0;
+			for (Object o : array) {
+				if (o instanceof String) {
+					licences[i++] = (String) o;
+				} else if (o instanceof JsonPrimitive) {
+					JsonPrimitive prim = (JsonPrimitive) o;
+					licences[i++] = prim.getAsString();
+				}
+			}
+			license.names = licences;
+		} else if (type instanceof GenericArrayType) {
 			JsonArray jsonArray = element.getAsJsonArray();
 			String[] licenses = new String[jsonArray.size()];
 			int i = 0;

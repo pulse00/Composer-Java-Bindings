@@ -48,6 +48,10 @@ public class PackagistTest extends TestCase {
 			assertNotNull(resource.versions);
 			assertTrue(resource.versions.size() > 1);
 			
+			
+			downloader = new PackageDownloader("https://packagist.org/packages/zendframework/zendframework.json");
+			resource = downloader.getPackage();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
