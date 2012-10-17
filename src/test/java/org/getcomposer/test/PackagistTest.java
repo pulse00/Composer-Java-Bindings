@@ -40,7 +40,7 @@ public class PackagistTest extends TestCase {
 		
 		try {
 			PackageDownloader downloader = new PackageDownloader("https://packagist.org/packages/react/react.json");
-			PHPPackage resource = downloader.getPackage();
+			PHPPackage resource = downloader.getPackage(); 
 			
 			assertTrue(resource != null);
 			assertEquals("react/react", resource.name);
@@ -64,6 +64,7 @@ public class PackagistTest extends TestCase {
 		try {
 			assertSearchResult("html");
 			assertSearchResult("react");
+			assertSearchResult("foo bar");
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -79,6 +80,9 @@ public class PackagistTest extends TestCase {
 		assertTrue(packages.size() > 0);
 		
 		for (PackageInterface phpPackage : packages) {
+			if (query.equals("foo bar")) {
+				System.err.println(phpPackage.getName());
+			}
 			assertNotNull(phpPackage);
 			assertNotNull(phpPackage.getName());
 			assertNotNull(phpPackage.getDescription());

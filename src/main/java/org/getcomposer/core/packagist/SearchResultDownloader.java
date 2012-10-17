@@ -10,6 +10,7 @@ package org.getcomposer.core.packagist;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class SearchResultDownloader extends Downloader {
 	public List<PackageInterface> searchPackages(String query)
 			throws IOException {
 		List<PackageInterface> packages = new ArrayList<PackageInterface>();
-		setUrl(String.format(ComposerConstants.searchURL, query));
+		setUrl(String.format(ComposerConstants.searchURL, URLEncoder.encode(query, "UTF-8")));
 
 		SearchResult result = loadPackages(getUrl());
 		
