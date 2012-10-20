@@ -26,7 +26,7 @@ import com.google.gson.GsonBuilder;
  * @author Robert Gruendler <r.gruendler@gmail.com>
  * 
  */
-public class PHPPackage implements PackageInterface {
+public class PHPPackage extends ObservableModel implements PackageInterface {
 
 	public String name;
 	public String type;
