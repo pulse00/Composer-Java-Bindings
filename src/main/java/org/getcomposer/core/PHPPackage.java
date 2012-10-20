@@ -49,6 +49,13 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	public Map<String, PHPPackage> versions;
 	public ArrayList<Author> authors;
 
+	public PHPPackage() {
+		authors = new ArrayList<Author>();
+		require = new HashMap<String, String>();
+		requireDev = new HashMap<String, String>();
+		versions = new HashMap<String, PHPPackage>();
+	}
+	
 	public String toString() {
 		return name;
 	}
