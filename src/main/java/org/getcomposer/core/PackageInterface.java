@@ -1,5 +1,6 @@
 package org.getcomposer.core;
 
+import java.util.List;
 import java.util.Map;
 
 public interface PackageInterface {
@@ -53,6 +54,6 @@ public interface PackageInterface {
 
 	public abstract Map<String, PHPPackage> getVersions();
 
-	public abstract Author[] getAuthors();
+	public abstract List<Author> getAuthors();
 
 }

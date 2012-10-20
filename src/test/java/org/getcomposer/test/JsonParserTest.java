@@ -30,7 +30,7 @@ public class JsonParserTest extends TestCase {
 					.fromJson(loadFile("composer.json"));
 
 			assertNotNull(phpPackage);
-			assertEquals(3, phpPackage.authors.length);
+			assertEquals(3, phpPackage.authors.size());
 			assertEquals(1, phpPackage.license.names.length);
 			assertEquals(1, phpPackage.keywords.length);
 			assertEquals(3, phpPackage.require.size());

@@ -12,6 +12,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -44,7 +47,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	public License license;
 	public String[] keywords;
 	public Map<String, PHPPackage> versions;
-	public Author[] authors;
+	public ArrayList<Author> authors;
 
 	public String toString() {
 		return name;
@@ -270,11 +273,125 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 * 
 	 * @see org.getcomposer.core.PackageInterface#getAuthors()
 	 */
-	public Author[] getAuthors() {
+	public List<Author> getAuthors() {
 		return authors;
 	}
 
 	public String getMinimumStability() {
 		return minimumStability;
 	}
+	
+	@SuppressWarnings("unchecked")
+	public void addAuthor(Author author) {
+		ArrayList<Author> authors = (ArrayList<Author>) this.authors.clone();
+		this.authors.add(author);
+		firePropertyChange("authors", authors, this.authors);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void removeAuthor(Author author) {
+		ArrayList<Author> authors = (ArrayList<Author>) this.authors.clone();
+		this.authors.remove(author);
+		firePropertyChange("authors", authors, this.authors);
+	}
+	
+	public void setAuthors(List<Author> authors) {
+		firePropertyChange("authors", this.authors, this.authors = (ArrayList<Author>)authors); 
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		firePropertyChange("name", this.name, this.name = name);
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		firePropertyChange("type", this.type, this.type = type);
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		firePropertyChange("description", this.description, this.description = description);
+	}
+
+	/**
+	 * @param homepage the homepage to set
+	 */
+	public void setHomepage(String homepage) {
+		firePropertyChange("homepage", this.homepage, this.homepage = homepage);
+	}
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		firePropertyChange("url", this.url, this.url = url);
+	}
+
+	/**
+	 * @param minimumStability the minimumStability to set
+	 */
+	public void setMinimumStability(String minimumStability) {
+		firePropertyChange("minimumStability", this.minimumStability, this.minimumStability = minimumStability);
+	}
+
+	/**
+	 * @param require the require to set
+	 */
+	public void setRequire(Map<String, String> require) {
+		firePropertyChange("require", this.require, this.require = require);
+	}
+	
+	public void addRequire(String phpPackage, String version) {
+		Map<String, String> oldRequire = new HashMap <String, String>(require);
+		require.put(phpPackage, version);
+		firePropertyChange("require", oldRequire, require);
+	}
+	
+	public void removeRequire(String phpPackage) {
+		Map<String, String> oldRequire = new HashMap <String, String>(require);
+		require.remove(phpPackage);
+		firePropertyChange("require", oldRequire, require);
+	}
+
+	/**
+	 * @param requireDev the requireDev to set
+	 */
+	public void setRequireDev(Map<String, String> requireDev) {
+		firePropertyChange("requireDev", this.requireDev, this.requireDev = requireDev);
+	}
+
+	public void addRequireDev(String phpPackage, String version) {
+		Map<String, String> oldRequireDev = new HashMap <String, String>(requireDev);
+		requireDev.put(phpPackage, version);
+		firePropertyChange("requireDev", oldRequireDev, requireDev);
+	}
+
+	public void removeRequireDev(String phpPackage) {
+		Map<String, String> oldRequireDev = new HashMap <String, String>(requireDev);
+		requireDev.remove(phpPackage);
+		firePropertyChange("requireDev", oldRequireDev, requireDev);
+	}
+
+	/**
+	 * @param targetDir the targetDir to set
+	 */
+	public void setTargetDir(String targetDir) {
+		firePropertyChange("targetDir", this.targetDir, this.targetDir = targetDir);
+	}
+
+	/**
+	 * @param keywords the keywords to set
+	 */
+	public void setKeywords(String[] keywords) {
+		firePropertyChange("keywords", this.keywords, this.keywords = keywords);
+	}
+	
+	
 }
