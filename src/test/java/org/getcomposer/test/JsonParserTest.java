@@ -8,7 +8,6 @@
 package org.getcomposer.test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Iterator;
@@ -35,7 +34,7 @@ public class JsonParserTest extends TestCase {
 			assertEquals(1, phpPackage.license.names.length);
 			assertEquals(1, phpPackage.keywords.length);
 			assertEquals(3, phpPackage.require.size());
-
+			
 			Map<String, String> require = phpPackage.require;
 			Iterator it = require.keySet().iterator();
 

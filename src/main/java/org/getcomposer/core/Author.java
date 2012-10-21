@@ -1,6 +1,6 @@
 package org.getcomposer.core;
 
-public class Author extends ObservableModel {
+public class Author extends ObservableModel implements Cloneable {
 	
 	public String name;
 	public String email;
@@ -61,5 +61,13 @@ public class Author extends ObservableModel {
 	 */
 	public void setHomepage(String homepage) {
 		firePropertyChange("homepage", this.homepage, this.homepage = homepage);
+	}
+	
+	public Author clone() {
+		try {
+			return (Author)super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
 	}
 }
