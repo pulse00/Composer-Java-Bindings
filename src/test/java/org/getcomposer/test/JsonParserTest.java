@@ -8,6 +8,7 @@
 package org.getcomposer.test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Iterator;
@@ -49,6 +50,17 @@ public class JsonParserTest extends TestCase {
 			assertEquals("FOS\\UserBundle", phpPackage.autoload.getPsr_0()
 					.keySet().iterator().next());
 
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	public void testEmptyJson() {
+		try {
+			PHPPackage phpPackage = PHPPackage.fromJson(loadFile("empty.json"));
+			assertNotNull(phpPackage);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

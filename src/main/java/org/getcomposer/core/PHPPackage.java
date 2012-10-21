@@ -71,10 +71,14 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 		Gson gson = getBuilder();
 		InputStream stream = new FileInputStream(input);
 		InputStreamReader reader = new InputStreamReader(stream);
-		PHPPackage pHPPackage = gson.fromJson(reader, PHPPackage.class);
-		pHPPackage.fullPath = input.getAbsolutePath();
+		PHPPackage phpPackage = gson.fromJson(reader, PHPPackage.class);
+		// gson.fromJson returns null if file is empty, make a blank package
+		if (phpPackage == null) {
+			phpPackage = new PHPPackage();
+		}
+		phpPackage.fullPath = input.getAbsolutePath();
 
-		return pHPPackage;
+		return phpPackage;
 	}
 
 	/**
