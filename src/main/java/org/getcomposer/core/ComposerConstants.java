@@ -12,5 +12,5 @@ public class ComposerConstants {
 	public static final String searchURL = "https://packagist.org/search.json?q=%s";
 	public static final String packageURL = "https://packagist.org/packages/%s.json";
 	public static final String pharURL = "https://getcomposer.org/composer.phar";
-	public static final String[] stabilities = {"stable", "RC", "beta", "alpha", "dev"};
+	public static final String[] STABILITIES = {"stable", "RC", "beta", "alpha", "dev"};
 }

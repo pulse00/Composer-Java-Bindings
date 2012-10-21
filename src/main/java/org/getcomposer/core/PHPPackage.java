@@ -37,7 +37,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	public String homepage;
 	public String url;
 	public String fullPath;
-	public String minimumStability;
+	public String minimumStability = ComposerConstants.STABILITIES[0];
 	public Map<String, String> require;
 	public Map<String, String> requireDev;
 	public Autoload autoload;
