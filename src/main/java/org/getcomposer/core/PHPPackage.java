@@ -55,6 +55,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 		require = new HashMap<String, String>();
 		requireDev = new HashMap<String, String>();
 		versions = new HashMap<String, PHPPackage>();
+		support = new Support();
 	}
 	
 	public String toString() {
