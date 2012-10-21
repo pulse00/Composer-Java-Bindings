@@ -44,6 +44,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	public String targetDir;
 	public String version;
 	public String versionNormalized;
+	public Support support;
 	public License license;
 	public String[] keywords;
 	public Map<String, PHPPackage> versions;
@@ -402,6 +403,17 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 */
 	public void setKeywords(String[] keywords) {
 		firePropertyChange("keywords", this.keywords, this.keywords = keywords);
+	}
+	
+	/**
+	 * @param support the support to set
+	 */
+	public void setSupport(Support support) {
+		firePropertyChange("support", this.support, this.support = support);
+	}
+
+	public Support getSupport() {
+		return support;
 	}
 	
 	

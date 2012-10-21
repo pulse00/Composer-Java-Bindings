@@ -8,6 +8,7 @@
 package org.getcomposer.test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Iterator;
@@ -16,6 +17,7 @@ import java.util.Map;
 import junit.framework.TestCase;
 
 import org.getcomposer.core.PHPPackage;
+import org.getcomposer.core.Support;
 import org.junit.Test;
 
 public class JsonParserTest extends TestCase {
@@ -53,6 +55,23 @@ public class JsonParserTest extends TestCase {
 			e.printStackTrace();
 			fail();
 		}
+	}
+	
+	@Test
+	public void testSupport() {
+		
+		try {
+			PHPPackage phpPackage = PHPPackage.fromJson(loadFile("support.json"));
+			Support support = phpPackage.getSupport();
+					
+			assertEquals("test@mail.com", support.getEmail());
+			assertEquals("irc://freenode.org/test", support.getIrc());
+			assertEquals("http://github.com/gossi/test/issues", support.getIssues());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+		
 	}
 	
 	@Test
