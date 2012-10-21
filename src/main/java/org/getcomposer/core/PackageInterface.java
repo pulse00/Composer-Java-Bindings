@@ -55,5 +55,7 @@ public interface PackageInterface {
 	public abstract Map<String, PHPPackage> getVersions();
 
 	public abstract List<Author> getAuthors();
+	
+	public abstract SupportInterface getSupport();
 
 }

@@ -18,6 +18,7 @@ import junit.framework.TestCase;
 
 import org.getcomposer.core.PHPPackage;
 import org.getcomposer.core.Support;
+import org.getcomposer.core.SupportInterface;
 import org.junit.Test;
 
 public class JsonParserTest extends TestCase {
@@ -62,7 +63,7 @@ public class JsonParserTest extends TestCase {
 		
 		try {
 			PHPPackage phpPackage = PHPPackage.fromJson(loadFile("support.json"));
-			Support support = phpPackage.getSupport();
+			SupportInterface support = phpPackage.getSupport();
 					
 			assertEquals("test@mail.com", support.getEmail());
 			assertEquals("irc://freenode.org/test", support.getIrc());

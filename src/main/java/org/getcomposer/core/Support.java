@@ -1,6 +1,6 @@
 package org.getcomposer.core;
 
-public class Support extends ObservableModel {
+public class Support extends ObservableModel implements SupportInterface {
 
 	private String email;
 	private String issues;

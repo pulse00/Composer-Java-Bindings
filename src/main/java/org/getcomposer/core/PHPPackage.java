@@ -412,7 +412,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 		firePropertyChange("support", this.support, this.support = support);
 	}
 
-	public Support getSupport() {
+	public SupportInterface getSupport() {
 		return support;
 	}
 	
