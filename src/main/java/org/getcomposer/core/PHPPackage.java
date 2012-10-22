@@ -47,14 +47,14 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	public Support support;
 	public License license;
 	public String[] keywords;
-	public Map<String, PHPPackage> versions;
-	public ArrayList<Author> authors;
+	public Map<String, PackageInterface> versions;
+	public ArrayList<AuthorInterface> authors;
 
 	public PHPPackage() {
-		authors = new ArrayList<Author>();
+		authors = new ArrayList<AuthorInterface>();
 		require = new HashMap<String, String>();
 		requireDev = new HashMap<String, String>();
-		versions = new HashMap<String, PHPPackage>();
+		versions = new HashMap<String, PackageInterface>();
 		support = new Support();
 	}
 	
@@ -101,6 +101,16 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 
 		return packagistPackage.phpPackage;
 	}
+	
+	/**
+	 * Serializes the package to json
+	 * 
+	 * @return the serialized json package
+	 */
+	public String toJson() {
+		Gson gson = getBuilder();
+		return gson.toJson(this);
+	}
 
 	/**
 	 * Retrieve a Gson with the proper TypeAdapters and FieldNamingStrategy
@@ -109,6 +119,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 */
 	public static Gson getBuilder() {
 		return new GsonBuilder()
+				.setPrettyPrinting()
 				.registerTypeAdapter(License.class, new LicenseDeserializer())
 				.setFieldNamingStrategy(new ComposerFieldNamingStrategy())
 				.create();
@@ -277,7 +288,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 * 
 	 * @see org.getcomposer.core.PackageInterface#getVersions()
 	 */
-	public Map<String, PHPPackage> getVersions() {
+	public Map<String, PackageInterface> getVersions() {
 		return versions;
 	}
 
@@ -286,7 +297,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 * 
 	 * @see org.getcomposer.core.PackageInterface#getAuthors()
 	 */
-	public List<Author> getAuthors() {
+	public List<AuthorInterface> getAuthors() {
 		return authors;
 	}
 
@@ -308,8 +319,8 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 		firePropertyChange("authors", authors, this.authors);
 	}
 	
-	public void setAuthors(List<Author> authors) {
-		firePropertyChange("authors", this.authors, this.authors = (ArrayList<Author>)authors); 
+	public void setAuthors(List<AuthorInterface> authors) {
+		firePropertyChange("authors", this.authors, this.authors = (ArrayList<AuthorInterface>) authors); 
 	}
 
 	/**

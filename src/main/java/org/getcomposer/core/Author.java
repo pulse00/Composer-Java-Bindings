@@ -1,6 +1,6 @@
 package org.getcomposer.core;
 
-public class Author extends ObservableModel implements Cloneable {
+public class Author extends ObservableModel implements Cloneable, AuthorInterface {
 	
 	public String name;
 	public String email;

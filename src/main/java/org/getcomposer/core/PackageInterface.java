@@ -52,9 +52,9 @@ public interface PackageInterface {
 
 	public abstract String[] getKeywords();
 
-	public abstract Map<String, PHPPackage> getVersions();
+	public abstract Map<String, PackageInterface> getVersions();
 
-	public abstract List<Author> getAuthors();
+	public abstract List<AuthorInterface> getAuthors();
 	
 	public abstract SupportInterface getSupport();
 
