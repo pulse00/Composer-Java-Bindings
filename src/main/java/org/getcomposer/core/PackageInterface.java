@@ -54,7 +54,7 @@ public interface PackageInterface {
 
 	public abstract Map<String, PackageInterface> getVersions();
 
-	public abstract List<AuthorInterface> getAuthors();
+	public abstract List<Author> getAuthors();
 	
 	public abstract SupportInterface getSupport();
 

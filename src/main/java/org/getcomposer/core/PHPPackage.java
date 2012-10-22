@@ -48,10 +48,10 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	public License license;
 	public String[] keywords;
 	public Map<String, PackageInterface> versions;
-	public ArrayList<AuthorInterface> authors;
+	public ArrayList<Author> authors;
 
 	public PHPPackage() {
-		authors = new ArrayList<AuthorInterface>();
+		authors = new ArrayList<Author>();
 		require = new HashMap<String, String>();
 		requireDev = new HashMap<String, String>();
 		versions = new HashMap<String, PackageInterface>();
@@ -297,7 +297,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 * 
 	 * @see org.getcomposer.core.PackageInterface#getAuthors()
 	 */
-	public List<AuthorInterface> getAuthors() {
+	public List<Author> getAuthors() {
 		return authors;
 	}
 
@@ -319,8 +319,8 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 		firePropertyChange("authors", authors, this.authors);
 	}
 	
-	public void setAuthors(List<AuthorInterface> authors) {
-		firePropertyChange("authors", this.authors, this.authors = (ArrayList<AuthorInterface>) authors); 
+	public void setAuthors(List<Author> authors) {
+		firePropertyChange("authors", this.authors, this.authors = (ArrayList<Author>) authors); 
 	}
 
 	/**
