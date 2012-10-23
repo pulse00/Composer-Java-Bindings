@@ -1,4 +1,4 @@
-package org.getcomposer.core;
+package org.getcomposer;
 
 import java.util.List;
 import java.util.Map;
@@ -52,9 +52,9 @@ public interface PackageInterface {
 
 	public abstract String[] getKeywords();
 
-	public abstract Map<String, PackageInterface> getVersions();
+	public abstract Versions getVersions();
 
-	public abstract List<Author> getAuthors();
+	public abstract List<Person> getAuthors();
 	
 	public abstract SupportInterface getSupport();
 

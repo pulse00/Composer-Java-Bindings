@@ -1,11 +1,11 @@
-package org.getcomposer.core;
+package org.getcomposer;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class ObservableModel {
 
-	private PropertyChangeSupport changeSupport = new PropertyChangeSupport(
+	private transient PropertyChangeSupport changeSupport = new PropertyChangeSupport(
 			this);
 
 	public void addPropertyChangeListener(PropertyChangeListener listener) {

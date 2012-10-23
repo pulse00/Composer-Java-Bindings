@@ -1,6 +1,6 @@
-package org.getcomposer.core.packagist;
+package org.getcomposer.packagist;
 
-import org.getcomposer.core.ComposerConstants;
+import org.getcomposer.ComposerConstants;
 
 public class PharDownloader extends Downloader {
 

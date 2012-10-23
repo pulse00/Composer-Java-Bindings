@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package org.getcomposer.core.packagist;
+package org.getcomposer.packagist;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +28,6 @@ import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.getcomposer.core.ProgressListener;
 
 
 /**
@@ -39,29 +38,29 @@ import org.getcomposer.core.ProgressListener;
 public class Downloader {
 	protected String url;
 
-	protected List<ProgressListener> listeners;
+	protected List<ProgressListenerInterface> listeners;
 
 	private HttpGet httpGet;
 
 	public Downloader(String url) {
 		this.setUrl(url);
-		listeners = new ArrayList<ProgressListener>();
+		listeners = new ArrayList<ProgressListenerInterface>();
 	}
 
-	public void addProgressListener(ProgressListener listener) {
+	public void addProgressListener(ProgressListenerInterface listener) {
 
 		listeners.add(listener);
 
 	}
 
-	public void removeProgressListener(ProgressListener listener) {
+	public void removeProgressListener(ProgressListenerInterface listener) {
 
 		listeners.remove(listener);
 	}
 
 	public InputStream downloadResource() throws IOException {
 
-		for (ProgressListener listener : listeners) {
+		for (ProgressListenerInterface listener : listeners) {
 			listener.setTotalWork(4);
 		}
 
@@ -83,7 +82,7 @@ public class Downloader {
 			throw e;
 		}
 
-		for (ProgressListener listener : listeners) {
+		for (ProgressListenerInterface listener : listeners) {
 			listener.progressChanged(1);
 		}
 
@@ -91,11 +90,11 @@ public class Downloader {
 			HttpEntity entity = response.getEntity();
 			InputStream content = entity.getContent();
 
-			for (ProgressListener listener : listeners) {
+			for (ProgressListenerInterface listener : listeners) {
 				listener.progressChanged(1);
 			}
 
-			for (ProgressListener listener : listeners) {
+			for (ProgressListenerInterface listener : listeners) {
 				listener.worked();
 			}
 
@@ -104,7 +103,7 @@ public class Downloader {
 		} catch (Exception e) {
 			//TODO: log
 		} finally {
-			for (ProgressListener listener : listeners) {
+			for (ProgressListenerInterface listener : listeners) {
 				listener.worked();
 			}
 		}

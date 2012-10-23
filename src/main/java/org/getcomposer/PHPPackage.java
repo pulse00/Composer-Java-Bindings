@@ -5,20 +5,20 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package org.getcomposer.core;
+package org.getcomposer;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.getcomposer.serialization.LicenseSerializer;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Represents a composer package. The source can either be a composer.json file
@@ -29,7 +29,7 @@ import com.google.gson.GsonBuilder;
  * @author Robert Gruendler <r.gruendler@gmail.com>
  * 
  */
-public class PHPPackage extends ObservableModel implements PackageInterface {
+public class PHPPackage extends IOPackage implements PackageInterface {
 
 	public String name;
 	public String type;
@@ -39,25 +39,30 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	public String fullPath;
 	public String minimumStability = ComposerConstants.STABILITIES[0];
 	public Map<String, String> require;
+	
+	@SerializedName("require-dev")
 	public Map<String, String> requireDev;
 	public Autoload autoload;
+	
+	@SerializedName("target-dir")
 	public String targetDir;
 	public String version;
 	public String versionNormalized;
 	public Support support;
 	public License license;
 	public String[] keywords;
-	public Map<String, PackageInterface> versions;
-	public ArrayList<Author> authors;
+	public Versions versions;
+	public List<Person> authors;
+	public List<Person> maintainers;
 
 	public PHPPackage() {
-		authors = new ArrayList<Author>();
+		authors = new ArrayList<Person>();
 		require = new HashMap<String, String>();
 		requireDev = new HashMap<String, String>();
-		versions = new HashMap<String, PackageInterface>();
 		support = new Support();
+		license = new License();
 	}
-	
+
 	public String toString() {
 		return name;
 	}
@@ -69,38 +74,28 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 * @return {@link PHPPackage} the deserialized package
 	 * @throws FileNotFoundException
 	 */
-	public static PHPPackage fromJson(File input) throws FileNotFoundException {
-		Gson gson = getBuilder();
-		InputStream stream = new FileInputStream(input);
-		InputStreamReader reader = new InputStreamReader(stream);
-		PHPPackage phpPackage = gson.fromJson(reader, PHPPackage.class);
-		// gson.fromJson returns null if file is empty, make a blank package
-		if (phpPackage == null) {
-			phpPackage = new PHPPackage();
-		}
-		phpPackage.fullPath = input.getAbsolutePath();
-
-		return phpPackage;
+	public static PHPPackage fromFile(File input) throws FileNotFoundException {
+		return fromFile(input, PHPPackage.class);
 	}
 
-	/**
-	 * Deserializes a package from packagist.org, e.g.
-	 * http://packagist.org/packages/react/react.json
-	 * 
-	 * @param input
-	 * @return {@link PHPPackage} the deserialized package
-	 * @throws FileNotFoundException
-	 */
-	public static PHPPackage fromPackagist(File input)
-			throws FileNotFoundException {
-		Gson gson = getBuilder();
-		InputStream stream = new FileInputStream(input);
-		InputStreamReader reader = new InputStreamReader(stream);
-		PackagistPackage packagistPackage = gson.fromJson(reader,
-				PackagistPackage.class);
-
-		return packagistPackage.phpPackage;
-	}
+//	/**
+//	 * Deserializes a package from packagist.org, e.g.
+//	 * http://packagist.org/packages/react/react.json
+//	 * 
+//	 * @param input
+//	 * @return {@link PHPPackage} the deserialized package
+//	 * @throws FileNotFoundException
+//	 */
+//	public static PHPPackage fromPackagist(File input)
+//			throws FileNotFoundException {
+//		Gson gson = getBuilder();
+//		InputStream stream = new FileInputStream(input);
+//		InputStreamReader reader = new InputStreamReader(stream);
+//		PackagistPackage packagistPackage = gson.fromJson(reader,
+//				PackagistPackage.class);
+//
+//		return packagistPackage.phpPackage;
+//	}
 	
 	/**
 	 * Serializes the package to json
@@ -108,8 +103,14 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 * @return the serialized json package
 	 */
 	public String toJson() {
-		Gson gson = getBuilder();
-		return gson.toJson(this);
+		Gson gson = getOutputBuilder();
+		return gson.toJson(this, PHPPackage.class);
+	}
+
+	public static Gson getOutputBuilder() {
+		return new GsonBuilder()
+			.setPrettyPrinting()
+			.create();
 	}
 
 	/**
@@ -120,8 +121,8 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	public static Gson getBuilder() {
 		return new GsonBuilder()
 				.setPrettyPrinting()
-				.registerTypeAdapter(License.class, new LicenseDeserializer())
-				.setFieldNamingStrategy(new ComposerFieldNamingStrategy())
+				.registerTypeAdapter(License.class, new LicenseSerializer())
+//				.setFieldNamingStrategy(new ComposerFieldNamingStrategy())
 				.create();
 	}
 
@@ -131,7 +132,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 * @see org.getcomposer.core.PackageInterface#getDefaultVersion()
 	 */
 	public String getDefaultVersion() {
-		return versions.keySet().iterator().next();
+		return versions.getDefaultVersion();
 	}
 
 	/*
@@ -141,7 +142,7 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 * org.getcomposer.core.PackageInterface#getPackageName(java.lang.String)
 	 */
 	public String getPackageName(String version) throws Exception {
-		if (!versions.containsKey(version)) {
+		if (!versions.has(version)) {
 			throw new Exception("Invalid version " + version + " for package "
 					+ name);
 		}
@@ -158,8 +159,10 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 */
 	public class PackagistPackage {
 
+		@SerializedName("package")
 		public PHPPackage phpPackage;
-
+		
+		public PackagistPackage() {}
 	}
 
 	/*
@@ -288,39 +291,62 @@ public class PHPPackage extends ObservableModel implements PackageInterface {
 	 * 
 	 * @see org.getcomposer.core.PackageInterface#getVersions()
 	 */
-	public Map<String, PackageInterface> getVersions() {
+	public Versions getVersions() {
 		return versions;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.getcomposer.core.PackageInterface#getAuthors()
-	 */
-	public List<Author> getAuthors() {
-		return authors;
 	}
 
 	public String getMinimumStability() {
 		return minimumStability;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.getcomposer.core.PackageInterface#getAuthors()
+	 */
+	public List<Person> getAuthors() {
+		return authors;
+	}
+	
 	@SuppressWarnings("unchecked")
-	public void addAuthor(Author author) {
-		ArrayList<Author> authors = (ArrayList<Author>) this.authors.clone();
+	public void addAuthor(Person author) {
+		ArrayList<Person> authors = (ArrayList<Person>) ((ArrayList<Person>) this.authors).clone();
 		this.authors.add(author);
 		firePropertyChange("authors", authors, this.authors);
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void removeAuthor(Author author) {
-		ArrayList<Author> authors = (ArrayList<Author>) this.authors.clone();
+	public void removeAuthor(Person author) {
+		ArrayList<Person> authors = (ArrayList<Person>) ((ArrayList<Person>) this.authors).clone();
 		this.authors.remove(author);
 		firePropertyChange("authors", authors, this.authors);
 	}
 	
-	public void setAuthors(List<Author> authors) {
-		firePropertyChange("authors", this.authors, this.authors = (ArrayList<Author>) authors); 
+	public void setAuthors(List<Person> authors) {
+		firePropertyChange("authors", this.authors, this.authors = (ArrayList<Person>) authors); 
+	}
+	
+
+	public List<Person> getMaintainers() {
+		return maintainers;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void addMaintainer(Person maintainer) {
+		ArrayList<Person> maintainers = (ArrayList<Person>) ((ArrayList<Person>) this.maintainers).clone();
+		this.maintainers.add(maintainer);
+		firePropertyChange("maintainers", maintainers, this.maintainers);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void removeMaintainer(Person maintainer) {
+		ArrayList<Person> maintainers = (ArrayList<Person>) ((ArrayList<Person>) this.maintainers).clone();
+		this.maintainers.remove(maintainer);
+		firePropertyChange("maintainers", maintainers, this.maintainers);
+	}
+	
+	public void setMaintainers(List<Person> maintainers) {
+		firePropertyChange("maintainers", this.maintainers, this.maintainers = (ArrayList<Person>) maintainers); 
 	}
 
 	/**

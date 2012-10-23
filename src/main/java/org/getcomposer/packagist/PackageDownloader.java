@@ -5,13 +5,13 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package org.getcomposer.core.packagist;
+package org.getcomposer.packagist;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.getcomposer.core.PHPPackage;
+import org.getcomposer.PHPPackage;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;

@@ -1,4 +1,4 @@
-package org.getcomposer.core;
+package org.getcomposer;
 
 public class Support extends ObservableModel implements SupportInterface {
 

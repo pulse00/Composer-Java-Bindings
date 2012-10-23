@@ -13,11 +13,11 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.getcomposer.core.PHPPackage;
-import org.getcomposer.core.PackageInterface;
-import org.getcomposer.core.packagist.PackageDownloader;
-import org.getcomposer.core.packagist.PharDownloader;
-import org.getcomposer.core.packagist.SearchResultDownloader;
+import org.getcomposer.PHPPackage;
+import org.getcomposer.PackageInterface;
+import org.getcomposer.packagist.PackageDownloader;
+import org.getcomposer.packagist.PharDownloader;
+import org.getcomposer.packagist.SearchResultDownloader;
 import org.junit.Test;
 
 

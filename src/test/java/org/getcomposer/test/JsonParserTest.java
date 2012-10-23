@@ -7,21 +7,16 @@
  ******************************************************************************/
 package org.getcomposer.test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
-import org.getcomposer.core.PHPPackage;
-import org.getcomposer.core.Support;
-import org.getcomposer.core.SupportInterface;
+import org.getcomposer.PHPPackage;
+import org.getcomposer.PackageInterface;
+import org.getcomposer.SupportInterface;
+import org.getcomposer.repositories.PackageRepository;
 import org.junit.Test;
 
-public class JsonParserTest extends TestCase {
+public class JsonParserTest extends ComposertTestCase {
 
 	@Test
 	@SuppressWarnings("rawtypes")
@@ -30,11 +25,11 @@ public class JsonParserTest extends TestCase {
 		try {
 
 			PHPPackage phpPackage = PHPPackage
-					.fromJson(loadFile("composer.json"));
+					.fromFile(loadFile("composer.json"));
 
 			assertNotNull(phpPackage);
 			assertEquals(3, phpPackage.authors.size());
-			assertEquals(1, phpPackage.license.names.length);
+			assertEquals(1, phpPackage.license.size());
 			assertEquals(1, phpPackage.keywords.length);
 			assertEquals(3, phpPackage.require.size());
 			
@@ -62,7 +57,7 @@ public class JsonParserTest extends TestCase {
 	public void testSupport() {
 		
 		try {
-			PHPPackage phpPackage = PHPPackage.fromJson(loadFile("support.json"));
+			PHPPackage phpPackage = PHPPackage.fromFile(loadFile("support.json"));
 			SupportInterface support = phpPackage.getSupport();
 					
 			assertEquals("test@mail.com", support.getEmail());
@@ -78,7 +73,7 @@ public class JsonParserTest extends TestCase {
 	@Test
 	public void testEmptyJson() {
 		try {
-			PHPPackage phpPackage = PHPPackage.fromJson(loadFile("empty.json"));
+			PHPPackage phpPackage = PHPPackage.fromFile(loadFile("empty.json"));
 			assertNotNull(phpPackage);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,17 +82,18 @@ public class JsonParserTest extends TestCase {
 	}
 
 	@Test
-	public void testPackagistJson() {
+	public void testPackageJson() {
 
 		try {
-			PHPPackage phpPackage = PHPPackage
-					.fromPackagist(loadFile("packagist.json"));
-			assertNotNull(phpPackage);
+			PackageRepository repo = PackageRepository.fromFile(loadFile("packagist.json"));
+			assertNotNull(repo);
+			
+			PackageInterface phpPackage = repo.getPackage();
 
-			assertEquals("friendsofsymfony/user-bundle", phpPackage.name);
-			assertEquals("Symfony FOSUserBundle", phpPackage.description);
-			assertNotNull(phpPackage.versions);
-			assertTrue(phpPackage.versions.size() > 0);
+			assertEquals("friendsofsymfony/user-bundle", phpPackage.getName());
+			assertEquals("Symfony FOSUserBundle", phpPackage.getDescription());
+			assertNotNull(phpPackage.getVersions());
+			assertTrue(phpPackage.getVersions().size() > 0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -109,27 +105,20 @@ public class JsonParserTest extends TestCase {
 	public void testReactJson() {
 
 		try {
+			PackageRepository repo = PackageRepository.fromFile(loadFile("react.json"));
+			assertNotNull(repo);
+			
+			PackageInterface phpPackage = repo.getPackage();
 
-			PHPPackage phpPackage = PHPPackage
-					.fromPackagist(loadFile("react.json"));
-			assertNotNull(phpPackage);
-
-			assertEquals("react/react", phpPackage.name);
+			assertEquals("react/react", phpPackage.getName());
 			assertEquals("Nuclear Reactor written in PHP.",
-					phpPackage.description);
-			assertNotNull(phpPackage.versions);
-			assertTrue(phpPackage.versions.size() > 0);
+					phpPackage.getDescription());
+			assertNotNull(phpPackage.getVersions());
+			assertTrue(phpPackage.getVersions().size() > 0);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
-	}
-
-	protected File loadFile(String name) throws URISyntaxException {
-
-		ClassLoader loader = getClass().getClassLoader();
-		URL resource = loader.getResource(name);
-		return new File(resource.toURI());
 	}
 }

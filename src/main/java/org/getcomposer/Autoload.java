@@ -5,16 +5,19 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package org.getcomposer.core;
+package org.getcomposer;
 
 import java.util.Iterator;
 import java.util.Map;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
  * 
  * @author Robert Gruendler <r.gruendler@gmail.com>
  */
 public class Autoload {
+	@SerializedName("psr-0")
 	private Map<String, String> psr_0;
 
 	public String getPSR0Path() {

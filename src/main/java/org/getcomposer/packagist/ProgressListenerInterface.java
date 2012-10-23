@@ -1,6 +1,6 @@
-package org.getcomposer.core;
+package org.getcomposer.packagist;
 
-public interface ProgressListener {
+public interface ProgressListenerInterface {
 
 	void progressChanged(int worked);
 

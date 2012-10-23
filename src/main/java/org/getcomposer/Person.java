@@ -1,6 +1,6 @@
-package org.getcomposer.core;
+package org.getcomposer;
 
-public class Author extends ObservableModel implements Cloneable {
+public class Person extends ObservableModel implements Cloneable {
 	
 	public String name;
 	public String email;
@@ -9,11 +9,11 @@ public class Author extends ObservableModel implements Cloneable {
 	/**
 	 * We need an empty ctor for gson deserialization.
 	 */
-	public Author() {
+	public Person() {
 		
 	}
 	
-	public Author(String name) {
+	public Person(String name) {
 		this.name = name;
 	}
 	
@@ -63,9 +63,9 @@ public class Author extends ObservableModel implements Cloneable {
 		firePropertyChange("homepage", this.homepage, this.homepage = homepage);
 	}
 	
-	public Author clone() {
+	public Person clone() {
 		try {
-			return (Author)super.clone();
+			return (Person)super.clone();
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
