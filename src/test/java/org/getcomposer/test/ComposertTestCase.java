@@ -4,7 +4,7 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import org.getcomposer.PHPPackage;
+import org.getcomposer.ComposerPackage;
 import org.getcomposer.Person;
 
 import junit.framework.TestCase;
@@ -17,8 +17,8 @@ public class ComposertTestCase extends TestCase {
 		return new File(resource.toURI());
 	}
 	
-	protected PHPPackage createDummyPackage() {
-		PHPPackage phpPackage = new PHPPackage();
+	protected ComposerPackage createDummyPackage() {
+		ComposerPackage phpPackage = new ComposerPackage();
 		
 		phpPackage.setName("gossi/test");
 		

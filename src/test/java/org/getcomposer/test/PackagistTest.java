@@ -13,8 +13,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import org.getcomposer.PHPPackage;
-import org.getcomposer.PackageInterface;
+import org.getcomposer.ComposerPackage;
 import org.getcomposer.packagist.PackageDownloader;
 import org.getcomposer.packagist.PharDownloader;
 import org.getcomposer.packagist.SearchResultDownloader;
@@ -40,13 +39,13 @@ public class PackagistTest extends TestCase {
 		
 		try {
 			PackageDownloader downloader = new PackageDownloader("https://packagist.org/packages/react/react.json");
-			PHPPackage resource = downloader.getPackage(); 
+			ComposerPackage resource = downloader.getPackage(); 
 			
 			assertTrue(resource != null);
-			assertEquals("react/react", resource.name);
-			assertEquals("Nuclear Reactor written in PHP.", resource.description);
-			assertNotNull(resource.versions);
-			assertTrue(resource.versions.size() > 1);
+			assertEquals("react/react", resource.getName());
+			assertEquals("Nuclear Reactor written in PHP.", resource.getDescription());
+			assertNotNull(resource.getVersions());
+			assertTrue(resource.getVersions().size() > 1);
 			
 			
 			downloader = new PackageDownloader("https://packagist.org/packages/zendframework/zendframework.json");
@@ -74,12 +73,12 @@ public class PackagistTest extends TestCase {
 	protected void assertSearchResult(String query) throws IOException {
 		
 		SearchResultDownloader downloader = new SearchResultDownloader();
-		List<PackageInterface> packages = downloader.searchPackages(query);
+		List<ComposerPackage> packages = downloader.searchPackages(query);
 
 		assertNotNull(packages);
 		assertTrue(packages.size() > 0);
 		
-		for (PackageInterface phpPackage : packages) {
+		for (ComposerPackage phpPackage : packages) {
 			if (query.equals("foo bar")) {
 				System.err.println(phpPackage.getName());
 			}

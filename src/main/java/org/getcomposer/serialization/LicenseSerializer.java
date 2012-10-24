@@ -38,19 +38,6 @@ public class LicenseSerializer implements JsonDeserializer<License>, JsonSeriali
 			for (JsonElement item : (JsonArray)element) {
 				license.add(item.getAsString());
 			}
-			
-//			JsonArray array = (JsonArray) element;
-//			String[] licences  = new String[array.size()];
-//			int i=0;
-//			for (Object o : array) {
-//				if (o instanceof String) {
-//					licences[i++] = (String) o;
-//				} else if (o instanceof JsonPrimitive) {
-//					JsonPrimitive prim = (JsonPrimitive) o;
-//					licences[i++] = prim.getAsString();
-//				}
-//			}
-//			license.names = licences;
 		} else if (type instanceof GenericArrayType) { 
 			JsonArray jsonArray = element.getAsJsonArray();
 
@@ -66,9 +53,10 @@ public class LicenseSerializer implements JsonDeserializer<License>, JsonSeriali
 
 	public JsonElement serialize(License src, Type typeOfSrc,
 			JsonSerializationContext context) {
-		
-		System.out.println("Serialize License: " + src);
-		if (src.size() == 1) {
+
+		if (src.size() == 0) {
+			return null;
+		} else if (src.size() == 1) {
 			return new JsonPrimitive(src.get(0));
 		} else {
 			JsonArray licenses = new JsonArray();

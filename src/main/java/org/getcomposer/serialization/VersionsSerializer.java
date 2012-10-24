@@ -4,8 +4,7 @@ import java.lang.reflect.Type;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.getcomposer.PHPPackage;
-import org.getcomposer.PackageInterface;
+import org.getcomposer.ComposerPackage;
 import org.getcomposer.Versions;
 
 import com.google.gson.JsonDeserializationContext;
@@ -23,9 +22,8 @@ public class VersionsSerializer implements JsonDeserializer<Versions> {
 		Set<Entry<String, JsonElement>> jsonVersions = json.getAsJsonObject().entrySet();
 		
 		for (Entry<String, JsonElement> entry : jsonVersions) {
-			versions.add(entry.getKey(), (PackageInterface) context.deserialize(entry.getValue(), PHPPackage.class));
+			versions.add(entry.getKey(), (ComposerPackage) context.deserialize(entry.getValue(), ComposerPackage.class));
 		}
-//		versions.add(json., phpPackage)
 		
 		return versions;
 	}

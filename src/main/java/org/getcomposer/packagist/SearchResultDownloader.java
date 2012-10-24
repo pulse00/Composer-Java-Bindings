@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.getcomposer.ComposerConstants;
-import org.getcomposer.PHPPackage;
-import org.getcomposer.PackageInterface;
+import org.getcomposer.ComposerPackage;
+import org.getcomposer.ComposerPackage;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,13 +24,13 @@ import com.google.gson.stream.JsonReader;
 
 public class SearchResultDownloader extends Downloader {
 	public SearchResultDownloader() {
-		super(ComposerConstants.searchURL);
+		super(ComposerConstants.SEARCH_URL);
 	}
 
-	public List<PackageInterface> searchPackages(String query)
+	public List<ComposerPackage> searchPackages(String query)
 			throws IOException {
-		List<PackageInterface> packages = new ArrayList<PackageInterface>();
-		setUrl(String.format(ComposerConstants.searchURL, URLEncoder.encode(query, "UTF-8")));
+		List<ComposerPackage> packages = new ArrayList<ComposerPackage>();
+		setUrl(String.format(ComposerConstants.SEARCH_URL, URLEncoder.encode(query, "UTF-8")));
 
 		SearchResult result = loadPackages(getUrl());
 		
@@ -67,7 +67,7 @@ public class SearchResultDownloader extends Downloader {
 	}
 
 	public static class SearchResult {
-		public List<PHPPackage> results;
+		public List<ComposerPackage> results;
 		public String next;
 		public String total;
 	}

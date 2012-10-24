@@ -11,6 +11,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.getcomposer.serialization.LicenseSerializer;
+
+/**
+ * Represents the license property of a composer package
+ * 
+ * @see http://getcomposer.org/doc/04-schema.md#license
+ * @author Thomas Gossmann <gos.si>
+ */
 public class License implements Iterable<String> {
 
 	private List<String> licenses;
@@ -19,23 +27,49 @@ public class License implements Iterable<String> {
 		licenses = new ArrayList<String>();
 	}
 	
+	/**
+	 * Adds a license
+	 * 
+	 * @param license
+	 */
 	public void add(String license) {
 		licenses.add(license);
 	}
 	
+	/**
+	 * Returns a license at the given zero-related index
+	 * 
+	 * @param index
+	 * @return the license
+	 */
 	public String get(int index) {
 		return licenses.get(index);
 	}
 	
+	/**
+	 * Returns the amount of licenses
+	 * @return
+	 */
 	public int size() {
 		return licenses.size();
 	}
 	
+	/**
+	 * Removes a license
+	 */
 	public void remove(String license) {
 		licenses.remove(license);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
 	public Iterator<String> iterator() {
 		return licenses.iterator();
+	}
+	
+	public static Object getSerializer() {
+		return new LicenseSerializer();
 	}
 }

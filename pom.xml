@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.getcomposer</groupId>
-	<artifactId>org.getcomposer.core</artifactId>
+	<artifactId>org.getcomposer</artifactId>
 	<packaging>jar</packaging>
 
 	<version>0.0.1-SNAPSHOT</version>
@@ -33,7 +33,7 @@
 	<scm>
 		<url>https://github.com/pulse00/Composer-Java-Bindings.git</url>
 		<connection>git</connection>
-		<developerConnection>Robert Gründler</developerConnection>
+		<developerConnection>Robert Gr√ºndler</developerConnection>
 		<tag>composer</tag>
 	</scm>
 	<ciManagement>

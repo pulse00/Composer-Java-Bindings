@@ -8,43 +8,40 @@
 package org.getcomposer.test;
 
 import java.util.Iterator;
-import java.util.Map;
 
-import org.getcomposer.PHPPackage;
-import org.getcomposer.PackageInterface;
-import org.getcomposer.SupportInterface;
+import org.getcomposer.Dependencies;
+import org.getcomposer.ComposerPackage;
+import org.getcomposer.Dependency;
+import org.getcomposer.Support;
 import org.getcomposer.repositories.PackageRepository;
 import org.junit.Test;
 
 public class JsonParserTest extends ComposertTestCase {
 
 	@Test
-	@SuppressWarnings("rawtypes")
 	public void testComposerJson() {
 
 		try {
 
-			PHPPackage phpPackage = PHPPackage
+			ComposerPackage phpPackage = ComposerPackage
 					.fromFile(loadFile("composer.json"));
 
 			assertNotNull(phpPackage);
-			assertEquals(3, phpPackage.authors.size());
-			assertEquals(1, phpPackage.license.size());
-			assertEquals(1, phpPackage.keywords.length);
-			assertEquals(3, phpPackage.require.size());
+			assertNotNull("Authors null", phpPackage.getAuthors());
+			assertEquals(3, phpPackage.getAuthors().size());
+			assertEquals(1, phpPackage.getLicense().size());
+			assertEquals(1, phpPackage.getKeywords().length);
+			assertEquals(3, phpPackage.getRequire().size());
 			
-			Map<String, String> require = phpPackage.require;
-			Iterator it = require.keySet().iterator();
-
-			while (it.hasNext()) {
-				String key = (String) it.next();
-				String value = require.get(key);
-				assertNotNull(key);
-				assertNotNull(value);
+			Dependencies require = phpPackage.getRequire();
+			
+			for (Dependency dep : require) {
+				assertNotNull(dep.getName());
+				assertNotNull(dep.getVersion());
 			}
 
-			assertNotNull(phpPackage.autoload);
-			assertEquals("FOS\\UserBundle", phpPackage.autoload.getPsr_0()
+			assertNotNull(phpPackage.getAutoload());
+			assertEquals("FOS\\UserBundle", phpPackage.getAutoload().getPsr0()
 					.keySet().iterator().next());
 
 		} catch (Exception e) {
@@ -57,9 +54,9 @@ public class JsonParserTest extends ComposertTestCase {
 	public void testSupport() {
 		
 		try {
-			PHPPackage phpPackage = PHPPackage.fromFile(loadFile("support.json"));
-			SupportInterface support = phpPackage.getSupport();
-					
+			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("support.json"));
+			Support support = phpPackage.getSupport();
+
 			assertEquals("test@mail.com", support.getEmail());
 			assertEquals("irc://freenode.org/test", support.getIrc());
 			assertEquals("http://github.com/gossi/test/issues", support.getIssues());
@@ -73,7 +70,7 @@ public class JsonParserTest extends ComposertTestCase {
 	@Test
 	public void testEmptyJson() {
 		try {
-			PHPPackage phpPackage = PHPPackage.fromFile(loadFile("empty.json"));
+			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("empty.json"));
 			assertNotNull(phpPackage);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -85,10 +82,8 @@ public class JsonParserTest extends ComposertTestCase {
 	public void testPackageJson() {
 
 		try {
-			PackageRepository repo = PackageRepository.fromFile(loadFile("packagist.json"));
-			assertNotNull(repo);
-			
-			PackageInterface phpPackage = repo.getPackage();
+			ComposerPackage phpPackage = ComposerPackage.fromPackagist(loadFile("packagist.json"));
+			assertNotNull(phpPackage);
 
 			assertEquals("friendsofsymfony/user-bundle", phpPackage.getName());
 			assertEquals("Symfony FOSUserBundle", phpPackage.getDescription());
@@ -108,7 +103,7 @@ public class JsonParserTest extends ComposertTestCase {
 			PackageRepository repo = PackageRepository.fromFile(loadFile("react.json"));
 			assertNotNull(repo);
 			
-			PackageInterface phpPackage = repo.getPackage();
+			ComposerPackage phpPackage = repo.getPackage();
 
 			assertEquals("react/react", phpPackage.getName());
 			assertEquals("Nuclear Reactor written in PHP.",

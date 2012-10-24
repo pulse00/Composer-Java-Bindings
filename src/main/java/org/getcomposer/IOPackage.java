@@ -6,14 +6,18 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.lang.reflect.Constructor;
-
-import org.getcomposer.serialization.LicenseSerializer;
-import org.getcomposer.serialization.VersionsSerializer;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * A package that can be read from a file or string and also dump to the latter one.
+ * 
+ * @author Thomas Gossmann <gos.si>
+ * 
+ */
 public class IOPackage extends ObservableModel {
 	
 	private transient String path;
@@ -40,24 +44,20 @@ public class IOPackage extends ObservableModel {
 		InputStream stream = new FileInputStream(input);
 		InputStreamReader reader = new InputStreamReader(stream);
 
-		T phpPackage = fromObject(reader, classOfT);
+		T phpPackage = fromReader(reader, classOfT);
 		((IOPackage)phpPackage).setPath(input.getAbsolutePath());
 		return phpPackage;
 	}
 	
-	protected static <T> T fromJson(String json, Class<T> classOfT) throws FileNotFoundException {
-		return fromObject(json, classOfT);
+	protected static <T> T fromJson(String json, Class<T> classOfT) {
+		return fromReader(new StringReader(json), classOfT);
 	}
 	
-	private static <T> T fromObject(Object input, Class<T> classOfT) throws FileNotFoundException {
+	private static <T> T fromReader(Reader input, Class<T> classOfT) {
 		T phpPackage = null;
 		try {
 			Gson gson = getBuilder();
-			if (input instanceof Reader) {
-				phpPackage = (T) gson.fromJson((Reader)input, classOfT);
-			} else if (input instanceof String) {
-				phpPackage = (T) gson.fromJson((String)input, classOfT);
-			}
+			phpPackage = (T) gson.fromJson((Reader)input, classOfT);
 			
 			// gson.fromJson returns null if file is empty, make a blank package
 			if (phpPackage == null) {
@@ -76,8 +76,11 @@ public class IOPackage extends ObservableModel {
 		if (builder == null) {
 			builder = new GsonBuilder()
 				.setPrettyPrinting()
-				.registerTypeAdapter(License.class, new LicenseSerializer())
-				.registerTypeAdapter(Versions.class, new VersionsSerializer())
+				.registerTypeAdapter(License.class, License.getSerializer())
+				.registerTypeAdapter(Support.class, Support.getSerializer())
+				.registerTypeAdapter(Persons.class, Persons.getSerializer())
+				.registerTypeAdapter(Dependencies.class, Dependencies.getSerializer())
+				.registerTypeAdapter(Versions.class, Versions.getSerializer())
 				.create();
 		}
 		return builder;

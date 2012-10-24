@@ -1,6 +1,14 @@
 package org.getcomposer;
 
-public class Support extends ObservableModel implements SupportInterface {
+import org.getcomposer.serialization.SupportSerializer;
+
+/**
+ * Represents a support section of a composer package.
+ * 
+ * @see http://getcomposer.org/doc/04-schema.md#support
+ * @author Thomas Gossmann <gos.si>
+ */
+public class Support extends ObservableModel implements Cloneable {
 
 	private String email;
 	private String issues;
@@ -10,6 +18,8 @@ public class Support extends ObservableModel implements SupportInterface {
 	private String source;
 	
 	/**
+	 * Returns the email
+	 * 
 	 * @return the email
 	 */
 	public String getEmail() {
@@ -17,13 +27,19 @@ public class Support extends ObservableModel implements SupportInterface {
 	}
 	
 	/**
+	 * Sets the email
+	 * 
 	 * @param email the email to set
+	 * @return this
 	 */
-	public void setEmail(String email) {
+	public Support setEmail(String email) {
 		firePropertyChange("email", this.email, this.email = email);
+		return this;
 	}
 	
 	/**
+	 * Returns the issues
+	 * 
 	 * @return the issues
 	 */
 	public String getIssues() {
@@ -31,13 +47,19 @@ public class Support extends ObservableModel implements SupportInterface {
 	}
 	
 	/**
+	 * Sets the issues
+	 * 
 	 * @param issues the issues to set
+	 * @return this
 	 */
-	public void setIssues(String issues) {
+	public Support setIssues(String issues) {
 		firePropertyChange("issues", this.issues, this.issues = issues);
+		return this;
 	}
 	
 	/**
+	 * Returns the forum
+	 * 
 	 * @return the forum
 	 */
 	public String getForum() {
@@ -45,13 +67,19 @@ public class Support extends ObservableModel implements SupportInterface {
 	}
 	
 	/**
+	 * Sets the forum
+	 * 
 	 * @param forum the forum to set
+	 * @return this
 	 */
-	public void setForum(String forum) {
+	public Support setForum(String forum) {
 		firePropertyChange("forum", this.forum, this.forum = forum);
+		return this;
 	}
 	
 	/**
+	 * Returns the wiki
+	 * 
 	 * @return the wiki
 	 */
 	public String getWiki() {
@@ -59,13 +87,19 @@ public class Support extends ObservableModel implements SupportInterface {
 	}
 	
 	/**
+	 * Sets the wiki
+	 * 
 	 * @param wiki the wiki to set
+	 * @return this
 	 */
-	public void setWiki(String wiki) {
+	public Support setWiki(String wiki) {
 		firePropertyChange("wiki", this.wiki, this.wiki = wiki);
+		return this;
 	}
 	
 	/**
+	 * Returns the irc
+	 * 
 	 * @return the irc
 	 */
 	public String getIrc() {
@@ -73,13 +107,19 @@ public class Support extends ObservableModel implements SupportInterface {
 	}
 	
 	/**
+	 * Sets the irc
+	 * 
 	 * @param irc the irc to set
+	 * @return this
 	 */
-	public void setIrc(String irc) {
+	public Support setIrc(String irc) {
 		firePropertyChange("irc", this.irc, this.irc = irc);
+		return this;
 	}
 	
 	/**
+	 * Returns the source
+	 * 
 	 * @return the source
 	 */
 	public String getSource() {
@@ -87,9 +127,29 @@ public class Support extends ObservableModel implements SupportInterface {
 	}
 	
 	/**
+	 * Sets the source
+	 * 
 	 * @param source the source to set
+	 * @return this
 	 */
-	public void setSource(String source) {
+	public Support setSource(String source) {
 		firePropertyChange("source", this.source, this.source = source);
+		return this;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	public Support clone() {
+		try {
+			return (Support)super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
+	}
+	
+	public static Object getSerializer() {
+		return new SupportSerializer();
 	}
 }

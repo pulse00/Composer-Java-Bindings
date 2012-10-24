@@ -1,36 +1,33 @@
 package org.getcomposer;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.getcomposer.collection.IterableJsonMap;
+import org.getcomposer.serialization.MapSerializer;
 
-public class Versions extends ObservableModel {
-	
-	private Map<String, PackageInterface> versions;
-	
+
+/**
+ * Represents a version property in a composer package or version collection
+ * in a composer repository or packagist package.
+ * 
+ * @see http://getcomposer.org/doc/04-schema.md#version
+ * @see http://getcomposer.org/doc/05-repositories.md#packages
+ * @author Thomas Gossmann <gos.si>
+ *
+ */
+public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
+
 	public Versions() {
-		versions = new HashMap<String, PackageInterface>();
+		super(ComposerPackage.class);
 	}
 	
-	public PackageInterface getVersion(String version) {
-		if (versions.containsKey(version)) {
-			return versions.get(version);
-		}
-		return null;
-	}
-	
+	/**
+	 * Returns the most recent version
+	 * @return
+	 */
 	public String getDefaultVersion() {
-		return versions.keySet().iterator().next();
+		return (String)collection.entrySet().iterator().next().getKey();
 	}
-	
-	public boolean has(String version) {
-		return versions.containsKey(version);
-	}
-	
-	public int size() {
-		return versions.size();
-	}
-	
-	public void add(String version, PackageInterface phpPackage) {
-		versions.put(version, phpPackage);
+
+	public static Object getSerializer() {
+		return new MapSerializer<Versions, ComposerPackage>();
 	}
 }
