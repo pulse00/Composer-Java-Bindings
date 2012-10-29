@@ -1,7 +1,7 @@
-package org.getcomposer;
+package org.getcomposer.collection;
 
-import org.getcomposer.collection.IterableJsonMap;
-import org.getcomposer.serialization.MapSerializer;
+import org.getcomposer.ComposerPackage;
+import org.getcomposer.internal.serialization.MapSerializer;
 
 
 /**
@@ -24,7 +24,7 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 	 * @return
 	 */
 	public String getDefaultVersion() {
-		return (String)collection.entrySet().iterator().next().getKey();
+		return (String)properties.entrySet().iterator().next().getKey();
 	}
 
 	public static Object getSerializer() {

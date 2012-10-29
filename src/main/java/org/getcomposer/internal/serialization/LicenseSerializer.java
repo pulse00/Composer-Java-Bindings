@@ -5,12 +5,12 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package org.getcomposer.serialization;
+package org.getcomposer.internal.serialization;
 
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Type;
 
-import org.getcomposer.License;
+import org.getcomposer.collection.License;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -34,14 +34,8 @@ public class LicenseSerializer implements JsonDeserializer<License>, JsonSeriali
 
 		License license = new License();
 
-		if (element instanceof JsonArray) {
-			for (JsonElement item : (JsonArray)element) {
-				license.add(item.getAsString());
-			}
-		} else if (type instanceof GenericArrayType) { 
-			JsonArray jsonArray = element.getAsJsonArray();
-
-			for (JsonElement item : jsonArray) {
+		if (element.isJsonArray()) {
+			for (JsonElement item : element.getAsJsonArray()) {
 				license.add(item.getAsString());
 			}
 		} else {

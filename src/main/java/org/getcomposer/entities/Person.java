@@ -1,4 +1,5 @@
-package org.getcomposer;
+package org.getcomposer.entities;
+
 
 /**
  * Represents a person entry in a composer package that is used in authors 
@@ -8,12 +9,7 @@ package org.getcomposer;
  * @author Thomas Gossmann <gos.si>
  *
  */
-public class Person extends ObservableModel implements Cloneable {
-	
-	private String name;
-	private String email;
-	private String homepage;
-	private String role; 
+public class Person extends GenericEntity implements Cloneable {
 
 	/**
 	 * Creates an empty person
@@ -27,7 +23,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @param name
 	 */
 	public Person(String name) {
-		this.name = name;
+		set("name", name);
 	}
 
 	/**
@@ -36,7 +32,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @return
 	 */
 	public String getInitString() {
-		return String.format("%s <%s>", name, email);
+		return String.format("%s <%s>", get("name"), get("email"));
 	}
 
 	/**
@@ -45,7 +41,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return getAsString("name");
 	}
 
 	/**
@@ -55,7 +51,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @return this
 	 */
 	public Person setName(String name) {
-		firePropertyChange("name", this.name, this.name = name);
+		set("name", name);
 		return this;
 	}
 
@@ -65,7 +61,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @return the email
 	 */
 	public String getEmail() {
-		return email;
+		return getAsString("email");
 	}
 
 	/**
@@ -75,7 +71,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @return this
 	 */
 	public Person setEmail(String email) {
-		firePropertyChange("email", this.email, this.email = email);
+		set("email", email);
 		return this;
 	}
 
@@ -85,7 +81,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @return the homepage
 	 */
 	public String getHomepage() {
-		return homepage;
+		return getAsString("homepage");
 	}
 
 	/**
@@ -95,7 +91,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @return this
 	 */
 	public Person setHomepage(String homepage) {
-		firePropertyChange("homepage", this.homepage, this.homepage = homepage);
+		set("homepage", homepage);
 		return this;
 	}
 
@@ -105,7 +101,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @return the role
 	 */
 	public String getRole() {
-		return role;
+		return getAsString("role");
 	}
 
 	/**
@@ -115,7 +111,7 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @return this
 	 */
 	public Person setRole(String role) {
-		firePropertyChange("role", this.role, this.role = role);
+		set("role", role);
 		return this;
 	}
 	
@@ -124,10 +120,6 @@ public class Person extends ObservableModel implements Cloneable {
 	 * @see java.lang.Object#clone()
 	 */
 	public Person clone() {
-		try {
-			return (Person)super.clone();
-		} catch (CloneNotSupportedException e) {
-			return null;
-		}
+		return (Person)super.clone();
 	}
 }

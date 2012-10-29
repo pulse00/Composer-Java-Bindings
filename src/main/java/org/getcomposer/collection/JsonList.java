@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<V> {
 	
-	protected List<V> collection = new ArrayList<V>();
+	protected List<V> values = new ArrayList<V>();
 
 	protected JsonList(Type type) {
 		super(type);
@@ -15,10 +15,10 @@ public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<
 	
 	/*
 	 * (non-Javadoc)
-	 * @see org.getcomposer.collection.JsonCollection#size()
+	 * @see org.getcomposer.values.JsonCollection#size()
 	 */
 	public int size() {
-		return collection.size();
+		return values.size();
 	}
 	
 	/**
@@ -28,34 +28,40 @@ public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<
 	 * @return the dependency
 	 */
 	public V get(int index) {
-		return collection.get(index);
+		return values.get(index);
 	}
 	
 	/**
-	 * Adds an item to this collection
+	 * Adds an value to this values
 	 * 
-	 * @param item the new item
+	 * @param value the new value
 	 */
-	public void add(V item) {
-		@SuppressWarnings("unchecked")
-		List<V> oldCollection = (List<V>) ((ArrayList<V>)collection).clone();
-		collection.add(item);
-		firePropertyChange("collection", oldCollection, collection);
+	@SuppressWarnings("unchecked")
+	public <T> T add(V value) {
+		List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
+		values.add(value);
+		firePropertyChange("values", oldValues, values);
+		return (T) this;
 	}
 	
 	/**
-	 * Removes an item from this collection
+	 * Removes an value from this values
 	 * 
-	 * @param item the item to remove
+	 * @param value the value to remove
 	 */
-	public void remove(V item) {
-		@SuppressWarnings("unchecked")
-		List<V> oldCollection = (List<V>) ((ArrayList<V>)collection).clone();
-		collection.remove(item);
-		firePropertyChange("dependencies", oldCollection, collection);
+	@SuppressWarnings("unchecked")
+	public <T> T remove(V value) {
+		List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
+		values.remove(value);
+		firePropertyChange("values", oldValues, values);
+		return (T) this;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Iterable#iterator()
+	 */
 	public Iterator<V> iterator() {
-		return collection.iterator();
+		return values.iterator();
 	}
 }

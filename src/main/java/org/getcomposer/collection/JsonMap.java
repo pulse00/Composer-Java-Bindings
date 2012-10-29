@@ -7,65 +7,69 @@ import java.util.Map;
 
 public abstract class JsonMap<C, V> extends JsonCollection<V> {
 
-	protected Map<String, V> collection = new HashMap<String, V>();
+	protected Map<String, V> properties = new HashMap<String, V>();
 	
-	protected JsonMap(Type type) {
+	public JsonMap(Type type) {
 		super(type);
 	}
 	
 	/*
 	 * (non-Javadoc)
-	 * @see org.getcomposer.collection.JsonCollection#size()
+	 * @see org.getcomposer.properties.JsonCollection#size()
 	 */
 	public int size() {
-		return collection.size();
+		return properties.size();
 	}
 	
 	/**
-	 * Returns whether a key is present in this collection
+	 * Returns whether the given property is present.
 	 * 
-	 * @param key the key
-	 * @return
+	 * @param property the property to look for
+	 * @return <ul>
+	 * 	<li><code>true</code> property present</li>
+	 * 	<li><code>false</code> property not present</li>
+	 * </ul>
 	 */
-	public boolean has(String key) {
-		return collection.containsKey(key);
+	public boolean has(String property) {
+		return properties.containsKey(property);
 	}
 	
 	/**
-	 * Returns the object
+	 * Returns the property value.
 	 * 
-	 * @param the key
-	 * @return the object
+	 * @param property the property
+	 * @return the value
 	 */
-	public V get(String key) {
-		return collection.get(key);
+	public V get(String property) {
+		return properties.get(property);
 	}
 	
 	/**
-	 * Adds a new dependency to this collection
+	 * Sets a new value for the given property.
 	 * 
-	 * @param key the key
-	 * @param item the item
+	 * @param property the property
+	 * @param value the new value
 	 * @return this
 	 */
 	@SuppressWarnings("unchecked")
-	public C add(String key, V item) {
-		Map<String, V> oldCollection = (Map<String, V>) ((HashMap<String, V>)collection).clone();
-		collection.put(key, item);
-		firePropertyChange("collection", oldCollection, collection);
-		return (C)this;
+	public C set(String property, V value) {
+		Object oldValue = properties.get(property);
+		properties.put(property, value);
+		firePropertyChange(property, oldValue, value);
+		return (C) this;
 	}
 	
 	/**
-	 * Removes an item from this collection
+	 * Removes the given property.
 	 * 
-	 * @param key the key
+	 * @param property the property
+	 * @return this
 	 */
 	@SuppressWarnings("unchecked")
-	public C remove(String key) {
-		Map<String, V> oldCollection = (Map<String, V>) ((HashMap<String, V>)collection).clone();
-		collection.remove(key);
-		firePropertyChange("collection", oldCollection, collection);
+	public C remove(String property) {
+		Map<String, V> oldProperties = (Map<String, V>) ((HashMap<String, V>)properties).clone();
+		properties.remove(property);
+		firePropertyChange("properties", oldProperties, properties);
 		return (C)this;
 	}
 

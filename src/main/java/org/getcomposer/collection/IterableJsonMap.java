@@ -11,7 +11,7 @@ public abstract class IterableJsonMap<C, V> extends JsonMap<C, V> implements Ite
 	}
 
 	public Iterator<Entry<String, V>> iterator() {
-		return collection.entrySet().iterator();
+		return properties.entrySet().iterator();
 	}
 
 

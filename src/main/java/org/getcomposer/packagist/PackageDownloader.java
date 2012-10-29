@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import org.getcomposer.ComposerPackage;
+import org.getcomposer.RepositoryPackage;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -22,7 +23,7 @@ public class PackageDownloader extends Downloader {
 		super(packageName);
 	}
 
-	public ComposerPackage getPackage() throws IOException {
+	public RepositoryPackage getPackage() throws IOException {
 		if (!url.endsWith(".json")) {
 			url += ".json";
 		}
@@ -32,12 +33,8 @@ public class PackageDownloader extends Downloader {
 		JsonReader jsonReader = new JsonReader(reader);
 
 		Gson gson = ComposerPackage.getBuilder();
-		Package pack = gson.fromJson(jsonReader, Package.class);
-		return pack.phpPackage;
+		RepositoryPackage pack = gson.fromJson(jsonReader, RepositoryPackage.class);
+		return pack;
 
-	}
-
-	public static class Package {
-		public ComposerPackage phpPackage;
 	}
 }

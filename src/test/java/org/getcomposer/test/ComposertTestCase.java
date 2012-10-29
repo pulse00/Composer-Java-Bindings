@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.getcomposer.ComposerPackage;
-import org.getcomposer.Person;
+import org.getcomposer.entities.Person;
 
 import junit.framework.TestCase;
 

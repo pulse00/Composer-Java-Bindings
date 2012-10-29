@@ -1,4 +1,4 @@
-package org.getcomposer.serialization;
+package org.getcomposer.internal.serialization;
 
 import java.lang.reflect.Type;
 
@@ -35,7 +35,7 @@ public class ListSerializer<C extends JsonList, V> implements JsonDeserializer<C
 			C list = cls.newInstance();
             
             for (JsonElement item : json.getAsJsonArray()) {
-				list.add((V) context.deserialize(item, list.getType()));
+				list.add((V) context.deserialize(item, list.getValueType()));
 			}
 			
 			return list;

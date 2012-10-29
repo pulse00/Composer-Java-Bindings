@@ -3,7 +3,7 @@ package org.getcomposer.repositories;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-public class VcsRepository extends AbstractRepository {
+public class VcsRepository extends Repository {
 
 	public VcsRepository() {
 		super("vcs");

@@ -1,4 +1,4 @@
-package org.getcomposer;
+package org.getcomposer.entities;
 
 /**
  * Represents a dependency entry in require or require-dev
@@ -8,42 +8,53 @@ package org.getcomposer;
  * @author Thomas Gossmann <gos.si>
  *
  */
-public class Dependency extends ObservableModel {
+public class Dependency extends GenericEntity {
 
-	private String name;
-	private String version;
-	
 	/**
+	 * Returns the name.
+	 * 
 	 * @return the name
 	 */
 	public String getName() {
-		return name;
+		return getAsString("name");
 	}
 	
 	/**
+	 * Sets the name.
+	 * 
 	 * @param name the name to set
 	 * @return this
 	 */
 	public Dependency setName(String name) {
-		firePropertyChange("name", this.name, this.name = name);
+		set("name", name);
 		return this;
 	}
 	
 	/**
+	 * Returns the version.
+	 * 
 	 * @return the version
 	 */
 	public String getVersion() {
-		return version;
+		return getAsString("version");
 	}
 	
 	/**
+	 * Sets the version.
+	 * 
 	 * @param version the version to set
 	 * @return this
 	 */
 	public Dependency setVersion(String version) {
-		firePropertyChange("version", this.version, this.version = version);
+		set("version", version);
 		return this;
 	}
 	
-	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	public Dependency clone() {
+		return (Dependency)super.clone();
+	}
 }

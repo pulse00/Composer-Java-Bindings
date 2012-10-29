@@ -1,6 +1,4 @@
-package org.getcomposer;
-
-import org.getcomposer.serialization.SupportSerializer;
+package org.getcomposer.entities;
 
 /**
  * Represents a support section of a composer package.
@@ -8,132 +6,126 @@ import org.getcomposer.serialization.SupportSerializer;
  * @see http://getcomposer.org/doc/04-schema.md#support
  * @author Thomas Gossmann <gos.si>
  */
-public class Support extends ObservableModel implements Cloneable {
+public class Support extends GenericEntity implements Cloneable {
 
-	private String email;
-	private String issues;
-	private String forum;
-	private String wiki;
-	private String irc;
-	private String source;
-	
 	/**
-	 * Returns the email
+	 * Returns the email.
 	 * 
 	 * @return the email
 	 */
 	public String getEmail() {
-		return email;
+//		System.out.println("Supprt.getEmail " + get("email").));
+		return getAsString("email");
 	}
 	
 	/**
-	 * Sets the email
+	 * Sets the email.
 	 * 
 	 * @param email the email to set
 	 * @return this
 	 */
 	public Support setEmail(String email) {
-		firePropertyChange("email", this.email, this.email = email);
+		set("email", email);
 		return this;
 	}
 	
 	/**
-	 * Returns the issues
+	 * Returns the issues.
 	 * 
 	 * @return the issues
 	 */
 	public String getIssues() {
-		return issues;
+		return getAsString("issues");
 	}
 	
 	/**
-	 * Sets the issues
+	 * Sets the issues.
 	 * 
 	 * @param issues the issues to set
 	 * @return this
 	 */
 	public Support setIssues(String issues) {
-		firePropertyChange("issues", this.issues, this.issues = issues);
+		set("issues", issues);
 		return this;
 	}
 	
 	/**
-	 * Returns the forum
+	 * Returns the forum.
 	 * 
 	 * @return the forum
 	 */
 	public String getForum() {
-		return forum;
+		return getAsString("forum");
 	}
 	
 	/**
-	 * Sets the forum
+	 * Sets the forum.
 	 * 
 	 * @param forum the forum to set
 	 * @return this
 	 */
 	public Support setForum(String forum) {
-		firePropertyChange("forum", this.forum, this.forum = forum);
+		set("forum", forum);
 		return this;
 	}
 	
 	/**
-	 * Returns the wiki
+	 * Returns the wiki.
 	 * 
 	 * @return the wiki
 	 */
 	public String getWiki() {
-		return wiki;
+		return getAsString("wiki");
 	}
 	
 	/**
-	 * Sets the wiki
+	 * Sets the wiki.
 	 * 
 	 * @param wiki the wiki to set
 	 * @return this
 	 */
 	public Support setWiki(String wiki) {
-		firePropertyChange("wiki", this.wiki, this.wiki = wiki);
+		set("wiki", wiki);
 		return this;
 	}
 	
 	/**
-	 * Returns the irc
+	 * Returns the irc.
 	 * 
 	 * @return the irc
 	 */
 	public String getIrc() {
-		return irc;
+		return getAsString("irc");
 	}
 	
 	/**
-	 * Sets the irc
+	 * Sets the irc.
 	 * 
 	 * @param irc the irc to set
 	 * @return this
 	 */
 	public Support setIrc(String irc) {
-		firePropertyChange("irc", this.irc, this.irc = irc);
+		set("irc", irc);
 		return this;
 	}
 	
 	/**
-	 * Returns the source
+	 * Returns the source.
 	 * 
 	 * @return the source
 	 */
 	public String getSource() {
-		return source;
+		return getAsString("source");
 	}
 	
 	/**
-	 * Sets the source
+	 * Sets the source.
 	 * 
 	 * @param source the source to set
 	 * @return this
 	 */
 	public Support setSource(String source) {
-		firePropertyChange("source", this.source, this.source = source);
+		set("source", source);
 		return this;
 	}
 	
@@ -142,14 +134,6 @@ public class Support extends ObservableModel implements Cloneable {
 	 * @see java.lang.Object#clone()
 	 */
 	public Support clone() {
-		try {
-			return (Support)super.clone();
-		} catch (CloneNotSupportedException e) {
-			return null;
-		}
-	}
-	
-	public static Object getSerializer() {
-		return new SupportSerializer();
+		return (Support)super.clone();
 	}
 }

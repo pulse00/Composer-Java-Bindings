@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  ******************************************************************************/
-package org.getcomposer.serialization;
+package org.getcomposer.internal.serialization;
 
 import java.lang.reflect.Field;
 

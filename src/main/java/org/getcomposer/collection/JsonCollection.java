@@ -1,9 +1,8 @@
 package org.getcomposer.collection;
 
 import java.lang.reflect.Type;
-import java.util.Collection;
 
-import org.getcomposer.ObservableModel;
+import org.getcomposer.Entity;
 
 /**
  * Represents a dependency section of a composer package, either require or
@@ -13,19 +12,17 @@ import org.getcomposer.ObservableModel;
  * @see http://getcomposer.org/doc/04-schema.md#require-dev
  * @author Thomas Gossmann <gos.si>
  */
-public abstract class JsonCollection<V> extends ObservableModel {
-
-	protected Collection<V> collection;
+public abstract class JsonCollection<V> extends Entity {
 	
+	private Type valueType;
 	
-	private Type type;
-	
-	protected JsonCollection(Type type) {
-		this.type = type;
+	public JsonCollection(Type type) {
+		super();
+		this.valueType = type;
 	}
 	
-	public Type getType() {
-		return type;
+	public Type getValueType() {
+		return valueType;
 	}
 	
 	/**

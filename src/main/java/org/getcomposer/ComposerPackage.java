@@ -7,12 +7,20 @@
  ******************************************************************************/
 package org.getcomposer;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import org.getcomposer.repositories.PackageRepository;
+import org.getcomposer.collection.Dependencies;
+import org.getcomposer.collection.License;
+import org.getcomposer.collection.Persons;
+import org.getcomposer.collection.Repositories;
+import org.getcomposer.entities.Autoload;
+import org.getcomposer.entities.Config;
+import org.getcomposer.entities.Dependency;
+import org.getcomposer.entities.Extra;
+import org.getcomposer.entities.Person;
+import org.getcomposer.entities.Support;
+import org.getcomposer.internal.serialization.ClientEntitySerializer;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -28,58 +36,32 @@ import com.google.gson.annotations.SerializedName;
  * @author Thomas Gossmann <gos.si>
  * 
  */
-public class ComposerPackage extends IOPackage {
+public class ComposerPackage extends AbstractPackage {
 
-	private String name;
-	private String type;
-	private String description;
-	private String homepage;
-	private String minimumStability = ComposerConstants.STABILITIES[0];
 	private Dependencies require = new Dependencies();
+	private Repositories repositories = new Repositories();
 
 	@SerializedName("require-dev")
 	private Dependencies requireDev = new Dependencies();
 	private Autoload autoload;
-	
-	@SerializedName("target-dir")
-	private String targetDir;
-	private String version;
-	private String versionNormalized;
+
 	private Support support = new Support();
 	private License license = new License();
 	private String[] keywords;
-	private Versions versions = new Versions();
+	
 	private Persons authors = new Persons();
-	private Persons maintainers = new Persons();
+	
+	private Extra extra = new Extra();
+	private Config config = new Config();
+	
 
 	public ComposerPackage() {
-		String[] listener = new String[] {
-				"require", 
-				"requireDev", 
-				"versions", 
-				"authors", 
-				"maintainers"};
+		super();
+	}
 
-		for (String prop : listener) {
-			listen(prop);
-		}
-	}
-	
-	private void listen(final String prop) {
-		try {
-			ObservableModel obj = (ObservableModel)this.getClass().getDeclaredField(prop).get(this);
-			obj.addPropertyChangeListener(new PropertyChangeListener() {
-				public void propertyChange(PropertyChangeEvent e) {
-					firePropertyChange(prop, e.getOldValue(), e.getNewValue());
-				}
-			});
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public String toString() {
-		return name;
+		return getName();
 	}
 
 	/**
@@ -103,20 +85,7 @@ public class ComposerPackage extends IOPackage {
 		return fromJson(json, ComposerPackage.class);
 	}
 
-	/**
-	 * Deserializes a package from packagist.org, e.g.
-	 * http://packagist.org/packages/react/react.json
-	 * 
-	 * @param input
-	 * @return the deserialized package
-	 * @throws FileNotFoundException
-	 */
-	public static ComposerPackage fromPackagist(File input)
-			throws FileNotFoundException {
-		
-		PackageRepository repo = PackageRepository.fromFile(input);
-		return repo.getPackage();
-	}
+
 	
 	/**
 	 * Serializes the package to json
@@ -128,102 +97,13 @@ public class ComposerPackage extends IOPackage {
 		return gson.toJson(this, ComposerPackage.class);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.getcomposer.Versions#getDefaultVersion()
-	 */
-	public String getDefaultVersion() {
-		return versions.getDefaultVersion();
-	}
-
-	/**
-	 *
-	 * Returns the package name suitable for passing it to
-	 * "composer.phar require"
-	 *
-	 * @param version
-	 * @return String the package/version combination
-	 * @throws Exception
-	 */
-	public String getPackageName(String version) throws Exception {
-		if (!this.versions.has(version)) {
-			throw new Exception("Invalid version " + version + " for package "
-					+ name);
-		}
-
-		return String.format("%s:%s", name, version);
-	}
-
-
-	/**
-	 * Returns the name
-	 * 
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-	
-	/**
-	 * Sets the name
-	 * 
-	 * @param name the name to set
-	 * @return this
-	 */
-	public ComposerPackage setName(String name) {
-		firePropertyChange("name", this.name, this.name = name);
-		return this;
-	}
-
-
-	/**
-	 * Returns the type
-	 * 
-	 * @return the type
-	 */
-	public String getType() {
-		return type;
-	}
-	
-	/**
-	 * Sets the type
-	 * 
-	 * @param type the type to set
-	 * @return this
-	 */
-	public ComposerPackage setType(String type) {
-		firePropertyChange("type", this.type, this.type = type);
-		return this;
-	}
-
-	
-	/**
-	 * Returns the description
-	 * @return
-	 */
-	public String getDescription() {
-		return description;
-	}
-	
-	/**
-	 * Sets the description
-	 * 
-	 * @param description the description to set
-	 * @return this
-	 */
-	public ComposerPackage setDescription(String description) {
-		firePropertyChange("description", this.description, this.description = description);
-		return this;
-	}
-
 	/**
 	 * Returns the homepage
 	 * 
 	 * @return the homepage
 	 */
 	public String getHomepage() {
-		return homepage;
+		return getAsString("homepage");
 	}
 
 	/**
@@ -233,7 +113,7 @@ public class ComposerPackage extends IOPackage {
 	 * @return this
 	 */
 	public ComposerPackage setHomepage(String homepage) {
-		firePropertyChange("homepage", this.homepage, this.homepage = homepage);
+		set("homepage", homepage);
 		return this;
 	}
 
@@ -314,7 +194,7 @@ public class ComposerPackage extends IOPackage {
 	 * @return the target-dir
 	 */
 	public String getTargetDir() {
-		return targetDir;
+		return getAsString("target-dir");
 	}
 	
 	/**
@@ -324,7 +204,7 @@ public class ComposerPackage extends IOPackage {
 	 * @return this
 	 */
 	public ComposerPackage setTargetDir(String targetDir) {
-		firePropertyChange("targetDir", this.targetDir, this.targetDir = targetDir);
+		set("target-dir", targetDir);
 		return this;
 	}
 
@@ -334,7 +214,7 @@ public class ComposerPackage extends IOPackage {
 	 * @return the version
 	 */
 	public String getVersion() {
-		return version;
+		return getAsString("version");
 	}
 	
 	/**
@@ -343,18 +223,11 @@ public class ComposerPackage extends IOPackage {
 	 * @return this
 	 */
 	public ComposerPackage setVersion(String version) {
-		firePropertyChange("version", this.version, this.version = version);
+		set("version", version);
 		return this;
 	}
 	
-	/**
-	 * Returns the versions
-	 * 
-	 * @return the versions
-	 */
-	public Versions getVersions() {
-		return versions;
-	}
+
 	
 	/**
 	 * Returns the normalized version
@@ -362,7 +235,7 @@ public class ComposerPackage extends IOPackage {
 	 * @return the normalized version
 	 */
 	public String getVersionNormalized() {
-		return versionNormalized;
+		return getAsString("version_normalized");
 	}
 
 	/**
@@ -402,7 +275,12 @@ public class ComposerPackage extends IOPackage {
 	 * @return the minimum-stability
 	 */
 	public String getMinimumStability() {
-		return minimumStability;
+		String stabi = getAsString("minimum-stability");
+		if (stabi == null) {
+			return ComposerConstants.STABILITIES[0];
+		} else {
+			return stabi;
+		}
 	}
 	
 
@@ -413,7 +291,7 @@ public class ComposerPackage extends IOPackage {
 	 * @return this
 	 */
 	public ComposerPackage setMinimumStability(String minimumStability) {
-		firePropertyChange("minimumStability", this.minimumStability, this.minimumStability = minimumStability);
+		set("minimum-stability", minimumStability);
 		return this;
 	}
 	
@@ -458,48 +336,7 @@ public class ComposerPackage extends IOPackage {
 		firePropertyChange("authors", this.authors, this.authors = authors);
 		return this;
 	}
-	
-	/**
-	 * Returns the maintainers
-	 * 
-	 * @return the maintainers
-	 */
-	public Persons getMaintainers() {
-		return maintainers;
-	}
-	
-	/**
-	 * Adds an maintainer
-	 * 
-	 * @param maintainer
-	 * @return this
-	 */
-	public ComposerPackage addMaintainer(Person maintainer) {
-		maintainers.add(maintainer);
-		return this;
-	}
-	
-	/**
-	 * Removes an maintainer
-	 * 
-	 * @param maintainer
-	 * @return this
-	 */
-	public ComposerPackage removeMaintainer(Person maintainer) {
-		maintainers.remove(maintainer);
-		return this;
-	}
 
-	/**
-	 * Sets the maintainers
-	 * 
-	 * @param maintainers
-	 * @return this
-	 */
-	public ComposerPackage setMaintainers(Persons maintainers) {
-		firePropertyChange("maintainers", this.maintainers, this.maintainers = maintainers);
-		return this;
-	}
 	
 
 	/**
@@ -522,4 +359,43 @@ public class ComposerPackage extends IOPackage {
 		return support;
 	}
 
+	/**
+	 * @return the repositories
+	 */
+	public Repositories getRepositories() {
+		return repositories;
+	}
+
+	/**
+	 * Sets the repository collection
+	 * 
+	 * @param repositories the repositories to set
+	 * @return this
+	 */
+	public ComposerPackage setRepositories(Repositories repositories) {
+		this.repositories = repositories;
+		return this;
+	}
+
+	/**
+	 * Returns the extra entity
+	 * 
+	 * @return the extra
+	 */
+	public Extra getExtra() {
+		return extra;
+	}
+	
+	/**
+	 * Returns the config entity
+	 * 
+	 * @return the config
+	 */
+	public Config getConfig() {
+		return config;
+	}
+	
+	public static Object getSerializer() {
+		return new ClientEntitySerializer<ComposerPackage>();
+	}
 }

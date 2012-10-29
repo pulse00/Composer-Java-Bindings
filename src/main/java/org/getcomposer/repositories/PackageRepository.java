@@ -3,20 +3,20 @@ package org.getcomposer.repositories;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import org.getcomposer.ComposerPackage;
+import org.getcomposer.RepositoryPackage;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PackageRepository extends AbstractRepository {
+public class PackageRepository extends Repository {
 
 	@SerializedName("package")
-	private ComposerPackage phpPackage;
+	private RepositoryPackage phpPackage;
 	
 	public PackageRepository() {
 		super("package");
 	}
 	
-	public ComposerPackage getPackage() {
+	public RepositoryPackage getPackage() {
 		return phpPackage;
 	}
 

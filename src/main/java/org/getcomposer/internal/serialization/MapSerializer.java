@@ -1,4 +1,4 @@
-package org.getcomposer.serialization;
+package org.getcomposer.internal.serialization;
 
 import java.lang.reflect.Type;
 import java.util.Iterator;
@@ -47,8 +47,8 @@ public class MapSerializer<C extends IterableJsonMap, V> implements JsonDeserial
 			Set<Entry<String, JsonElement>> items = json.getAsJsonObject().entrySet();
 			
 			for (Entry<String, JsonElement> entry : items) {
-				V value = (V) context.deserialize(entry.getValue(), map.getType());
-				map.add(entry.getKey(), value);
+				V value = (V) context.deserialize(entry.getValue(), map.getValueType());
+				map.set(entry.getKey(), value);
 			}
 			
 			return map;

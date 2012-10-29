@@ -14,6 +14,7 @@ import java.util.List;
 import junit.framework.TestCase;
 
 import org.getcomposer.ComposerPackage;
+import org.getcomposer.RepositoryPackage;
 import org.getcomposer.packagist.PackageDownloader;
 import org.getcomposer.packagist.PharDownloader;
 import org.getcomposer.packagist.SearchResultDownloader;
@@ -39,7 +40,7 @@ public class PackagistTest extends TestCase {
 		
 		try {
 			PackageDownloader downloader = new PackageDownloader("https://packagist.org/packages/react/react.json");
-			ComposerPackage resource = downloader.getPackage(); 
+			RepositoryPackage resource = downloader.getPackage(); 
 			
 			assertTrue(resource != null);
 			assertEquals("react/react", resource.getName());

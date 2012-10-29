@@ -1,7 +1,7 @@
-package org.getcomposer;
+package org.getcomposer.collection;
 
-import org.getcomposer.collection.JsonList;
-import org.getcomposer.serialization.ListSerializer;
+import org.getcomposer.entities.Person;
+import org.getcomposer.internal.serialization.ListSerializer;
 
 
 /**

@@ -1,11 +1,11 @@
-package org.getcomposer.serialization;
+package org.getcomposer.internal.serialization;
 
 import java.lang.reflect.Type;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.getcomposer.ComposerPackage;
-import org.getcomposer.Versions;
+import org.getcomposer.collection.Versions;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -22,7 +22,7 @@ public class VersionsSerializer implements JsonDeserializer<Versions> {
 		Set<Entry<String, JsonElement>> jsonVersions = json.getAsJsonObject().entrySet();
 		
 		for (Entry<String, JsonElement> entry : jsonVersions) {
-			versions.add(entry.getKey(), (ComposerPackage) context.deserialize(entry.getValue(), ComposerPackage.class));
+			versions.set(entry.getKey(), (ComposerPackage) context.deserialize(entry.getValue(), ComposerPackage.class));
 		}
 		
 		return versions;

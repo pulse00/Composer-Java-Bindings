@@ -1,11 +1,11 @@
-package org.getcomposer.serialization;
+package org.getcomposer.internal.serialization;
 
 import java.lang.reflect.Type;
 import java.util.Set;
 import java.util.Map.Entry;
 
-import org.getcomposer.Dependencies;
-import org.getcomposer.Dependency;
+import org.getcomposer.collection.Dependencies;
+import org.getcomposer.entities.Dependency;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -35,7 +35,7 @@ public class DependenciesSerializer implements JsonDeserializer<Dependencies>, J
 		Set<Entry<String, JsonElement>> items = json.getAsJsonObject().entrySet();
 		
 		for (Entry<String, JsonElement> entry : items) {
-			deps.add(entry.getKey(), (new Dependency()).setName(entry.getKey()).setVersion(entry.getValue().getAsString()));
+			deps.set(entry.getKey(), (new Dependency()).setName(entry.getKey()).setVersion(entry.getValue().getAsString()));
 		}
 		
 		return deps;

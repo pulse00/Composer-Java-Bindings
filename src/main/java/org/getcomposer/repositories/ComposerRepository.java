@@ -4,14 +4,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-import org.getcomposer.Versions;
+import org.getcomposer.collection.Versions;
+import org.getcomposer.entities.GenericEntity;
 
-public class ComposerRepository extends AbstractRepository {
+/**
+ * Represents a composer repository
+ * 
+ * @author Thomas Gossmann <gos.si>
+ *
+ */
+public class ComposerRepository extends Repository {
 
 	private Map<String, Versions> packages;
+	private GenericEntity options = new GenericEntity();
 	
 	public ComposerRepository() {
 		super("composer");
+		listen();
 	}
 	
 	public Versions getVersions(String name) {
@@ -19,6 +28,15 @@ public class ComposerRepository extends AbstractRepository {
 			return packages.get(name);
 		}
 		return null;
+	}
+	
+	/**
+	 * Returns the options entity
+	 * 
+	 * @return the options
+	 */
+	public GenericEntity getOptions() {
+		return options;
 	}
 
 	public static ComposerRepository fromFile(File input) throws FileNotFoundException {

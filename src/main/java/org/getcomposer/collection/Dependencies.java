@@ -1,12 +1,12 @@
-package org.getcomposer;
+package org.getcomposer.collection;
 
 import java.util.Iterator;
 
-import org.getcomposer.collection.JsonMap;
-import org.getcomposer.serialization.DependenciesSerializer;
+import org.getcomposer.entities.Dependency;
+import org.getcomposer.internal.serialization.DependenciesSerializer;
 
 /**
- * Represents a dependency section of a composer package, either require or
+ * Represents a dependencies collection of a composer package, either require or
  * require-dev
  * 
  * @see http://getcomposer.org/doc/04-schema.md#require
@@ -20,17 +20,17 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 	}
 	
 	/**
-	 * Adds a new dependency to this collection
+	 * Adds a new dependency.
 	 * 
 	 * @param dependency the new dependency
-	 * @return 
+	 * @return this
 	 */
 	public Dependencies add(Dependency dependency) {
-		return super.add(dependency.getName(), dependency);
+		return super.set(dependency.getName(), dependency);
 	}
 
 	/**
-	 * Removes a dependency from this collection
+	 * Removes a dependency.
 	 * 
 	 * @param dependency the dependency to remove
 	 */
@@ -40,7 +40,7 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 
 
 	public Iterator<Dependency> iterator() {
-		return (Iterator<Dependency>)collection.values().iterator();
+		return (Iterator<Dependency>)properties.values().iterator();
 	}
 
 	public static Object getSerializer() {
