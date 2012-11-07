@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import org.getcomposer.collection.Dependencies;
+import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.License;
 import org.getcomposer.collection.Persons;
 import org.getcomposer.collection.Repositories;
@@ -39,6 +40,8 @@ public class ComposerPackage extends AbstractPackage {
 
 	private Dependencies require = new Dependencies();
 	private Repositories repositories = new Repositories();
+	
+	private GenericArray bin = new GenericArray();
 
 	@SerializedName("require-dev")
 	private Dependencies requireDev = new Dependencies();
@@ -360,6 +363,15 @@ public class ComposerPackage extends AbstractPackage {
 	 */
 	public Config getConfig() {
 		return config;
+	}
+
+	/**
+	 * Returns the <code>bin</code> collection.
+	 * 
+	 * @return the <code>bin</code> collection
+	 */
+	public GenericArray getBin() {
+		return bin;
 	}
 	
 	public static Object getSerializer() {

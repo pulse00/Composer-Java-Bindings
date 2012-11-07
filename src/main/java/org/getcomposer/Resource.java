@@ -19,9 +19,7 @@ import org.getcomposer.collection.Psr0;
 import org.getcomposer.collection.Repositories;
 import org.getcomposer.collection.Versions;
 import org.getcomposer.entities.Autoload;
-import org.getcomposer.entities.Distribution;
 import org.getcomposer.entities.GenericEntity;
-import org.getcomposer.entities.Source;
 import org.getcomposer.repositories.SubversionRepository;
 
 import com.google.gson.Gson;
