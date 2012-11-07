@@ -26,7 +26,7 @@ public class Autoload extends GenericEntity {
 	private GenericArray files;
 	
 	@SerializedName("psr-0")
-	private Psr0 psr0;
+	private Psr0 psr0 = null;
 	
 	public String getPsr0Path() {
 		if (psr0 == null) {
@@ -38,6 +38,18 @@ public class Autoload extends GenericEntity {
 		return null;
 	}
 
+	public boolean hasPsr0() {
+		return psr0 != null;
+	}
+	
+	public boolean hasClassMap() {
+		return classmap != null && classmap.size() > 0;
+	}
+	
+	public boolean hasFiles() {
+		return files != null && files.size() > 0;
+	}
+	
 	public Psr0 getPsr0() {
 		return psr0;
 	}
@@ -47,7 +59,7 @@ public class Autoload extends GenericEntity {
 		return this;
 	}
 	
-	public GenericArray getClassmap() {
+	public GenericArray getClassMap() {
 		return classmap;
 	}
 	

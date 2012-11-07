@@ -10,7 +10,10 @@ package org.getcomposer.test;
 import org.getcomposer.ComposerPackage;
 import org.getcomposer.RepositoryPackage;
 import org.getcomposer.collection.Dependencies;
+import org.getcomposer.collection.GenericArray;
+import org.getcomposer.collection.Psr0;
 import org.getcomposer.collection.Repositories;
+import org.getcomposer.entities.Autoload;
 import org.getcomposer.entities.Config;
 import org.getcomposer.entities.Dependency;
 import org.getcomposer.entities.Distribution;
@@ -172,6 +175,51 @@ public class JsonParserTest extends ComposertTestCase {
 			e.printStackTrace();
 			fail();
 		}
+	}
+	
+	@Test
+	public void testAutoload() {
+		
+		try {
+			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("autoload.json"));
+			Autoload al = phpPackage.getAutoload();
+			
+			assertNotNull(al);
+			
+			// psr0 tests
+			assertTrue(al.hasPsr0());
+			Psr0 psr = al.getPsr0();
+			
+			assertEquals(4, psr.size());
+			assertEquals(1, psr.get("gossi").size());
+			assertEquals("src/", psr.get("gossi").get());
+			
+			assertEquals(2, psr.get("Monolog").size());
+			assertEquals("lib/", psr.get("Monolog").getAll().get(1));
+			
+			assertEquals(1, psr.get("UniqueGlobalClass").size());
+			assertEquals("", psr.get("UniqueGlobalClass").get());
+			
+			assertNotNull(psr.get(""));
+			assertEquals("src/", psr.get("").get());
+			
+			// classmap
+			assertTrue(al.hasClassMap());
+			GenericArray classMap = al.getClassMap();
+			
+			assertEquals(3, classMap.size());
+			
+			// files
+			assertTrue(al.hasFiles());
+			GenericArray files = al.getFiles();
+			
+			assertEquals(1, files.size());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+		
 	}
 	
 	@Test
