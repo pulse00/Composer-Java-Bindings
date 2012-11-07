@@ -4,7 +4,7 @@
 	"repositories": [
 	    {
             "type": "composer",
-            "url": "https://packages.example.com",
+            "url": "https://packagist.org/packages.json",
             "options": {
                 "ssl": {
                     "verify_peer": "true"
@@ -13,11 +13,15 @@
         },
 	    {
 	    	"type": "svn",
-	    	"url": "http://svn.example.com"
+	    	"url": "http://svn.example.com",
+	    	"trunk-path": "Trunk",
+            "branches-path": "Branches",
+            "tags-path": "Tags"
 	    },
 	    {
             "type": "pear",
-            "url": "http://pear2.php.net"
+            "url": "http://pear2.php.net",
+            "vendor-alias": "foobar"
         },
         {
             "type": "package",
@@ -34,6 +38,10 @@
                     "reference": "tags/Smarty_3_1_7/distribution/"
                 }
             }
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/Seldaek/monolog"
         }
 	]
 }

@@ -14,7 +14,6 @@ import org.getcomposer.collection.Dependencies;
 import org.getcomposer.collection.License;
 import org.getcomposer.collection.Persons;
 import org.getcomposer.collection.Repositories;
-import org.getcomposer.entities.Autoload;
 import org.getcomposer.entities.Config;
 import org.getcomposer.entities.Dependency;
 import org.getcomposer.entities.Extra;
@@ -43,7 +42,6 @@ public class ComposerPackage extends AbstractPackage {
 
 	@SerializedName("require-dev")
 	private Dependencies requireDev = new Dependencies();
-	private Autoload autoload;
 
 	private Support support = new Support();
 	private License license = new License();
@@ -85,8 +83,6 @@ public class ComposerPackage extends AbstractPackage {
 		return fromJson(json, ComposerPackage.class);
 	}
 
-
-	
 	/**
 	 * Serializes the package to json
 	 * 
@@ -179,14 +175,6 @@ public class ComposerPackage extends AbstractPackage {
 	}
 
 
-	/**
-	 * Returns the autoload section
-	 * 
-	 * @return the autoload section
-	 */
-	public Autoload getAutoload() {
-		return autoload;
-	}
 
 	/**
 	 * Returns the target-dir
@@ -207,27 +195,6 @@ public class ComposerPackage extends AbstractPackage {
 		set("target-dir", targetDir);
 		return this;
 	}
-
-	/**
-	 * Returns the version
-	 * 
-	 * @return the version
-	 */
-	public String getVersion() {
-		return getAsString("version");
-	}
-	
-	/**
-	 * Sets the version
-	 * 
-	 * @return this
-	 */
-	public ComposerPackage setVersion(String version) {
-		set("version", version);
-		return this;
-	}
-	
-
 	
 	/**
 	 * Returns the normalized version

@@ -139,7 +139,7 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	public GenericEntity getAsEntity(String property) {
 		return properties.get(property).getAsEntity();
 	}
-	
+
 	/**
 	 * Sets a new value for the given property.
 	 * 

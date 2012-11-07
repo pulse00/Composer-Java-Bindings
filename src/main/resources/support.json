@@ -4,6 +4,9 @@
 	"support": {
 		"email": "test@mail.com",
 		"irc": "irc://freenode.org/test",
-		"issues": "http://github.com/gossi/test/issues"
+		"issues": "http://github.com/gossi/test/issues",
+		"forum": "http://github.com/gossi/test/issues",
+		"wiki": "http://github.com/gossi/test/wiki",
+		"source": "http://github.com/gossi/test"
 	}
 }

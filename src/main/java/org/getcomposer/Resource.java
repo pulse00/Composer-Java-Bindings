@@ -19,7 +19,10 @@ import org.getcomposer.collection.Psr0;
 import org.getcomposer.collection.Repositories;
 import org.getcomposer.collection.Versions;
 import org.getcomposer.entities.Autoload;
+import org.getcomposer.entities.Distribution;
 import org.getcomposer.entities.GenericEntity;
+import org.getcomposer.entities.Source;
+import org.getcomposer.repositories.SubversionRepository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -102,17 +105,6 @@ public class Resource extends GenericEntity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-//				.registerTypeAdapter(License.class, License.getSerializer())
-//				.registerTypeAdapter(Persons.class, Persons.getSerializer())
-//				.registerTypeAdapter(Autoload.class, Autoload.getSerializer())
-//				.registerTypeAdapter(Psr0.class, Psr0.getSerializer())
-//				.registerTypeAdapter(Dependencies.class, Dependencies.getSerializer())
-//				.registerTypeAdapter(Repositories.class, Repositories.getSerializer())
-//				.registerTypeAdapter(Versions.class, Versions.getSerializer())
-//				.registerTypeAdapter(ComposerPackage.class, ComposerPackage.getSerializer())
-//				.registerTypeAdapter(RepositoryPackage.class, RepositoryPackage.getSerializer())
-//				.registerTypeAdapter(GenericArray.class, GenericArray.getSerializer())
-//				.registerTypeAdapter(GenericEntity.class, GenericEntity.getSerializer())
 			
 			gson = builder.create();
 		}
@@ -121,15 +113,22 @@ public class Resource extends GenericEntity {
 	
 	public static Type[] getBuilderRegistry() {
 		return new Type[] {
+			// entities
 			License.class,
-			Persons.class,
 			Autoload.class,
 			Psr0.class,
+			SubversionRepository.class,
+			ComposerPackage.class,
+			RepositoryPackage.class,
+
+			
+			// collections
+			Persons.class,
 			Dependencies.class,
 			Repositories.class,
 			Versions.class,
-			ComposerPackage.class,
-			RepositoryPackage.class,
+			
+			// generics
 			GenericArray.class,
 			GenericEntity.class
 		};

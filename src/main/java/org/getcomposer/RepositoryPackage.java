@@ -19,14 +19,14 @@ public class RepositoryPackage extends AbstractPackage {
 	}
 	
 	/**
-	 * Deserializes a package from packagist.org, e.g.
+	 * Deserializes packages from packagist.org, e.g.
 	 * http://packagist.org/packages/react/react.json
 	 * 
 	 * @param input
 	 * @return the deserialized package
 	 * @throws FileNotFoundException
 	 */
-	public static RepositoryPackage fromPackagist(File input)
+	public static RepositoryPackage fromPackageRepository(File input)
 			throws FileNotFoundException {
 		
 		PackageRepository repo = PackageRepository.fromFile(input);

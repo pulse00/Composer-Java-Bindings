@@ -17,6 +17,11 @@ public abstract class Repository extends Resource {
 		return getAsString("type");
 	}
 
+	/**
+	 * Returns the <code>url</code> property.
+	 * 
+	 * @return the <code>url</code> property
+	 */
 	public String getUrl() {
 		return getAsString("url");
 	}
