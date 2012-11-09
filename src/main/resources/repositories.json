@@ -13,10 +13,10 @@
         },
 	    {
 	    	"type": "svn",
-	    	"url": "http://svn.example.com",
-	    	"trunk-path": "Trunk",
-            "branches-path": "Branches",
-            "tags-path": "Tags"
+	    	"url": "https://svn.github.com",
+	    	"trunk-path": "trunk/",
+            "branches-path": "branches/",
+            "tags-path": "tags/"
 	    },
 	    {
             "type": "pear",

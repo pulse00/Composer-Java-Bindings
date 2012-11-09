@@ -21,11 +21,61 @@ public class ClientEntitySerializer<T extends GenericEntity> implements JsonSeri
 
 	public JsonElement serialize(T src, Type typeOfSrc,
 			JsonSerializationContext context) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		JsonObject json = new JsonObject();
+		
+		writeProperties(json, src, context);
+		
+		return json; 
+		
+		// collecting fields
+//		try {
+//			ArrayList<Field> fields = getFields(src);
+//			
+//			for (Field field : fields) {
+//				String name = getFieldName(field);
+//				field.setAccessible(true);
+//
+//				json.add(name, context.serialize(field.get(src)));
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	void writeProperties(JsonObject json, GenericEntity src, JsonSerializationContext context) {
+		GenericEntitySerializer genericSerializer = new GenericEntitySerializer();
+		genericSerializer.writeProperties(json, src, context);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	ArrayList<Field> getFields(T entity) {
+		ArrayList<Field> fields = new ArrayList<Field>();
+		Class superClass = entity.getClass();
+		
+		while (superClass != null) {
+			for (Field field : superClass.getDeclaredFields()) {
+				if (!((field.getModifiers() & Modifier.TRANSIENT) == Modifier.TRANSIENT)) {
+					fields.add(field);
+				}
+			}
+			superClass = superClass.getSuperclass();		
+		}
+		
+		return fields;
+	}
+	
+	String getFieldName(Field field) {
+		String name = field.getName();
+		for (Annotation anno : field.getAnnotations()) {
+			if (anno.annotationType() == SerializedName.class) {
+				name = ((SerializedName) anno).value();
+			}
+		}
+		return name;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public T deserialize(JsonElement json, Type typeOfT,
 			JsonDeserializationContext context) throws JsonParseException {
 		
@@ -36,26 +86,11 @@ public class ClientEntitySerializer<T extends GenericEntity> implements JsonSeri
 			JsonObject obj = json.getAsJsonObject();
 			
 			// collecting fields
-			ArrayList<Field> fields = new ArrayList<Field>();
-			Class superClass = entity.getClass();
-			
-			while (superClass != null) {
-				for (Field field : superClass.getDeclaredFields()) {
-					if (!((field.getModifiers() & Modifier.TRANSIENT) == Modifier.TRANSIENT)) {
-						fields.add(field);
-					}
-				}
-				superClass = superClass.getSuperclass();		
-			}
+			ArrayList<Field> fields = getFields(entity);
 			
 			// setting values
 			for (Field field : fields) {
-				String name = field.getName();
-				for (Annotation anno : field.getAnnotations()) {
-					if (anno.annotationType() == SerializedName.class) {
-						name = ((SerializedName) anno).value();
-					}
-				}
+				String name = getFieldName(field);
 				
 				if (obj.has(name)) {
 					field.setAccessible(true);
@@ -78,8 +113,6 @@ public class ClientEntitySerializer<T extends GenericEntity> implements JsonSeri
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
 		
 		return null;
 	}

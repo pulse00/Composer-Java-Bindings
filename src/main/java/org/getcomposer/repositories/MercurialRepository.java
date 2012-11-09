@@ -3,6 +3,8 @@ package org.getcomposer.repositories;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import org.getcomposer.internal.serialization.ClientEntitySerializer;
+
 public class MercurialRepository extends VcsRepository {
 
 	public MercurialRepository() {
@@ -15,5 +17,9 @@ public class MercurialRepository extends VcsRepository {
 	
 	public static MercurialRepository fromJson(String json) throws FileNotFoundException {
 		return fromJson(json, MercurialRepository.class);
+	}
+
+	public static Object getSerializer() {
+		return new ClientEntitySerializer<MercurialRepository>();
 	}
 }

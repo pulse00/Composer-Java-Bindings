@@ -1,25 +1,25 @@
 {
-    "name": "friendsofsymfony/user-bundle",
-    "type": "symfony-bundle",
-    "description": "Symfony FOSUserBundle",
-    "keywords": ["User management"],
-    "homepage": "http://friendsofsymfony.github.com",
+    "name": "gossi/test",
+    "type": "library",
+    "description": "really dump description",
+    "keywords": ["stub", "oop"],
+    "homepage": "http://pdt-extensions.org",
     "license": "MIT",
     "authors": [
         {
-            "name": "Christophe Coevoet",
-            "email": "stof@notk.org"
+            "name": "Robert Gründler",
+            "email": "r.gruendler@gmail.com",
+            "role": "owner"
         },
         {
-            "name": "Thibault Duplessis",
-            "email": "thibault.duplessis@gmail.com"
-        },
-        {
-            "name": "FriendsOfSymfony Community",
-            "homepage": "https://github.com/friendsofsymfony/FOSUserBundle/contributors"
+            "name": "Thomas Gossmann",
+            "homepage": "http://gos.si",
+            "role": "contributor"
         }
     ],
     "minimum-stability": "dev",
+    "target-dir": "test/",
+    
     "require": {
         "php": ">=5.3.2",
         "symfony/framework-bundle": "2.1.*",
@@ -36,7 +36,6 @@
     "autoload": {
         "psr-0": { "FOS\\UserBundle": "" }
     },
-    "target-dir": "FOS/UserBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "2.0.x-dev"

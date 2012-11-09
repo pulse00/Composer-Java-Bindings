@@ -19,8 +19,20 @@ import org.getcomposer.collection.Psr0;
 import org.getcomposer.collection.Repositories;
 import org.getcomposer.collection.Versions;
 import org.getcomposer.entities.Autoload;
+import org.getcomposer.entities.Config;
+import org.getcomposer.entities.Distribution;
+import org.getcomposer.entities.Extra;
 import org.getcomposer.entities.GenericEntity;
+import org.getcomposer.entities.Person;
+import org.getcomposer.entities.Source;
+import org.getcomposer.entities.Support;
+import org.getcomposer.repositories.ComposerRepository;
+import org.getcomposer.repositories.GitRepository;
+import org.getcomposer.repositories.MercurialRepository;
+import org.getcomposer.repositories.PackageRepository;
+import org.getcomposer.repositories.PearRepository;
 import org.getcomposer.repositories.SubversionRepository;
+import org.getcomposer.repositories.VcsRepository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -34,7 +46,7 @@ import com.google.gson.GsonBuilder;
 public class Resource extends GenericEntity {
 	
 	private transient String path;
-	private static Gson gson = null;
+	private transient static Gson gson = null;
 
 	public String getPath() {
 		return path;
@@ -112,12 +124,24 @@ public class Resource extends GenericEntity {
 	public static Type[] getBuilderRegistry() {
 		return new Type[] {
 			// entities
+			Person.class,
 			License.class,
 			Autoload.class,
 			Psr0.class,
+			Support.class,
+			Config.class,
+			Extra.class,
+			ComposerRepository.class,
+			GitRepository.class,
+			MercurialRepository.class,
+			PearRepository.class,
+			PackageRepository.class,
 			SubversionRepository.class,
+			VcsRepository.class,
 			ComposerPackage.class,
 			RepositoryPackage.class,
+			Distribution.class,
+			Source.class,
 
 			
 			// collections

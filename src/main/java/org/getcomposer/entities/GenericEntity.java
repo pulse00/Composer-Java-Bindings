@@ -19,7 +19,7 @@ import org.getcomposer.internal.serialization.GenericEntitySerializer;
  */
 public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implements Cloneable {
 
-	private Map<String, PropertyChangeListener> listeners = new HashMap<String, PropertyChangeListener>();
+	private transient Map<String, PropertyChangeListener> listeners = new HashMap<String, PropertyChangeListener>();
 	
 	/**
 	 * Creates an empty entity
@@ -87,6 +87,9 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value
 	 */
 	public GenericArray getAsArray(String property) {
+		if (!properties.containsKey(property)) {
+			properties.put(property, new GenericValue(new GenericArray()));
+		}
 		return properties.get(property).getAsArray();
 	}
 	

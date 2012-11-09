@@ -53,6 +53,31 @@ public class GenericValue {
 	}
 	
 	/**
+	 * Returns whether the property is a boolean.
+	 * 
+	 * @return <ul>
+	 * 	<li><code>true</code> property is a boolean</li>
+	 * 	<li><code>false</code> property is not a boolean</li>
+	 * </ul>
+	 */
+	public boolean isBoolean() {
+		return value instanceof Boolean;
+	}
+	
+	
+	/**
+	 * Returns whether the property is a number.
+	 * 
+	 * @return <ul>
+	 * 	<li><code>true</code> property is a number</li>
+	 * 	<li><code>false</code> property is not a number</li>
+	 * </ul>
+	 */
+	public boolean isNumber() {
+		return value instanceof Number;
+	}
+	
+	/**
 	 * Returns the value.
 	 * 
 	 * @return the value
@@ -85,7 +110,10 @@ public class GenericValue {
 	 * @return the value as boolean
 	 */
 	public boolean getAsBoolean() {
-		return Boolean.parseBoolean((String)value);
+		if (value instanceof String) {
+			return Boolean.parseBoolean((String)value);
+		}
+		return (Boolean)value;
 	}
 	
 	/**
@@ -104,6 +132,15 @@ public class GenericValue {
 	 */
 	public float getAsFloat() {
 		return Float.valueOf((String)value);
+	}
+
+	/**
+	 * Returns the value as number.
+	 * 
+	 * @return the value as number
+	 */
+	public Number getAsNumber() {
+		return (Number)value;
 	}
 	
 	/**

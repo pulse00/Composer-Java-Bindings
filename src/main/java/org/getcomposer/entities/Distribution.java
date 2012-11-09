@@ -1,5 +1,7 @@
 package org.getcomposer.entities;
 
+import org.getcomposer.internal.serialization.ClientEntitySerializer;
+
 /**
  * Represents a <code>dist</code> entity in a package
  * 
@@ -29,4 +31,7 @@ public class Distribution extends Storage {
 		return this;
 	}
 
+	public static Object getSerializer() {
+		return new ClientEntitySerializer<Distribution>();
+	}
 }

@@ -3,7 +3,7 @@ package org.getcomposer.collection;
 import org.getcomposer.internal.serialization.GenericArraySerializer;
 
 
-public class GenericArray extends JsonList<Object> {
+public class GenericArray extends JsonList<Object>  implements Iterable<Object> {
 
 	public GenericArray() {
 		super(Object.class);

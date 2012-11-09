@@ -1,11 +1,13 @@
 package org.getcomposer.repositories;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.getcomposer.collection.Versions;
 import org.getcomposer.entities.GenericEntity;
+import org.getcomposer.internal.serialization.ExtendedClientEntitySerializer;
 
 /**
  * Represents a composer repository
@@ -45,5 +47,9 @@ public class ComposerRepository extends Repository {
 	
 	public static ComposerRepository fromJson(String json) throws FileNotFoundException {
 		return fromJson(json, ComposerRepository.class);
+	}
+
+	public static Object getSerializer() {
+		return new ExtendedClientEntitySerializer<ComposerRepository>();
 	}
 }

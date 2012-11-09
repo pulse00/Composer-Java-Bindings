@@ -3,10 +3,10 @@
 	"description": "this is to test the support",
 	"support": {
 		"email": "test@mail.com",
-		"irc": "irc://freenode.org/test",
-		"issues": "http://github.com/gossi/test/issues",
-		"forum": "http://github.com/gossi/test/issues",
-		"wiki": "http://github.com/gossi/test/wiki",
-		"source": "http://github.com/gossi/test"
+		"irc": "irc://freenode.org/pdt",
+		"issues": "https://github.com/pulse00/Composer-Java-Bindings/issues",
+		"forum": "https://groups.google.com/forum/?fromgroups=#!forum/pdt-extensions-platform",
+		"wiki": "https://github.com/pdt-eg/Core-Plugin/wiki",
+		"source": "https://github.com/pulse00/Composer-Java-Bindings"
 	}
 }

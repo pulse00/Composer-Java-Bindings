@@ -2,8 +2,8 @@
 	"name": "gossi/test",
 	"description": "this is to test the config",
 	"config": {
-		"vendor-dir": "vend0r",
-		"bin-dir": "b1n",
+		"vendor-dir": "vendor/",
+		"bin-dir": "bin/",
 		"process-timeout": "3000",
 		"github-protocols": ["git", "http"],
 		"notify-on-install": "true"

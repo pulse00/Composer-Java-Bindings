@@ -10,21 +10,8 @@ package org.getcomposer.test;
 import org.getcomposer.ComposerPackage;
 import org.getcomposer.RepositoryPackage;
 import org.getcomposer.collection.Dependencies;
-import org.getcomposer.collection.GenericArray;
-import org.getcomposer.collection.Psr0;
-import org.getcomposer.collection.Repositories;
-import org.getcomposer.entities.Autoload;
 import org.getcomposer.entities.Config;
 import org.getcomposer.entities.Dependency;
-import org.getcomposer.entities.Distribution;
-import org.getcomposer.entities.GenericEntity;
-import org.getcomposer.entities.Source;
-import org.getcomposer.entities.Support;
-import org.getcomposer.repositories.ComposerRepository;
-import org.getcomposer.repositories.PackageRepository;
-import org.getcomposer.repositories.PearRepository;
-import org.getcomposer.repositories.SubversionRepository;
-import org.getcomposer.repositories.VcsRepository;
 import org.junit.Test;
 
 public class JsonParserTest extends ComposertTestCase {
@@ -40,7 +27,7 @@ public class JsonParserTest extends ComposertTestCase {
 			assertEquals("symfony-bundle", phpPackage.getType());
 			assertEquals("Symfony FOSUserBundle", phpPackage.getDescription());
 			
-			assertEquals("User management", phpPackage.getKeywords()[0]);
+			assertEquals("User management", phpPackage.getKeywords().get(0));
 			assertEquals("http://friendsofsymfony.github.com", phpPackage.getHomepage());
 			
 			assertEquals("FOS/UserBundle", phpPackage.getTargetDir());
@@ -52,8 +39,7 @@ public class JsonParserTest extends ComposertTestCase {
 			assertEquals(1, phpPackage.getLicense().size());
 			assertEquals("MIT", phpPackage.getLicense().get(0));
 			
-			assertEquals(1, phpPackage.getKeywords().length);
-			assertEquals(1, phpPackage.getKeywords().length);
+			assertEquals(1, phpPackage.getKeywords().size());
 			
 			assertNotNull(phpPackage.getRequire());
 			assertEquals(3, phpPackage.getRequire().size());
@@ -77,27 +63,16 @@ public class JsonParserTest extends ComposertTestCase {
 	
 	@Test
 	public void testSupport() {
-		
 		try {
-			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("support.json"));
-			Support support = phpPackage.getSupport();
-
-			assertEquals("test@mail.com", support.getEmail());
-			assertEquals("irc://freenode.org/test", support.getIrc());
-			assertEquals("http://github.com/gossi/test/issues", support.getIssues());
-			assertEquals("http://github.com/gossi/test/issues", support.getForum());
-			assertEquals("http://github.com/gossi/test/wiki", support.getWiki());
-			assertEquals("http://github.com/gossi/test", support.getSource());
+			doTestSupport(ComposerPackage.fromFile(loadFile("support.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
-		
 	}
 	
 	@Test
 	public void testConfig() {
-		
 		try {
 			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("config.json"));
 			Config config = phpPackage.getConfig();
@@ -112,65 +87,11 @@ public class JsonParserTest extends ComposertTestCase {
 			e.printStackTrace();
 			fail();
 		}
-		
 	}
 	
 	public void testRepositories() {
 		try {
-			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("repositories.json"));
-			Repositories repos = phpPackage.getRepositories();
-
-			assertNotNull(repos);
-			assertTrue(repos.get(0) instanceof ComposerRepository);
-			assertTrue(repos.get(1) instanceof SubversionRepository);
-			assertTrue(repos.get(2) instanceof PearRepository);
-			assertTrue(repos.get(3) instanceof PackageRepository);
-			assertTrue(repos.get(4) instanceof VcsRepository);
-			
-			// composer repository
-			ComposerRepository composer = (ComposerRepository)repos.get(0);
-			assertTrue(composer.getOptions() instanceof GenericEntity);
-			
-			GenericEntity options = composer.getOptions();
-			assertTrue(options.has("ssl"));
-			assertTrue(options.isEntity("ssl"));
-			
-			GenericEntity ssl = options.getAsEntity("ssl");
-			assertTrue(ssl.has("verify_peer"));
-			assertTrue(ssl.getAsBoolean("verify_peer"));
-			
-			// subversion repository
-			SubversionRepository subversion = (SubversionRepository)repos.get(1);
-			assertNotNull(subversion.getTrunkPath());
-			assertNotNull(subversion.getBranchesPath());
-			assertNotNull(subversion.getTagsPath());
-			
-			// pear repository
-			PearRepository pear = (PearRepository)repos.get(2);
-			assertNotNull(pear.getVendorAlias());
-			assertEquals("foobar", pear.getVendorAlias());
-			
-			// package repository
-			PackageRepository pkgRepo = (PackageRepository)repos.get(3);
-			assertNotNull(pkgRepo);
-			
-			RepositoryPackage pkg = pkgRepo.getPackage();
-			assertNotNull(pkg);
-			
-			assertEquals("smarty/smarty", pkg.getName());
-			assertEquals("3.1.7", pkg.getVersion());
-			
-			assertNotNull(pkg.getDist());
-			assertTrue(pkg.getDist() instanceof Distribution);
-			assertEquals("http://www.smarty.net/files/Smarty-3.1.7.zip", pkg.getDist().getUrl());
-			assertEquals("zip", pkg.getDist().getType());
-			
-			assertNotNull(pkg.getSource());
-			assertTrue(pkg.getSource() instanceof Source);
-			assertEquals("http://smarty-php.googlecode.com/svn/", pkg.getSource().getUrl());
-			assertEquals("svn", pkg.getSource().getType());
-			assertEquals("tags/Smarty_3_1_7/distribution/", pkg.getSource().getReference());
-			
+			doTestRepositories(ComposerPackage.fromFile(loadFile("repositories.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -179,47 +100,12 @@ public class JsonParserTest extends ComposertTestCase {
 	
 	@Test
 	public void testAutoload() {
-		
 		try {
-			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("autoload.json"));
-			Autoload al = phpPackage.getAutoload();
-			
-			assertNotNull(al);
-			
-			// psr0 tests
-			assertTrue(al.hasPsr0());
-			Psr0 psr = al.getPsr0();
-			
-			assertEquals(4, psr.size());
-			assertEquals(1, psr.get("gossi").size());
-			assertEquals("src/", psr.get("gossi").get());
-			
-			assertEquals(2, psr.get("Monolog").size());
-			assertEquals("lib/", psr.get("Monolog").getAll().get(1));
-			
-			assertEquals(1, psr.get("UniqueGlobalClass").size());
-			assertEquals("", psr.get("UniqueGlobalClass").get());
-			
-			assertNotNull(psr.get(""));
-			assertEquals("src/", psr.get("").get());
-			
-			// classmap
-			assertTrue(al.hasClassMap());
-			GenericArray classMap = al.getClassMap();
-			
-			assertEquals(3, classMap.size());
-			
-			// files
-			assertTrue(al.hasFiles());
-			GenericArray files = al.getFiles();
-			
-			assertEquals(1, files.size());
-			
+			doTestAutoload(ComposerPackage.fromFile(loadFile("autoload.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
-		
 	}
 	
 	@Test

@@ -5,12 +5,43 @@ import org.junit.Test;
 
 public class JsonWriterTest extends ComposertTestCase {
 
+	private ComposerPackage phpPackage;
+	private String json;
+
+	
+	
+	/*
+	 * would be better in a @BeforeClass as so, this does not work for me
+	 */
+	public void setUp() {
+		phpPackage = createDummyPackage();
+		json = phpPackage.toJson();
+		
+	}
+	
 	@Test
 	public void testToJson() {
-		ComposerPackage phpPackage = createDummyPackage();
-
-		String json = phpPackage.toJson();
 		assertNotNull(json);
 		System.out.println(json);
+	}
+	
+	@Test
+	public void testAutoload() {
+		doTestAutoload(ComposerPackage.fromJson(json));
+	}
+	
+	@Test
+	public void testConfig() {
+		doTestConfig(ComposerPackage.fromJson(json));
+	}
+	
+	@Test
+	public void testSupport() {
+		doTestSupport(ComposerPackage.fromJson(json));
+	}
+
+	@Test
+	public void testRepositories() {
+		doTestRepositories(ComposerPackage.fromJson(json));
 	}
 }

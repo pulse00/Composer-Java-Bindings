@@ -3,6 +3,8 @@ package org.getcomposer.repositories;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import org.getcomposer.internal.serialization.ClientEntitySerializer;
+
 public class VcsRepository extends Repository {
 
 	public VcsRepository() {
@@ -19,5 +21,9 @@ public class VcsRepository extends Repository {
 
 	public static VcsRepository fromJson(String json) throws FileNotFoundException {
 		return fromJson(json, VcsRepository.class);
+	}
+	
+	public static Object getSerializer() {
+		return new ClientEntitySerializer<VcsRepository>();
 	}
 }

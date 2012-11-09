@@ -14,7 +14,7 @@ import org.getcomposer.Entity;
  */
 public abstract class JsonCollection<V> extends Entity {
 	
-	private Type valueType;
+	private transient Type valueType;
 	
 	public JsonCollection(Type type) {
 		super();

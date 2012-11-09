@@ -10,7 +10,7 @@ import org.getcomposer.internal.serialization.ListSerializer;
  * @author Thomas Gossmann <gos.si>
  *
  */
-public class Persons extends JsonList<Person> {
+public class Persons extends JsonList<Person> implements Iterable<Person> {
 
 	public Persons() {
 		super(Person.class);

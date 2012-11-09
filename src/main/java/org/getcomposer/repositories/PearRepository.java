@@ -3,6 +3,8 @@ package org.getcomposer.repositories;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import org.getcomposer.internal.serialization.ExtendedClientEntitySerializer;
+
 import com.google.gson.annotations.SerializedName;
 
 public class PearRepository extends Repository {
@@ -39,5 +41,9 @@ public class PearRepository extends Repository {
 	
 	public static PearRepository fromJson(String json) throws FileNotFoundException {
 		return fromJson(json, PearRepository.class);
+	}
+	
+	public static Object getSerializer() {
+		return new ExtendedClientEntitySerializer<PearRepository>();
 	}
 }

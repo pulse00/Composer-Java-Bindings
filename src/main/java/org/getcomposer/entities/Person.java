@@ -1,5 +1,7 @@
 package org.getcomposer.entities;
 
+import org.getcomposer.internal.serialization.ClientEntitySerializer;
+
 
 /**
  * Represents a person entry in a composer package that is used in authors 
@@ -121,5 +123,9 @@ public class Person extends GenericEntity implements Cloneable {
 	 */
 	public Person clone() {
 		return (Person)super.clone();
+	}
+	
+	public static Object getSerializer() {
+		return new ClientEntitySerializer<Person>();
 	}
 }

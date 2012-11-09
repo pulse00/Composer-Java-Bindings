@@ -7,7 +7,6 @@
  ******************************************************************************/
 package org.getcomposer.internal.serialization;
 
-import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Type;
 
 import org.getcomposer.collection.License;
@@ -25,6 +24,7 @@ import com.google.gson.JsonSerializer;
  * 
  * @see http://getcomposer.org/doc/04-schema.md#license
  * @author Robert Gruendler <r.gruendler@gmail.com>
+ * @author Thomas Gossmann <gos.si>
  * 
  */
 public class LicenseSerializer implements JsonDeserializer<License>, JsonSerializer<License> {
@@ -60,6 +60,5 @@ public class LicenseSerializer implements JsonDeserializer<License>, JsonSeriali
 			return licenses;
 		}
 	}
-	
 	
 }

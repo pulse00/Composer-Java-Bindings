@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import org.getcomposer.collection.Persons;
 import org.getcomposer.collection.Versions;
 import org.getcomposer.entities.Person;
-import org.getcomposer.internal.serialization.ClientEntitySerializer;
+import org.getcomposer.internal.serialization.ExtendedClientEntitySerializer;
 import org.getcomposer.repositories.PackageRepository;
 
 public class RepositoryPackage extends AbstractPackage {
@@ -121,6 +121,6 @@ public class RepositoryPackage extends AbstractPackage {
 	
 	
 	public static Object getSerializer() {
-		return new ClientEntitySerializer<RepositoryPackage>();
+		return new ExtendedClientEntitySerializer<RepositoryPackage>();
 	}
 }

@@ -9,7 +9,7 @@ package org.getcomposer.entities;
 
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.Psr0;
-import org.getcomposer.internal.serialization.ClientEntitySerializer;
+import org.getcomposer.internal.serialization.AutoloadSerializer;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -22,11 +22,11 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Autoload extends GenericEntity {
 	
-	private GenericArray classmap;
-	private GenericArray files;
+	private GenericArray classmap = new GenericArray();
+	private GenericArray files = new GenericArray();
 	
 	@SerializedName("psr-0")
-	private Psr0 psr0 = null;
+	private Psr0 psr0 = new Psr0();
 	
 	public String getPsr0Path() {
 		if (psr0 == null) {
@@ -69,6 +69,6 @@ public class Autoload extends GenericEntity {
 	
 	
 	public static Object getSerializer() {
-		return new ClientEntitySerializer<Autoload>();
+		return new AutoloadSerializer();
 	}
 }

@@ -7,7 +7,7 @@ import java.util.Map;
 
 public abstract class JsonMap<C, V> extends JsonCollection<V> {
 
-	protected Map<String, V> properties = new HashMap<String, V>();
+	protected transient Map<String, V> properties = new HashMap<String, V>();
 	
 	public JsonMap(Type type) {
 		super(type);

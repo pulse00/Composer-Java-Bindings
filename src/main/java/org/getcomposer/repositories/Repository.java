@@ -30,4 +30,8 @@ public abstract class Repository extends Resource {
 		set("url", url);
 	}
 	
+//	public static Object getSerializer() {
+//		return new RepositorySerializer();
+//	}
+
 }

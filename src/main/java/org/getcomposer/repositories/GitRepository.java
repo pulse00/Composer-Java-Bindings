@@ -3,6 +3,8 @@ package org.getcomposer.repositories;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import org.getcomposer.internal.serialization.ClientEntitySerializer;
+
 public class GitRepository extends VcsRepository {
 
 	public GitRepository() {
@@ -15,5 +17,9 @@ public class GitRepository extends VcsRepository {
 	
 	public static GitRepository fromJson(String json) throws FileNotFoundException {
 		return fromJson(json, GitRepository.class);
+	}
+
+	public static Object getSerializer() {
+		return new ClientEntitySerializer<GitRepository>();
 	}
 }

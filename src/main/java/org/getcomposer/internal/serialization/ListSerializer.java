@@ -15,13 +15,22 @@ import com.google.gson.JsonSerializer;
 @SuppressWarnings("rawtypes")
 public class ListSerializer<C extends JsonList, V> implements JsonDeserializer<C>, JsonSerializer<C> {
 
+	@SuppressWarnings("unchecked")
 	public JsonElement serialize(C src, Type typeOfSrc,
 			JsonSerializationContext context) {
 		JsonArray json = new JsonArray();
 		
-		for (Object item : src) {
-			json.add(context.serialize(item));
-		}
+		try {
+			Class<C> cls = (Class<C>) typeOfSrc;
+			C list = cls.newInstance();
+			
+			for (Object item : src) {
+				json.add(context.serialize(item, list.getValueType()));
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
 		return json;
 	}
 

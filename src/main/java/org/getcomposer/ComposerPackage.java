@@ -20,7 +20,7 @@ import org.getcomposer.entities.Dependency;
 import org.getcomposer.entities.Extra;
 import org.getcomposer.entities.Person;
 import org.getcomposer.entities.Support;
-import org.getcomposer.internal.serialization.ClientEntitySerializer;
+import org.getcomposer.internal.serialization.ComposerPackageSerializer;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -41,14 +41,14 @@ public class ComposerPackage extends AbstractPackage {
 	private Dependencies require = new Dependencies();
 	private Repositories repositories = new Repositories();
 	
-	private GenericArray bin = new GenericArray();
+//	private GenericArray bin = new GenericArray();
 
 	@SerializedName("require-dev")
 	private Dependencies requireDev = new Dependencies();
 
 	private Support support = new Support();
 	private License license = new License();
-	private String[] keywords;
+//	private GenericArray keywords = new GenericArray();
 	
 	private Persons authors = new Persons();
 	
@@ -222,20 +222,8 @@ public class ComposerPackage extends AbstractPackage {
 	 *
 	 * @return the keywords
 	 */
-	public String[] getKeywords() {
-		return keywords;
-	}
-	
-	
-	/**
-	 * Sets the keywords
-	 * 
-	 * @param keywords the keywords to set
-	 * @return this
-	 */
-	public ComposerPackage setKeywords(String[] keywords) {
-		firePropertyChange("keywords", this.keywords, this.keywords = keywords);
-		return this;
+	public GenericArray getKeywords() {
+		return getAsArray("keywords");
 	}
 
 
@@ -371,10 +359,10 @@ public class ComposerPackage extends AbstractPackage {
 	 * @return the <code>bin</code> collection
 	 */
 	public GenericArray getBin() {
-		return bin;
+		return getAsArray("bin");
 	}
 	
 	public static Object getSerializer() {
-		return new ClientEntitySerializer<ComposerPackage>();
+		return new ComposerPackageSerializer();
 	}
 }
