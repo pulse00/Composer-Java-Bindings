@@ -1,7 +1,7 @@
 package org.getcomposer.collection;
 
-import org.getcomposer.internal.serialization.RepositoriesSerializer;
 import org.getcomposer.repositories.Repository;
+import org.getcomposer.serialization.RepositoriesSerializer;
 
 /**
  * Represents a repositories collection of a composer package

@@ -9,7 +9,8 @@ Export-Package: org.getcomposer,
  org.getcomposer.collection,
  org.getcomposer.entities,
  org.getcomposer.packagist,
- org.getcomposer.repositories
+ org.getcomposer.repositories,
+ org.getcomposer.serialization
 Require-Bundle: org.junit,
  com.google.gson,
  org.apache.httpcomponents.httpclient,

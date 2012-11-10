@@ -3,7 +3,7 @@ package org.getcomposer.collection;
 import java.util.Iterator;
 
 import org.getcomposer.entities.Dependency;
-import org.getcomposer.internal.serialization.DependenciesSerializer;
+import org.getcomposer.serialization.DependenciesSerializer;
 
 /**
  * Represents a dependencies collection of a composer package, either require or

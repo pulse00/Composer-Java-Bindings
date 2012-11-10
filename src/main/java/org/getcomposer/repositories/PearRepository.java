@@ -3,7 +3,7 @@ package org.getcomposer.repositories;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import org.getcomposer.internal.serialization.ExtendedClientEntitySerializer;
+import org.getcomposer.serialization.ExtendedClientEntitySerializer;
 
 import com.google.gson.annotations.SerializedName;
 

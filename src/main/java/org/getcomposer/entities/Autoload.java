@@ -9,7 +9,7 @@ package org.getcomposer.entities;
 
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.Psr0;
-import org.getcomposer.internal.serialization.AutoloadSerializer;
+import org.getcomposer.serialization.AutoloadSerializer;
 
 import com.google.gson.annotations.SerializedName;
 

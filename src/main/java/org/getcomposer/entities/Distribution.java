@@ -1,6 +1,6 @@
 package org.getcomposer.entities;
 
-import org.getcomposer.internal.serialization.ClientEntitySerializer;
+import org.getcomposer.serialization.ClientEntitySerializer;
 
 /**
  * Represents a <code>dist</code> entity in a package

@@ -9,7 +9,7 @@ import java.util.Map;
 import org.getcomposer.GenericValue;
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.JsonMap;
-import org.getcomposer.internal.serialization.GenericEntitySerializer;
+import org.getcomposer.serialization.GenericEntitySerializer;
 
 /**
  * Represents a generic entity.

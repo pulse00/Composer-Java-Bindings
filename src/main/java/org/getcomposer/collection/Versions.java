@@ -1,7 +1,7 @@
 package org.getcomposer.collection;
 
 import org.getcomposer.ComposerPackage;
-import org.getcomposer.internal.serialization.MapSerializer;
+import org.getcomposer.serialization.MapSerializer;
 
 
 /**

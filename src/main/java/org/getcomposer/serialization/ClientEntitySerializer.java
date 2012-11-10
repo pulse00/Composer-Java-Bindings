@@ -1,4 +1,4 @@
-package org.getcomposer.internal.serialization;
+package org.getcomposer.serialization;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

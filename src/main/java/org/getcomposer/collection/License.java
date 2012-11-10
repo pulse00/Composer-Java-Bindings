@@ -7,7 +7,7 @@
  ******************************************************************************/
 package org.getcomposer.collection;
 
-import org.getcomposer.internal.serialization.LicenseSerializer;
+import org.getcomposer.serialization.LicenseSerializer;
 
 /**
  * Represents the license property of a composer package

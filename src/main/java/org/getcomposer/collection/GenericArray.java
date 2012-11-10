@@ -1,6 +1,6 @@
 package org.getcomposer.collection;
 
-import org.getcomposer.internal.serialization.GenericArraySerializer;
+import org.getcomposer.serialization.GenericArraySerializer;
 
 
 public class GenericArray extends JsonList<Object>  implements Iterable<Object> {

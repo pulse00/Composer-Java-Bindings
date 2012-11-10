@@ -8,9 +8,9 @@ import java.io.Reader;
 import org.getcomposer.collection.Persons;
 import org.getcomposer.collection.Versions;
 import org.getcomposer.entities.Person;
-import org.getcomposer.internal.serialization.ExtendedClientEntitySerializer;
 import org.getcomposer.packagist.PackagistDownloader;
 import org.getcomposer.repositories.PackageRepository;
+import org.getcomposer.serialization.ExtendedClientEntitySerializer;
 
 public class RepositoryPackage extends AbstractPackage {
 	

@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.getcomposer.entities.Dependency;
 import org.getcomposer.entities.Namespace;
-import org.getcomposer.internal.serialization.Psr0Serializer;
+import org.getcomposer.serialization.Psr0Serializer;
 
 /**
  * Represents a psr-0 entity in a composer package.

@@ -1,7 +1,7 @@
 package org.getcomposer.collection;
 
 import org.getcomposer.entities.Person;
-import org.getcomposer.internal.serialization.ListSerializer;
+import org.getcomposer.serialization.ListSerializer;
 
 
 /**

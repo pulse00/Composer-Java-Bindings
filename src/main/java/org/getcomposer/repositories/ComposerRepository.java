@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.getcomposer.collection.Versions;
 import org.getcomposer.entities.GenericEntity;
-import org.getcomposer.internal.serialization.ExtendedClientEntitySerializer;
+import org.getcomposer.serialization.ExtendedClientEntitySerializer;
 
 /**
  * Represents a composer repository

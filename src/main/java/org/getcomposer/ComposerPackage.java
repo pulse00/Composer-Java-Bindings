@@ -20,7 +20,7 @@ import org.getcomposer.entities.Dependency;
 import org.getcomposer.entities.Extra;
 import org.getcomposer.entities.Person;
 import org.getcomposer.entities.Support;
-import org.getcomposer.internal.serialization.ComposerPackageSerializer;
+import org.getcomposer.serialization.ComposerPackageSerializer;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;

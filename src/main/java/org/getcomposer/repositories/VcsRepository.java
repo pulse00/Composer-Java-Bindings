@@ -3,7 +3,7 @@ package org.getcomposer.repositories;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import org.getcomposer.internal.serialization.ClientEntitySerializer;
+import org.getcomposer.serialization.ClientEntitySerializer;
 
 public class VcsRepository extends Repository {
 
