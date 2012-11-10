@@ -14,6 +14,15 @@ public class GenericArray extends JsonList<Object>  implements Iterable<Object> 
 		return (GenericArray)super.add(value);
 	}
 
+	/**
+	 * Returns the values as an array of strings
+	 * 
+	 * @return
+	 */
+	public String[] toStringArray() {
+		return (String[]) values.toArray();
+	}
+	
 	public static Object getSerializer() {
 		return new GenericArraySerializer();
 	}

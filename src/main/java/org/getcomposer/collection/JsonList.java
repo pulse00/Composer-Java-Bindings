@@ -57,6 +57,11 @@ public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<
 		return (T) this;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public V[] toArray() {
+		return (V[]) values.toArray();
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Iterable#iterator()
