@@ -78,7 +78,7 @@ public class Resource extends GenericEntity {
 		return fromReader(new StringReader(json), classOfT);
 	}
 	
-	private static <T> T fromReader(Reader input, Class<T> classOfT) {
+	protected static <T> T fromReader(Reader input, Class<T> classOfT) {
 		T phpPackage = null;
 		try {
 			Gson gson = getBuilder();

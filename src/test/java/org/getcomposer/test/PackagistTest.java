@@ -15,7 +15,6 @@ import junit.framework.TestCase;
 
 import org.getcomposer.ComposerPackage;
 import org.getcomposer.RepositoryPackage;
-import org.getcomposer.packagist.PackageDownloader;
 import org.getcomposer.packagist.PharDownloader;
 import org.getcomposer.packagist.SearchResultDownloader;
 import org.junit.Test;
@@ -39,18 +38,13 @@ public class PackagistTest extends TestCase {
 	public void testPackage() {
 		
 		try {
-			PackageDownloader downloader = new PackageDownloader("https://packagist.org/packages/react/react.json");
-			RepositoryPackage resource = downloader.getPackage(); 
+			RepositoryPackage resource = RepositoryPackage.fromPackagist("react/react");
 			
 			assertTrue(resource != null);
 			assertEquals("react/react", resource.getName());
 			assertEquals("Nuclear Reactor written in PHP.", resource.getDescription());
 			assertNotNull(resource.getVersions());
 			assertTrue(resource.getVersions().size() > 1);
-			
-			
-			downloader = new PackageDownloader("https://packagist.org/packages/zendframework/zendframework.json");
-			resource = downloader.getPackage();
 			
 		} catch (Exception e) {
 			e.printStackTrace();

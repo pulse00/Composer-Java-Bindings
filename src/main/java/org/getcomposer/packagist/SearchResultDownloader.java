@@ -16,10 +16,9 @@ import java.util.List;
 
 import org.getcomposer.ComposerConstants;
 import org.getcomposer.ComposerPackage;
-import org.getcomposer.ComposerPackage;
+import org.getcomposer.Resource;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 public class SearchResultDownloader extends Downloader {
@@ -61,7 +60,7 @@ public class SearchResultDownloader extends Downloader {
 		InputStream resource = downloadResource();
 		InputStreamReader reader = new InputStreamReader(resource);
 		JsonReader jsonReader = new JsonReader(reader);
-		Gson gson = new GsonBuilder().create();
+		Gson gson = Resource.getBuilder();
 
 		return gson.fromJson(jsonReader, SearchResult.class);
 	}

@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 
 import org.getcomposer.ComposerPackage;
 import org.getcomposer.RepositoryPackage;
+import org.getcomposer.repositories.PackageRepository;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -33,8 +34,8 @@ public class PackageDownloader extends Downloader {
 		JsonReader jsonReader = new JsonReader(reader);
 
 		Gson gson = ComposerPackage.getBuilder();
-		RepositoryPackage pack = gson.fromJson(jsonReader, RepositoryPackage.class);
-		return pack;
+		PackageRepository repo = gson.fromJson(jsonReader, PackageRepository.class);
+		return repo.getPackage();
 
 	}
 }

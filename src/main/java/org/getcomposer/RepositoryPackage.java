@@ -2,11 +2,14 @@ package org.getcomposer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.Reader;
 
 import org.getcomposer.collection.Persons;
 import org.getcomposer.collection.Versions;
 import org.getcomposer.entities.Person;
 import org.getcomposer.internal.serialization.ExtendedClientEntitySerializer;
+import org.getcomposer.packagist.PackagistDownloader;
 import org.getcomposer.repositories.PackageRepository;
 
 public class RepositoryPackage extends AbstractPackage {
@@ -32,6 +35,38 @@ public class RepositoryPackage extends AbstractPackage {
 		PackageRepository repo = PackageRepository.fromFile(input);
 		return repo.getPackage();
 	}
+	
+	/**
+	 * Deserializes packages from packagist.org, e.g.
+	 * http://packagist.org/packages/react/react.json
+	 * 
+	 * @param input
+	 * @return the deserialized package
+	 * @throws FileNotFoundException
+	 */
+	public static RepositoryPackage fromPackageRepository(Reader input)
+			throws FileNotFoundException {
+		
+		PackageRepository repo = PackageRepository.fromReader(input, PackageRepository.class);
+		return repo.getPackage();
+	}
+	
+	/**
+	 * Deserializes packages from packagist.org, e.g.
+	 * http://packagist.org/packages/Symfony/Router.json
+	 * 
+	 * @param name the package name, such as Symfony/Router
+	 * @return the deserialized package
+	 * @throws IOException
+	 */
+	public static RepositoryPackage fromPackagist(String name)
+			throws IOException {
+		
+		PackagistDownloader downloader = new PackagistDownloader(name);
+		
+		return downloader.getPackage();
+	}
+	
 	
 	/**
 	 * Returns the versions
