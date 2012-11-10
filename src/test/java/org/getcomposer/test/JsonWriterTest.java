@@ -26,6 +26,16 @@ public class JsonWriterTest extends ComposertTestCase {
 	}
 	
 	@Test
+	public void testComposerPackage() {
+		doTestComposerPackage(ComposerPackage.fromJson(json));
+	}
+	
+	@Test
+	public void testDependencies() {
+		doTestDependencies(ComposerPackage.fromJson(json));
+	}
+	
+	@Test
 	public void testAutoload() {
 		doTestAutoload(ComposerPackage.fromJson(json));
 	}

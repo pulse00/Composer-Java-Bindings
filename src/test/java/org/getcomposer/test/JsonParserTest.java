@@ -9,9 +9,6 @@ package org.getcomposer.test;
 
 import org.getcomposer.ComposerPackage;
 import org.getcomposer.RepositoryPackage;
-import org.getcomposer.collection.Dependencies;
-import org.getcomposer.entities.Config;
-import org.getcomposer.entities.Dependency;
 import org.junit.Test;
 
 public class JsonParserTest extends ComposertTestCase {
@@ -19,45 +16,19 @@ public class JsonParserTest extends ComposertTestCase {
 	@Test
 	public void testComposerPackage() {
 		try {
-			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("composer.json"));
-			
-			assertNotNull(phpPackage);
-			
-			assertEquals("friendsofsymfony/user-bundle", phpPackage.getName());
-			assertEquals("symfony-bundle", phpPackage.getType());
-			assertEquals("Symfony FOSUserBundle", phpPackage.getDescription());
-			
-			assertEquals("User management", phpPackage.getKeywords().get(0));
-			assertEquals("http://friendsofsymfony.github.com", phpPackage.getHomepage());
-			
-			assertEquals("FOS/UserBundle", phpPackage.getTargetDir());
-			assertNotNull(phpPackage.getMinimumStability());
-
-			assertNotNull("Authors not NULL", phpPackage.getAuthors());
-			assertEquals(3, phpPackage.getAuthors().size());
-			
-			assertEquals(1, phpPackage.getLicense().size());
-			assertEquals("MIT", phpPackage.getLicense().get(0));
-			
-			assertEquals(1, phpPackage.getKeywords().size());
-			
-			assertNotNull(phpPackage.getRequire());
-			assertEquals(3, phpPackage.getRequire().size());
-		
-			Dependencies require = phpPackage.getRequire();
-			
-			for (Dependency dep : require) {
-				assertNotNull(dep.getName());
-				assertNotNull(dep.getVersion());
-			}
-			
-			assertNotNull(phpPackage.getRequireDev());
-			assertNotNull(phpPackage.getAutoload());
-			
-			assertEquals("PSR-0 Namespace paths count", 1, phpPackage.getAutoload().getPsr0().get("FOS\\UserBundle").getAll().size());
-			
+			doTestComposerPackage(ComposerPackage.fromFile(loadFile("composer.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testDependencies() {
+		try {
+			doTestDependencies(ComposerPackage.fromFile(loadFile("dependencies.json")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -74,15 +45,7 @@ public class JsonParserTest extends ComposertTestCase {
 	@Test
 	public void testConfig() {
 		try {
-			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("config.json"));
-			Config config = phpPackage.getConfig();
-
-			assertNotNull(config);
-			assertEquals("vend0r", config.getVendorDir());
-			assertEquals("b1n", config.getBinDir());
-			assertEquals(3000, config.getProcessTimeout());
-			assertEquals(2, config.getGithubProtocols().size());
-			assertTrue(config.getNotifyOnInstall());
+			doTestConfig(ComposerPackage.fromFile(loadFile("config.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

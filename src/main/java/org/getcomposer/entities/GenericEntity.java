@@ -39,7 +39,10 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * </ul>
 	 */
 	public boolean is(String property, Type type) {
-		return properties.get(property).is(type);
+		if (properties.containsKey(property)) {
+			return properties.get(property).is(type);
+		}
+		return false;
 	}
 	
 	/**
@@ -53,7 +56,10 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * </ul>
 	 */
 	public boolean isArray(String property) {
-		return properties.get(property).isArray();
+		if (properties.containsKey(property)) {
+			return properties.get(property).isArray();
+		}
+		return false;
 	}
 	
 	/**
@@ -67,7 +73,10 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * </ul>
 	 */
 	public boolean isEntity(String property) {
-		return properties.get(property).isEntity();
+		if (properties.containsKey(property)) {
+			return properties.get(property).isEntity();
+		}
+		return false;
 	}
 	
 	/**
@@ -100,7 +109,10 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value as string
 	 */
 	public String getAsString(String property) {
-		return properties.get(property).getAsString();
+		if (properties.containsKey(property)) {
+			return properties.get(property).getAsString();
+		}
+		return null;
 	}
 
 	/**
@@ -109,8 +121,11 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @param property the property
 	 * @return the value as boolean
 	 */
-	public boolean getAsBoolean(String property) {
-		return properties.get(property).getAsBoolean();
+	public Boolean getAsBoolean(String property) {
+		if (properties.containsKey(property)) {
+			return properties.get(property).getAsBoolean();
+		}
+		return null;
 	}
 	
 	/**
@@ -119,8 +134,11 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @param property the property
 	 * @return the value as integer
 	 */
-	public int getAsInteger(String property) {
-		return properties.get(property).getAsInteger();
+	public Integer getAsInteger(String property) {
+		if (properties.containsKey(property)) {
+			return properties.get(property).getAsInteger();
+		}
+		return null;
 	}
 	
 	/**
@@ -129,8 +147,11 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @param property the property
 	 * @return the value as double
 	 */
-	public float getAsFloat(String property) {
-		return properties.get(property).getAsFloat();
+	public Float getAsFloat(String property) {
+		if (properties.containsKey(property)) {
+			return properties.get(property).getAsFloat();
+		}
+		return null;
 	}
 	
 	/**
@@ -140,6 +161,9 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value as entity
 	 */
 	public GenericEntity getAsEntity(String property) {
+		if (!properties.containsKey(property)) {
+			properties.put(property, new GenericValue(new GenericEntity()));
+		}
 		return properties.get(property).getAsEntity();
 	}
 

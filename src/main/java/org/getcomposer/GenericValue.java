@@ -109,7 +109,7 @@ public class GenericValue {
 	 * 
 	 * @return the value as boolean
 	 */
-	public boolean getAsBoolean() {
+	public Boolean getAsBoolean() {
 		if (value instanceof String) {
 			return Boolean.parseBoolean((String)value);
 		}
@@ -121,7 +121,7 @@ public class GenericValue {
 	 * 
 	 * @return the value as integer
 	 */
-	public int getAsInteger() {
+	public Integer getAsInteger() {
 		return Integer.valueOf((String)value);
 	}
 	
@@ -130,7 +130,7 @@ public class GenericValue {
 	 * 
 	 * @return the value as float
 	 */
-	public float getAsFloat() {
+	public Float getAsFloat() {
 		return Float.valueOf((String)value);
 	}
 

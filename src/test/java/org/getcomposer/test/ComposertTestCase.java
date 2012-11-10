@@ -33,8 +33,6 @@ public abstract class ComposertTestCase extends TestCase {
 	// dummy package contents
 	protected static String NAME = "gossi/test";
 	protected static String DESCRIPTION = "really dump description";
-	protected static int AUTHOR_COUNT = 2;
-	protected static String AUTHOR_NAME = "tester";
 	protected static String[] KEYWORDS = new String[]{"stub", "oop"};
 	protected static String LICENSE = "MIT";
 	protected static String TYPE = "library";
@@ -59,6 +57,13 @@ public abstract class ComposertTestCase extends TestCase {
 	protected static String NAMESPACE_PATH2 = "lib/";
 	protected static String[] AUTOLOAD_MAP = new String[]{NAMESPACE_PATH1, NAMESPACE_PATH2, "Something.php"};
 	protected static String[] AUTOLOAD_FILES = new String[]{"src/MyLibrary/functions.php"};
+	
+	// dependencies
+	protected static String PHP = "php";
+	protected static String PHP_VERSION = ">=5.3.2";
+	protected static String PHPUNIT = "phpunit/phpunit";
+	protected static String PHPUNIT_VERSION = "3.7.9";
+	
 	
 	// config
 	protected static String BIN_DIR = "bin/";
@@ -111,19 +116,35 @@ public abstract class ComposertTestCase extends TestCase {
 		// type
 		phpPackage.setType(TYPE);
 		
-		// authors
-		for (int i = 0; i < AUTHOR_COUNT; i++) {
-			Person author = new Person();
-			author.setName(AUTHOR_NAME);
-			
-			phpPackage.addAuthor(author);	
-		}
+		// homepage
+		phpPackage.setHomepage(HOMEPAGE);
+		
+		// target-dir
+		phpPackage.setTargetDir(TARGET_DIR);
+		
+		// minimum-stability
+		phpPackage.setMinimumStability(MINIMUM_STABILITY);
 		
 		// keywords
 		GenericArray keywords = phpPackage.getKeywords();
 		for (String keyword : KEYWORDS) {
 			keywords.add(keyword);
 		}
+		
+		// authors
+		Person robert = new Person();
+		robert.setName(PERSON1);
+		robert.setEmail(PERSON1_EMAIL);
+		robert.setRole(PERSON1_ROLE);
+		
+		phpPackage.addAuthor(robert);
+		
+		Person gossi = new Person();
+		gossi.setName(PERSON2);
+		gossi.setHomepage(PERSON2_HOMEPAGE);
+		gossi.setRole(PERSON2_ROLE);
+		
+		phpPackage.addAuthor(gossi);
 		
 		// license
 		phpPackage.getLicense().add(LICENSE);
@@ -190,11 +211,10 @@ public abstract class ComposertTestCase extends TestCase {
 	
 	private void createDependencies(ComposerPackage phpPackage) {
 		Dependencies require = phpPackage.getRequire();
-		require.add((new Dependency()).setName("php").setVersion(">=5.3"));
+		require.add((new Dependency()).setName(PHP).setVersion(PHP_VERSION));
 		
 		Dependencies requireDev = phpPackage.getRequireDev();
-		requireDev.add((new Dependency()).setName("php").setVersion(">=5.3"));
-		requireDev.add((new Dependency()).setName("gossi\\test").setVersion("0.2.*"));
+		requireDev.add((new Dependency()).setName(PHPUNIT).setVersion(PHPUNIT_VERSION));
 	}
 	
 	private void createSupport(ComposerPackage phpPackage) {
@@ -264,6 +284,52 @@ public abstract class ComposertTestCase extends TestCase {
 		VcsRepository vcsRepo = new VcsRepository();
 		vcsRepo.setUrl(VCS_URL);
 		repos.add(vcsRepo);
+	}
+	
+	protected void doTestComposerPackage(ComposerPackage phpPackage) {
+		assertNotNull(phpPackage);
+		
+		assertEquals(NAME, phpPackage.getName());
+		assertEquals(TYPE, phpPackage.getType());
+		assertEquals(DESCRIPTION, phpPackage.getDescription());
+		
+		assertEquals(KEYWORDS[0], phpPackage.getKeywords().get(0));
+		assertEquals(HOMEPAGE, phpPackage.getHomepage());
+		
+		assertEquals(TARGET_DIR, phpPackage.getTargetDir());
+		assertEquals(MINIMUM_STABILITY, phpPackage.getMinimumStability());
+
+		assertNotNull("Authors not NULL", phpPackage.getAuthors());
+		assertEquals(2, phpPackage.getAuthors().size());
+		
+		Person robert = phpPackage.getAuthors().get(0);
+		assertEquals(PERSON1, robert.getName());
+		assertEquals(PERSON1_EMAIL, robert.getEmail());
+		assertEquals(PERSON1_ROLE, robert.getRole());
+		
+		Person gossi = phpPackage.getAuthors().get(1);
+		assertEquals(PERSON2, gossi.getName());
+		assertEquals(PERSON2_HOMEPAGE, gossi.getHomepage());
+		assertEquals(PERSON2_ROLE, gossi.getRole());
+		
+		assertEquals(1, phpPackage.getLicense().size());
+		assertEquals("MIT", phpPackage.getLicense().get(0));
+		
+		assertEquals(KEYWORDS.length, phpPackage.getKeywords().size());
+	}
+	
+	protected void doTestDependencies(ComposerPackage phpPackage) {
+		assertNotNull(phpPackage.getRequire());
+		assertEquals(1, phpPackage.getRequire().size());
+	
+		Dependencies require = phpPackage.getRequire();
+		
+		for (Dependency dep : require) {
+			assertNotNull(dep.getName());
+			assertNotNull(dep.getVersion());
+		}
+		
+		assertNotNull(phpPackage.getRequireDev());
 	}
 
 	protected void doTestAutoload(ComposerPackage phpPackage) {
@@ -380,6 +446,8 @@ public abstract class ComposertTestCase extends TestCase {
 		assertEquals(SMARTY_REFERENCE, pkg.getSource().getReference());
 	}
 	
+	public abstract void testComposerPackage();
+	public abstract void testDependencies();
 	public abstract void testAutoload();
 	public abstract void testSupport();
 	public abstract void testRepositories();
