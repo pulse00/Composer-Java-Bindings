@@ -20,7 +20,12 @@ public class GenericArray extends JsonList<Object>  implements Iterable<Object> 
 	 * @return
 	 */
 	public String[] toStringArray() {
-		return (String[]) values.toArray();
+		String[] arr = new String[values.size()];
+		int i = 0;
+		for (Object val : values) {
+			arr[i++] = (String) val;
+		}
+		return arr;
 	}
 	
 	public static Object getSerializer() {
