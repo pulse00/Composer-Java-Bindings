@@ -25,10 +25,10 @@ public abstract class AbstractPackage extends Resource {
 	 * @param name the new <code>name</code> value
 	 * @return this
 	 */
-	@SuppressWarnings("unchecked")
-	public <T> T setName(String name) {
+//	@SuppressWarnings("unchecked")
+	public void setName(String name) {
 		set("name", name);
-		return (T)this;
+//		return (T)this;
 	}
 
 
