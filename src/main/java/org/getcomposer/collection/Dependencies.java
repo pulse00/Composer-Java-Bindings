@@ -25,8 +25,8 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 	 * @param dependency the new dependency
 	 * @return this
 	 */
-	public Dependencies add(Dependency dependency) {
-		return super.set(dependency.getName(), dependency);
+	public void add(Dependency dependency) {
+		super.set(dependency.getName(), dependency);
 	}
 
 	/**
@@ -34,8 +34,8 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 	 * 
 	 * @param dependency the dependency to remove
 	 */
-	public Dependencies remove(Dependency dependency) {
-		return super.remove(dependency.getName());
+	public void remove(Dependency dependency) {
+		super.remove(dependency.getName());
 	}
 
 

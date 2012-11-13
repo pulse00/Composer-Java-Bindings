@@ -27,9 +27,8 @@ public class License extends JsonList<String> {
 	 * @param license
 	 * @return this
 	 */
-	@SuppressWarnings("unchecked")
-	public License add(String license) {
-		return (License)super.add(license);
+	public void add(String license) {
+		super.add(license);
 	}
 	
 	/**
@@ -37,9 +36,8 @@ public class License extends JsonList<String> {
 	 * 
 	 * @return this
 	 */
-	@SuppressWarnings("unchecked")
-	public License remove(String license) {
-		return (License)super.remove(license);
+	public void remove(String license) {
+		super.remove(license);
 	}
 
 	

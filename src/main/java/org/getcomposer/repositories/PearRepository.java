@@ -28,11 +28,9 @@ public class PearRepository extends Repository {
 	 * Sets the vendor-alias
 	 * 
 	 * @param vendorAlias the vendor-alias to set
-	 * @return this
 	 */
-	public PearRepository setVendorAlias(String vendorAlias) {
+	public void setVendorAlias(String vendorAlias) {
 		this.vendorAlias = vendorAlias;
-		return this;
 	}
 
 	public static PearRepository fromFile(File input) throws FileNotFoundException {

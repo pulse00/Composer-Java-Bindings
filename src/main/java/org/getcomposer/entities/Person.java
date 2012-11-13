@@ -50,11 +50,9 @@ public class Person extends GenericEntity implements Cloneable {
 	 * Sets the person's name
 	 * 
 	 * @param name the name to set
-	 * @return this
 	 */
-	public Person setName(String name) {
+	public void setName(String name) {
 		set("name", name);
-		return this;
 	}
 
 	/**
@@ -70,11 +68,9 @@ public class Person extends GenericEntity implements Cloneable {
 	 * Sets the person's email
 	 * 
 	 * @param email the email to set
-	 * @return this
 	 */
-	public Person setEmail(String email) {
+	public void setEmail(String email) {
 		set("email", email);
-		return this;
 	}
 
 	/**
@@ -90,11 +86,9 @@ public class Person extends GenericEntity implements Cloneable {
 	 * Sets the person's homepage
 	 * 
 	 * @param homepage the homepage to set
-	 * @return this
 	 */
-	public Person setHomepage(String homepage) {
+	public void setHomepage(String homepage) {
 		set("homepage", homepage);
-		return this;
 	}
 
 	/**
@@ -112,9 +106,8 @@ public class Person extends GenericEntity implements Cloneable {
 	 * @param role the role to set
 	 * @return this
 	 */
-	public Person setRole(String role) {
+	public void setRole(String role) {
 		set("role", role);
-		return this;
 	}
 	
 	/*

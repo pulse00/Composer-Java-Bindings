@@ -15,27 +15,24 @@ public class SubversionRepository extends VcsRepository {
 		return getAsString("trunk-path");
 	}
 	
-	public SubversionRepository setTrunkPath(String path) {
+	public void setTrunkPath(String path) {
 		set("trunk-path", path);
-		return this;
 	}
 	
 	public String getBranchesPath() {
 		return getAsString("branches-path");
 	}
 	
-	public SubversionRepository setBranchesPath(String path) {
+	public void setBranchesPath(String path) {
 		set("branches-path", path);
-		return this;
 	}
 	
 	public String getTagsPath() {
 		return getAsString("tags-path");
 	}
 	
-	public SubversionRepository setTagsPath(String path) {
+	public void setTagsPath(String path) {
 		set("tags-path", path);
-		return this;
 	}
 	
 	public static SubversionRepository fromFile(File input) throws FileNotFoundException {

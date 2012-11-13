@@ -54,10 +54,10 @@ public class Autoload extends GenericEntity {
 		return psr0;
 	}
 
-	public Autoload setPsr0(Psr0 psr0) {
-		firePropertyChange("psr-0", this.psr0, this.psr0 = psr0);
-		return this;
-	}
+//	public Autoload setPsr0(Psr0 psr0) {
+//		firePropertyChange("psr-0", this.psr0, this.psr0 = psr0);
+//		return this;
+//	}
 	
 	public GenericArray getClassMap() {
 		return classmap;

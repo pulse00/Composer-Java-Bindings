@@ -49,28 +49,24 @@ public abstract class JsonMap<C, V> extends JsonCollection<V> {
 	 * 
 	 * @param property the property
 	 * @param value the new value
-	 * @return this
 	 */
 	@SuppressWarnings("unchecked")
-	public C set(String property, V value) {
+	public void set(String property, Object value) {
 		Object oldValue = properties.get(property);
-		properties.put(property, value);
+		properties.put(property, (V)value);
 		firePropertyChange(property, oldValue, value);
-		return (C) this;
 	}
 	
 	/**
 	 * Removes the given property.
 	 * 
 	 * @param property the property
-	 * @return this
 	 */
 	@SuppressWarnings("unchecked")
-	public C remove(String property) {
+	public void remove(String property) {
 		Map<String, V> oldProperties = (Map<String, V>) ((HashMap<String, V>)properties).clone();
 		properties.remove(property);
 		firePropertyChange("properties", oldProperties, properties);
-		return (C)this;
 	}
 
 }

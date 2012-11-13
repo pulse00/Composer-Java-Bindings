@@ -126,16 +126,14 @@ public class RepositoryPackage extends AbstractPackage {
 		return this;
 	}
 
-	/**
-	 * Sets the maintainers
-	 * 
-	 * @param maintainers
-	 * @return this
-	 */
-	public RepositoryPackage setMaintainers(Persons maintainers) {
-		firePropertyChange("maintainers", this.maintainers, this.maintainers = maintainers);
-		return this;
-	}
+//	/**
+//	 * Sets the maintainers
+//	 * 
+//	 * @param maintainers
+//	 */
+//	public void setMaintainers(Persons maintainers) {
+//		firePropertyChange("maintainers", this.maintainers, this.maintainers = maintainers);
+//	}
 
 	/**
 	 * Returns the repository url
@@ -149,9 +147,8 @@ public class RepositoryPackage extends AbstractPackage {
 	/**
 	 * @param repository the repository to set
 	 */
-	public RepositoryPackage setRepository(String repository) {
+	public void setRepository(String repository) {
 		set("repository", repository);
-		return this;
 	}
 	
 	

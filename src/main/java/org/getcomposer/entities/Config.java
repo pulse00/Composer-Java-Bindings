@@ -24,11 +24,9 @@ public class Config extends GenericEntity {
 	 * Sets the <code>vendor-bin</code> property.
 	 * 
 	 * @param vendorDir the new <code>vendor-bin</code> value
-	 * @return this
 	 */
-	public Config setVendorDir(String vendorDir) {
+	public void setVendorDir(String vendorDir) {
 		set("vendor-dir", vendorDir);
-		return this;
 	}
 	
 	/**
@@ -44,11 +42,9 @@ public class Config extends GenericEntity {
 	 * Sets the <code>bin-dir</code> property.
 	 * 
 	 * @param binDir the new <code>bin-dir</code> value
-	 * @return this
 	 */
-	public Config setBinDir(String binDir) {
+	public void setBinDir(String binDir) {
 		set("bin-dir", binDir);
-		return this;
 	}
 	
 	/**
@@ -64,11 +60,9 @@ public class Config extends GenericEntity {
 	 * Sets the <code>process-timeout</code> property.
 	 * 
 	 * @param processTimeout the new <code>process-timeout</code> value
-	 * @return this
 	 */
-	public Config setProcessTimeout(int processTimeout) {
+	public void setProcessTimeout(int processTimeout) {
 		set("process-timeout", processTimeout);
-		return this;
 	}
 	
 	/**
@@ -82,7 +76,9 @@ public class Config extends GenericEntity {
 		GenericArray protocols = getAsArray("github-protocols");
 		if (protocols == null) {
 			protocols = new GenericArray();
-			protocols.add("git").add("https").add("http");
+			protocols.add("git");
+			protocols.add("https");
+			protocols.add("http");
 		}
 		return protocols;
 	}
@@ -91,11 +87,9 @@ public class Config extends GenericEntity {
 	 * Sets the <code>github-protocols</code> property.
 	 * 
 	 * @param githubProtocols the new <code>github-protocols</code> value
-	 * @return this
 	 */
-	public Config setGithubProtocols(GenericArray githubProtocols) {
+	public void setGithubProtocols(GenericArray githubProtocols) {
 		set("github-protocols", githubProtocols);
-		return this;
 	}
 	
 	/**
@@ -117,10 +111,8 @@ public class Config extends GenericEntity {
 	 * Set the <code>notify-on-install</code> property.
 	 * 
 	 * @param notifyOnInstall the new <code>notify-on-install</code> value
-	 * @return this
 	 */
-	public Config setNotifyOnInstall(boolean notifyOnInstall) {
+	public void setNotifyOnInstall(boolean notifyOnInstall) {
 		set("notify-on-install", notifyOnInstall);
-		return this;
 	}
 }

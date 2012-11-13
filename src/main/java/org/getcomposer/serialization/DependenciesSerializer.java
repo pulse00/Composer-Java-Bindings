@@ -35,7 +35,10 @@ public class DependenciesSerializer implements JsonDeserializer<Dependencies>, J
 		Set<Entry<String, JsonElement>> items = json.getAsJsonObject().entrySet();
 		
 		for (Entry<String, JsonElement> entry : items) {
-			deps.set(entry.getKey(), (new Dependency()).setName(entry.getKey()).setVersion(entry.getValue().getAsString()));
+			Dependency dep = new Dependency();
+			dep.setName(entry.getKey());
+			dep.setVersion(entry.getValue().getAsString());
+			deps.set(entry.getKey(), dep);
 		}
 		
 		return deps;

@@ -23,12 +23,9 @@ public abstract class AbstractPackage extends Resource {
 	 * Sets the <code>name</code> property.
 	 * 
 	 * @param name the new <code>name</code> value
-	 * @return this
 	 */
-//	@SuppressWarnings("unchecked")
 	public void setName(String name) {
 		set("name", name);
-//		return (T)this;
 	}
 
 
@@ -45,12 +42,9 @@ public abstract class AbstractPackage extends Resource {
 	 * Sets the <code>type</code> property.
 	 * 
 	 * @param type new <code>type</code> value
-	 * @return this
 	 */
-	@SuppressWarnings("unchecked")
-	public <T> T setType(String type) {
+	public void setType(String type) {
 		set("type", type);
-		return (T)this;
 	}
 
 	
@@ -66,12 +60,9 @@ public abstract class AbstractPackage extends Resource {
 	 * Sets the <code>description</code> property.
 	 * 
 	 * @param description the new <code>description</code> value
-	 * @return this
 	 */
-	@SuppressWarnings("unchecked")
-	public <T> T setDescription(String description) {
+	public void setDescription(String description) {
 		set("description", description);
-		return (T)this;
 	}
 	
 	/**
@@ -86,12 +77,9 @@ public abstract class AbstractPackage extends Resource {
 	/**
 	 * Sets the version
 	 * 
-	 * @return this
 	 */
-	@SuppressWarnings("unchecked")
-	public <T> T setVersion(String version) {
+	public void setVersion(String version) {
 		set("version", version);
-		return (T) this;
 	}
 	
 

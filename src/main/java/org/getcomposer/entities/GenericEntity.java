@@ -172,9 +172,19 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * 
 	 * @param property the property
 	 * @param value the new value
-	 * @return this
 	 */
-	public GenericEntity set(final String property, GenericValue value) {
+	@Override
+	public void set(String property, Object value) {
+		set(property, new GenericValue(value));
+	}
+	
+	/**
+	 * Sets a new value for the given property.
+	 * 
+	 * @param property the property
+	 * @param value the new value
+	 */
+	public void set(final String property, GenericValue value) {
 		super.set(property, value);
 		
 		// install listener to be aware of changes 
@@ -192,32 +202,17 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 				&& listeners.containsKey(property)) {
 			listeners.remove(property);
 		}
-		
-		return (GenericEntity) this;
 	}
-	
-	/**
-	 * Sets a new value for the given property.
-	 * 
-	 * @param property the property
-	 * @param value the new value
-	 * @return this
-	 */
-	public GenericEntity set(String property, Object value) {
-		set(property, new GenericValue(value));
-		return (GenericEntity) this;
-	}
+
 	
 	/**
 	 * Removes the given property.
 	 * 
 	 * @param property the property
-	 * @return this
 	 */
-	public GenericEntity remove(String property) {
+	public void remove(String property) {
 		remove(property);
 		listeners.remove(property);
-		return this;
 	}
 	
 	/*

@@ -8,11 +8,6 @@ public class GenericArray extends JsonList<Object>  implements Iterable<Object> 
 	public GenericArray() {
 		super(Object.class);
 	}
-	
-	@SuppressWarnings("unchecked")
-	public GenericArray add(Object value) {
-		return (GenericArray)super.add(value);
-	}
 
 	/**
 	 * Returns the values as an array of strings

@@ -109,11 +109,9 @@ public class ComposerPackage extends AbstractPackage {
 	 * Sets the homepage
 	 * 
 	 * @param homepage the homepage to set
-	 * @return this
 	 */
-	public ComposerPackage setHomepage(String homepage) {
+	public void setHomepage(String homepage) {
 		set("homepage", homepage);
-		return this;
 	}
 
 	/**
@@ -192,11 +190,9 @@ public class ComposerPackage extends AbstractPackage {
 	 * Sets the target-dir
 	 * 
 	 * @param targetDir the target-dir to set
-	 * @return this
 	 */
-	public ComposerPackage setTargetDir(String targetDir) {
+	public void setTargetDir(String targetDir) {
 		set("target-dir", targetDir);
-		return this;
 	}
 	
 	/**
@@ -246,11 +242,9 @@ public class ComposerPackage extends AbstractPackage {
 	 * Sets the minimum-stability property
 	 * 
 	 * @param minimumStability the minimum-stability to set
-	 * @return this
 	 */
-	public ComposerPackage setMinimumStability(String minimumStability) {
+	public void setMinimumStability(String minimumStability) {
 		set("minimum-stability", minimumStability);
-		return this;
 	}
 	
 	/**
@@ -284,29 +278,25 @@ public class ComposerPackage extends AbstractPackage {
 		return this;
 	}
 
-	/**
-	 * Sets the authors
-	 * 
-	 * @param authors
-	 * @return this
-	 */
-	public ComposerPackage setAuthors(Persons authors) {
-		firePropertyChange("authors", this.authors, this.authors = authors);
-		return this;
-	}
-
-	
-
-	/**
-	 * Sets the support section
-	 * 
-	 * @param support the support to set
-	 * @return this
-	 */
-	public ComposerPackage setSupport(Support support) {
-		firePropertyChange("support", this.support, this.support = support);
-		return this;
-	}
+//	/**
+//	 * Sets the authors
+//	 * 
+//	 * @param authors
+//	 */
+//	public void setAuthors(Persons authors) {
+//		firePropertyChange("authors", this.authors, this.authors = authors);
+//	}
+//
+//	
+//
+//	/**
+//	 * Sets the support section
+//	 * 
+//	 * @param support the support to set
+//	 */
+//	public void setSupport(Support support) {
+//		firePropertyChange("support", this.support, this.support = support);
+//	}
 
 	/**
 	 * Returns the support section
@@ -324,16 +314,14 @@ public class ComposerPackage extends AbstractPackage {
 		return repositories;
 	}
 
-	/**
-	 * Sets the repository collection
-	 * 
-	 * @param repositories the repositories to set
-	 * @return this
-	 */
-	public ComposerPackage setRepositories(Repositories repositories) {
-		this.repositories = repositories;
-		return this;
-	}
+//	/**
+//	 * Sets the repository collection
+//	 * 
+//	 * @param repositories the repositories to set
+//	 */
+//	public void setRepositories(Repositories repositories) {
+//		this.repositories = repositories;
+//	}
 
 	/**
 	 * Returns the extra entity

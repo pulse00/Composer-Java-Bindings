@@ -24,12 +24,9 @@ public abstract class Storage extends GenericEntity {
 	 * Sets the <code>url</code> property.
 	 * 
 	 * @param url the new <code>url</code> value
-	 * @return this
 	 */
-	@SuppressWarnings("unchecked")
-	public <T> T setUrl(String url) {
+	public void setUrl(String url) {
 		set("url", url);
-		return (T) this;
 	}
 	
 	/**
@@ -45,12 +42,9 @@ public abstract class Storage extends GenericEntity {
 	 * Sets the <code>type</code> property.
 	 * 
 	 * @param type the new <code>type</code> value
-	 * @return this
 	 */
-	@SuppressWarnings("unchecked")
-	public <T> T setType(String type) {
+	public void setType(String type) {
 		set("type", type);
-		return (T) this;
 	}
 	
 	/**
@@ -66,11 +60,8 @@ public abstract class Storage extends GenericEntity {
 	 * Sets the <code>reference</code> property.
 	 * 
 	 * @param type the new <code>reference</code> value
-	 * @return this
 	 */
-	@SuppressWarnings("unchecked")
-	public <T> T setReference(String reference) {
+	public void setReference(String reference) {
 		set("reference", reference);
-		return (T) this;
 	}
 }

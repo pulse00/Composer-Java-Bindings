@@ -22,11 +22,9 @@ public class Support extends GenericEntity implements Cloneable {
 	 * Sets the email.
 	 * 
 	 * @param email the email to set
-	 * @return this
 	 */
-	public Support setEmail(String email) {
+	public void setEmail(String email) {
 		set("email", email);
-		return this;
 	}
 	
 	/**
@@ -42,11 +40,9 @@ public class Support extends GenericEntity implements Cloneable {
 	 * Sets the issues.
 	 * 
 	 * @param issues the issues to set
-	 * @return this
 	 */
-	public Support setIssues(String issues) {
+	public void setIssues(String issues) {
 		set("issues", issues);
-		return this;
 	}
 	
 	/**
@@ -62,11 +58,9 @@ public class Support extends GenericEntity implements Cloneable {
 	 * Sets the forum.
 	 * 
 	 * @param forum the forum to set
-	 * @return this
 	 */
-	public Support setForum(String forum) {
+	public void setForum(String forum) {
 		set("forum", forum);
-		return this;
 	}
 	
 	/**
@@ -82,11 +76,9 @@ public class Support extends GenericEntity implements Cloneable {
 	 * Sets the wiki.
 	 * 
 	 * @param wiki the wiki to set
-	 * @return this
 	 */
-	public Support setWiki(String wiki) {
+	public void setWiki(String wiki) {
 		set("wiki", wiki);
-		return this;
 	}
 	
 	/**
@@ -102,11 +94,9 @@ public class Support extends GenericEntity implements Cloneable {
 	 * Sets the irc.
 	 * 
 	 * @param irc the irc to set
-	 * @return this
 	 */
-	public Support setIrc(String irc) {
+	public void setIrc(String irc) {
 		set("irc", irc);
-		return this;
 	}
 	
 	/**
@@ -122,11 +112,9 @@ public class Support extends GenericEntity implements Cloneable {
 	 * Sets the source.
 	 * 
 	 * @param source the source to set
-	 * @return this
 	 */
-	public Support setSource(String source) {
+	public void setSource(String source) {
 		set("source", source);
-		return this;
 	}
 	
 	/*

@@ -25,8 +25,8 @@ public class Psr0 extends JsonMap<Psr0, Namespace> implements Iterable<Namespace
 	 * @param dependency the new dependency
 	 * @return this
 	 */
-	public Psr0 add(Namespace namespace) {
-		return super.set(namespace.getNamespace(), namespace);
+	public void add(Namespace namespace) {
+		super.set(namespace.getNamespace(), namespace);
 	}
 
 	/**
@@ -34,13 +34,9 @@ public class Psr0 extends JsonMap<Psr0, Namespace> implements Iterable<Namespace
 	 * 
 	 * @param dependency the dependency to remove
 	 */
-	public Psr0 remove(Namespace namespace) {
-		return super.remove(namespace.getNamespace());
+	public void remove(Namespace namespace) {
+		super.remove(namespace.getNamespace());
 	}
-
-//	public Namespace get(String namespace) {
-//		return (Namespace) super.get(namespace);
-//	}
 	
 	public List<Namespace> getAll() {
 		return (List<Namespace>) properties.values();

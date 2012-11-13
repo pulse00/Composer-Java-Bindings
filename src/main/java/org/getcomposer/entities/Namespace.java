@@ -29,16 +29,13 @@ public class Namespace extends GenericEntity {
 	 * Sets the name.
 	 * 
 	 * @param name the name to set
-	 * @return this
 	 */
-	public Namespace setNamespace(String namespace) {
+	public void setNamespace(String namespace) {
 		set("namespace", namespace);
-		return this;
 	}
 	
-	public Namespace add(String path) {
+	public void add(String path) {
 		paths.add(path);
-		return this;
 	}
 	
 	/**
@@ -48,6 +45,10 @@ public class Namespace extends GenericEntity {
 	 */
 	public String get() {
 		return (String) paths.get(0);
+	}
+	
+	public void remove(String path) {
+		paths.remove(path);
 	}
 	
 	public GenericArray getAll() {

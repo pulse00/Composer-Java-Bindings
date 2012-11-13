@@ -23,11 +23,9 @@ public class Dependency extends GenericEntity {
 	 * Sets the name.
 	 * 
 	 * @param name the name to set
-	 * @return this
 	 */
-	public Dependency setName(String name) {
+	public void setName(String name) {
 		set("name", name);
-		return this;
 	}
 	
 	/**
@@ -43,11 +41,9 @@ public class Dependency extends GenericEntity {
 	 * Sets the version.
 	 * 
 	 * @param version the version to set
-	 * @return this
 	 */
-	public Dependency setVersion(String version) {
+	public void setVersion(String version) {
 		set("version", version);
-		return this;
 	}
 	
 	/*

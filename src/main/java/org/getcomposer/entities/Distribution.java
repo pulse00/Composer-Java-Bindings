@@ -24,11 +24,9 @@ public class Distribution extends Storage {
 	 * Sets the <code>shasum</code> property.
 	 * 
 	 * @param type the new <code>shasum</code> value
-	 * @return this
 	 */
-	public Distribution setShaSum(String shaSum) {
+	public void setShaSum(String shaSum) {
 		set("shasum", shaSum);
-		return this;
 	}
 
 	public static Object getSerializer() {

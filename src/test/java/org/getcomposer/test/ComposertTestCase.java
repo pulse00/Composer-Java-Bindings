@@ -211,10 +211,16 @@ public abstract class ComposertTestCase extends TestCase {
 	
 	private void createDependencies(ComposerPackage phpPackage) {
 		Dependencies require = phpPackage.getRequire();
-		require.add((new Dependency()).setName(PHP).setVersion(PHP_VERSION));
+		Dependency php = new Dependency();
+		php.setName(PHP);
+		php.setVersion(PHP_VERSION);
+		require.add(php);
 		
 		Dependencies requireDev = phpPackage.getRequireDev();
-		requireDev.add((new Dependency()).setName(PHPUNIT).setVersion(PHPUNIT_VERSION));
+		Dependency phpUnit = new Dependency();
+		phpUnit.setName(PHPUNIT);
+		phpUnit.setVersion(PHPUNIT_VERSION);
+		requireDev.add(phpUnit);
 	}
 	
 	private void createSupport(ComposerPackage phpPackage) {

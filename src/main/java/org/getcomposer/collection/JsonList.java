@@ -37,11 +37,10 @@ public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<
 	 * @param value the new value
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T add(V value) {
+	public void add(V value) {
 		List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
 		values.add(value);
 		firePropertyChange("values", oldValues, values);
-		return (T) this;
 	}
 	
 	/**
@@ -50,11 +49,10 @@ public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<
 	 * @param value the value to remove
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T remove(V value) {
+	public void remove(V value) {
 		List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
 		values.remove(value);
 		firePropertyChange("values", oldValues, values);
-		return (T) this;
 	}
 	
 	@SuppressWarnings("unchecked")
