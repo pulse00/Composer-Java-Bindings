@@ -35,6 +35,7 @@ public abstract class ComposertTestCase extends TestCase {
 	protected static String DESCRIPTION = "really dump description";
 	protected static String[] KEYWORDS = new String[]{"stub", "oop"};
 	protected static String LICENSE = "MIT";
+	protected static String LICENSE_EPL = "EPL";
 	protected static String TYPE = "library";
 	protected static String HOMEPAGE = "http://pdt-extensions.org";
 	protected static String MINIMUM_STABILITY = "dev";
@@ -148,6 +149,7 @@ public abstract class ComposertTestCase extends TestCase {
 		
 		// license
 		phpPackage.getLicense().add(LICENSE);
+		phpPackage.getLicense().add(LICENSE_EPL);
 		
 		// autoload
 		createAutoload(phpPackage);
@@ -318,8 +320,9 @@ public abstract class ComposertTestCase extends TestCase {
 		assertEquals(PERSON2_HOMEPAGE, gossi.getHomepage());
 		assertEquals(PERSON2_ROLE, gossi.getRole());
 		
-		assertEquals(1, phpPackage.getLicense().size());
-		assertEquals("MIT", phpPackage.getLicense().get(0));
+		assertEquals(2, phpPackage.getLicense().size());
+		assertEquals(LICENSE, phpPackage.getLicense().get(0));
+		assertEquals(LICENSE_EPL, phpPackage.getLicense().get(1));
 		
 		assertEquals(KEYWORDS.length, phpPackage.getKeywords().size());
 	}

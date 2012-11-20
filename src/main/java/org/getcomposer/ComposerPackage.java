@@ -222,7 +222,6 @@ public class ComposerPackage extends AbstractPackage {
 		return getAsArray("keywords");
 	}
 
-
 	/**
 	 * Returns the minimum-stability property
 	 * 

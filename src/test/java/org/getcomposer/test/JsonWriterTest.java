@@ -16,7 +16,6 @@ public class JsonWriterTest extends ComposertTestCase {
 	public void setUp() {
 		phpPackage = createDummyPackage();
 		json = phpPackage.toJson();
-		
 	}
 	
 	@Test
@@ -53,5 +52,12 @@ public class JsonWriterTest extends ComposertTestCase {
 	@Test
 	public void testRepositories() {
 		doTestRepositories(ComposerPackage.fromJson(json));
+	}
+	
+	@Test public void testSimplePackage() {
+		ComposerPackage pkg = new ComposerPackage();
+		pkg.setName("test/package");
+		
+		System.out.println(pkg.toJson());
 	}
 }

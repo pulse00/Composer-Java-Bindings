@@ -4,7 +4,7 @@
     "description": "really dump description",
     "keywords": ["stub", "oop"],
     "homepage": "http://pdt-extensions.org",
-    "license": "MIT",
+    "license": ["MIT", "EPL"],
     "authors": [
         {
             "name": "Robert Gründler",

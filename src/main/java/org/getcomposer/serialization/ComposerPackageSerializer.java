@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 
 import org.getcomposer.ComposerPackage;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
@@ -16,18 +17,30 @@ public class ComposerPackageSerializer extends ClientEntitySerializer<ComposerPa
 		
 		writeProperties(json, src, context);
 		
-		json.add("authors", context.serialize(src.getAuthors()));
-		json.add("license", context.serialize(src.getLicense()));
-		json.add("autoload", context.serialize(src.getAutoload()));
-		json.add("require", context.serialize(src.getRequire()));
-		json.add("require-dev", context.serialize(src.getRequireDev()));
 		
-		json.add("repositories", context.serialize(src.getRepositories()));
+		add(json, "authors", context.serialize(src.getAuthors()) );
+		add(json, "license", context.serialize(src.getLicense()));
+		add(json, "autoload", context.serialize(src.getAutoload()));
+		add(json, "require", context.serialize(src.getRequire()));
+		add(json, "require-dev", context.serialize(src.getRequireDev()));
 		
-		json.add("support", context.serialize(src.getSupport()));
-		json.add("config", context.serialize(src.getConfig()));
-		json.add("extra", context.serialize(src.getExtra()));
+		add(json, "repositories", context.serialize(src.getRepositories()));
+		
+		add(json, "support", context.serialize(src.getSupport()));
+		add(json, "config", context.serialize(src.getConfig()));
+		add(json, "extra", context.serialize(src.getExtra()));
 
 		return json;
+	}
+	
+	private void add(JsonObject json, String key, JsonElement val) {
+		if (val == null 
+				|| val.isJsonNull() 
+				|| (val.isJsonArray() && ((JsonArray)val).size() == 0)
+				|| (val.isJsonObject() && ((JsonObject)val).entrySet().size() == 0)) {
+			return;
+		}
+		
+		json.add(key, val);
 	}
 }
