@@ -57,6 +57,7 @@ public class JsonWriterTest extends ComposertTestCase {
 	@Test public void testSimplePackage() {
 		ComposerPackage pkg = new ComposerPackage();
 		pkg.setName("test/package");
+		pkg.setType("");
 		
 		System.out.println(pkg.toJson());
 	}

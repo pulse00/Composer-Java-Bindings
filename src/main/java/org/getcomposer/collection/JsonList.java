@@ -22,6 +22,16 @@ public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<
 	}
 	
 	/**
+	 * Checks whether the value is present.
+	 * 
+	 * @param value the value to check
+	 * @return true if present, false if not
+	 */
+	public boolean has(V value) {
+		return values.contains(value);
+	}
+	
+	/**
 	 * Returns the passed object
 	 * 
 	 * @param packageName
