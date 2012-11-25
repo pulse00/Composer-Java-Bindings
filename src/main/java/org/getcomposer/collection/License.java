@@ -8,6 +8,7 @@
 package org.getcomposer.collection;
 
 import org.getcomposer.serialization.LicenseSerializer;
+import org.json.simple.JSONArray;
 
 /**
  * Represents the license property of a composer package
@@ -19,6 +20,17 @@ public class License extends JsonList<String> {
 
 	public License() {
 		super(String.class);
+	}
+	
+	protected void parse(Object obj) {
+		if (obj instanceof JSONArray) {
+			for (Object license : (JSONArray)obj) {
+				add((String)license);
+			}
+		} else {
+			add((String)obj);
+		}
+		
 	}
 	
 	/**

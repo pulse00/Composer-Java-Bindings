@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.json.simple.JSONArray;
+
 public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<V> {
 	
 	protected List<V> values = new ArrayList<V>();
@@ -13,12 +15,30 @@ public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<
 		super(type);
 	}
 	
+	@SuppressWarnings("unchecked")
+	protected void parse(Object obj) {
+		clear();
+		if (obj instanceof JSONArray) {
+			List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
+			values = (List<V>)obj;
+			firePropertyChange("values", oldValues, values);
+		}
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * @see org.getcomposer.values.JsonCollection#size()
 	 */
 	public int size() {
 		return values.size();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.getcomposer.collection.JsonCollection#clear()
+	 */
+	public void clear() {
+		values.clear();
 	}
 	
 	/**

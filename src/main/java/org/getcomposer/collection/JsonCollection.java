@@ -31,4 +31,6 @@ public abstract class JsonCollection<V> extends Entity {
 	 * @return the amount
 	 */
 	public abstract int size();
+	
+	public abstract void clear();
 }

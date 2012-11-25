@@ -9,6 +9,7 @@ package org.getcomposer;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.getcomposer.collection.Dependencies;
 import org.getcomposer.collection.GenericArray;
@@ -16,11 +17,11 @@ import org.getcomposer.collection.License;
 import org.getcomposer.collection.Persons;
 import org.getcomposer.collection.Repositories;
 import org.getcomposer.entities.Config;
-import org.getcomposer.entities.Dependency;
 import org.getcomposer.entities.Extra;
-import org.getcomposer.entities.Person;
 import org.getcomposer.entities.Support;
 import org.getcomposer.serialization.ComposerPackageSerializer;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -59,10 +60,72 @@ public class ComposerPackage extends AbstractPackage {
 	public ComposerPackage() {
 		super();
 	}
+	
+	public ComposerPackage(Object json) {
+		super();
+		parse(json);
+	}
+	
+	public ComposerPackage(String json) {
+		super();
+		parse(JSONValue.parse(json));
+	}
+	
+	public ComposerPackage(File file) throws IOException {
+		super();
+		load(file);
+	}
 
 
 	public String toString() {
 		return getName();
+	}
+	
+	protected void parse(Object obj) {
+		if (obj instanceof JSONObject) {
+
+			JSONObject json = (JSONObject)obj;
+
+			parseValue(json, "bin");
+			parseValue(json, "homepage");
+			parseValue(json, "keywords");
+			parseValue(json, "minimum-stability");
+			parseValue(json, "target-dir");
+			
+			if (json.containsKey("require")) {
+				require.load(json.get("require"));
+			}
+			
+			if (json.containsKey("require-dev")) {
+				requireDev.load(json.get("require-dev"));
+			}
+			
+			if (json.containsKey("support")) {
+				support.load(json.get("support"));
+			}
+			
+			if (json.containsKey("license")) {
+				license.load(json.get("license"));
+			}
+			
+			if (json.containsKey("extra")) {
+				extra.load(json.get("extra"));
+			}
+			
+			if (json.containsKey("authors")) {
+				authors.load(json.get("authors"));
+			}
+			
+			if (json.containsKey("config")) {
+				config.load(json.get("config"));
+			}
+			
+			if (json.containsKey("repositories")) {
+				repositories.load(json.get("repositories"));
+			}
+		}
+		
+		super.parse(obj);
 	}
 
 	/**
@@ -122,28 +185,6 @@ public class ComposerPackage extends AbstractPackage {
 	public Dependencies getRequire() {
 		return require;
 	}
-	
-	/**
-	 * Adds a dependency to the require section
-	 * 
-	 * @param dependency
-	 * @return this
-	 */
-	public ComposerPackage addRequire(Dependency dependency) {
-		require.add(dependency);
-		return this;
-	}
-	
-	/**
-	 * Removes a dependency from the require section
-	 * 
-	 * @param dependency
-	 * @return this
-	 */
-	public ComposerPackage removeRequire(Dependency dependency) {
-		require.remove(dependency);
-		return this;
-	}
 
 	/**
 	 * Returns the require-dev dependencies
@@ -152,30 +193,6 @@ public class ComposerPackage extends AbstractPackage {
 	public Dependencies getRequireDev() {
 		return requireDev;
 	}
-	
-	/**
-	 * Adds a dependency to the require-dev section
-	 * 
-	 * @param dependency
-	 * @return this
-	 */
-	public ComposerPackage addRequireDev(Dependency dependency) {
-		requireDev.add(dependency);
-		return this;
-	}
-	
-	/**
-	 * Removes a dependency from the require-dev section
-	 * 
-	 * @param dependency
-	 * @return this
-	 */
-	public ComposerPackage removeRequireDev(Dependency dependency) {
-		requireDev.remove(dependency);
-		return this;
-	}
-
-
 
 	/**
 	 * Returns the target-dir
@@ -254,48 +271,6 @@ public class ComposerPackage extends AbstractPackage {
 	public Persons getAuthors() {
 		return authors;
 	}
-	
-	/**
-	 * Adds an author
-	 * 
-	 * @param author
-	 * @return this
-	 */
-	public ComposerPackage addAuthor(Person author) {
-		authors.add(author);
-		return this;
-	}
-	
-	/**
-	 * Removes an author
-	 * 
-	 * @param author
-	 * @return this
-	 */
-	public ComposerPackage removeAuthor(Person author) {
-		authors.remove(author);
-		return this;
-	}
-
-//	/**
-//	 * Sets the authors
-//	 * 
-//	 * @param authors
-//	 */
-//	public void setAuthors(Persons authors) {
-//		firePropertyChange("authors", this.authors, this.authors = authors);
-//	}
-//
-//	
-//
-//	/**
-//	 * Sets the support section
-//	 * 
-//	 * @param support the support to set
-//	 */
-//	public void setSupport(Support support) {
-//		firePropertyChange("support", this.support, this.support = support);
-//	}
 
 	/**
 	 * Returns the support section
@@ -312,15 +287,6 @@ public class ComposerPackage extends AbstractPackage {
 	public Repositories getRepositories() {
 		return repositories;
 	}
-
-//	/**
-//	 * Sets the repository collection
-//	 * 
-//	 * @param repositories the repositories to set
-//	 */
-//	public void setRepositories(Repositories repositories) {
-//		this.repositories = repositories;
-//	}
 
 	/**
 	 * Returns the extra entity

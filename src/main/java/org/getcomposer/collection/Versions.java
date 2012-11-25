@@ -1,7 +1,11 @@
 package org.getcomposer.collection;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.getcomposer.ComposerPackage;
 import org.getcomposer.serialization.MapSerializer;
+import org.json.simple.JSONObject;
 
 
 /**
@@ -17,6 +21,17 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 
 	public Versions() {
 		super(ComposerPackage.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void parse(Object obj) {
+		clear();
+		if (obj instanceof JSONObject) {
+			for (Entry<String, Object> entry : ((Map<String, Object>)obj).entrySet()) {
+				ComposerPackage pkg = new ComposerPackage(entry.getValue());
+				set(entry.getKey(), pkg);
+			}
+		}
 	}
 	
 	/**

@@ -10,6 +10,7 @@ package org.getcomposer.entities;
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.Psr0;
 import org.getcomposer.serialization.AutoloadSerializer;
+import org.json.simple.JSONObject;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -28,10 +29,25 @@ public class Autoload extends GenericEntity {
 	@SerializedName("psr-0")
 	private Psr0 psr0 = new Psr0();
 	
-	public String getPsr0Path() {
-		if (psr0 == null) {
-			return null;
+	protected void parse(Object obj) {
+		if (obj instanceof JSONObject) {
+			JSONObject json = (JSONObject) obj;
+			
+			if (json.containsKey("psr-0")) {
+				psr0.load(json.get("psr-0"));
+			}
+			
+			if (json.containsKey("classmap")) {
+				classmap.load(json.get("classmap"));
+			}
+			
+			if (json.containsKey("files")) {
+				files.load(json.get("files"));
+			}
 		}
+	} 
+	
+	public String getPsr0Path() {
 		if (psr0.size() > 0) {
 			return ((Namespace)psr0.iterator().next()).get();
 		}

@@ -138,14 +138,14 @@ public abstract class ComposertTestCase extends TestCase {
 		robert.setEmail(PERSON1_EMAIL);
 		robert.setRole(PERSON1_ROLE);
 		
-		phpPackage.addAuthor(robert);
+		phpPackage.getAuthors().add(robert);
 		
 		Person gossi = new Person();
 		gossi.setName(PERSON2);
 		gossi.setHomepage(PERSON2_HOMEPAGE);
 		gossi.setRole(PERSON2_ROLE);
 		
-		phpPackage.addAuthor(gossi);
+		phpPackage.getAuthors().add(gossi);
 		
 		// license
 		phpPackage.getLicense().add(LICENSE);

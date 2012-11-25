@@ -5,19 +5,19 @@ import java.lang.reflect.Type;
 public class RepositoryFactory {
 
 	public static Repository create(String type) {
-		if (type == "composer") {
+		if (type.equalsIgnoreCase("composer")) {
 			return new ComposerRepository();
-		} else if (type == "vcs") {
+		} else if (type.equalsIgnoreCase("vcs")) {
 			return new VcsRepository();
-		} else if (type == "git") {
+		} else if (type.equalsIgnoreCase("git")) {
 			return new GitRepository();
-		} else if (type == "svn") {
+		} else if (type.equalsIgnoreCase("svn")) {
 			return new SubversionRepository();
-		} else if (type == "hg") {
+		} else if (type.equalsIgnoreCase("hg")) {
 			return new MercurialRepository();
-		} else if (type == "package") {
+		} else if (type.equalsIgnoreCase("package")) {
 			return new PackageRepository();
-		} else if (type == "pear") {
+		} else if (type.equalsIgnoreCase("pear")) {
 			return new PearRepository();
 		}
 		
@@ -25,19 +25,19 @@ public class RepositoryFactory {
 	}
 	
 	public static Type getType(String type) {
-		if (type.equals("composer")) {
+		if (type.equalsIgnoreCase("composer")) {
 			return ComposerRepository.class;
-		} else if (type.equals("vcs")) {
+		} else if (type.equalsIgnoreCase("vcs")) {
 			return VcsRepository.class;
-		} else if (type.equals("git")) {
+		} else if (type.equalsIgnoreCase("git")) {
 			return GitRepository.class;
-		} else if (type.equals("svn")) {
+		} else if (type.equalsIgnoreCase("svn")) {
 			return SubversionRepository.class;
-		} else if (type.equals("hg")) {
+		} else if (type.equalsIgnoreCase("hg")) {
 			return MercurialRepository.class;
-		} else if (type.equals("package")) {
+		} else if (type.equalsIgnoreCase("package")) {
 			return PackageRepository.class;
-		} else if (type.equals("pear")) {
+		} else if (type.equalsIgnoreCase("pear")) {
 			return PearRepository.class;
 		}
 		

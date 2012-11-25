@@ -16,7 +16,7 @@ public class JsonParserTest extends ComposertTestCase {
 	@Test
 	public void testComposerPackage() {
 		try {
-			doTestComposerPackage(ComposerPackage.fromFile(loadFile("composer.json")));
+			doTestComposerPackage(new ComposerPackage(loadFile("composer.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -25,7 +25,7 @@ public class JsonParserTest extends ComposertTestCase {
 	@Test
 	public void testDependencies() {
 		try {
-			doTestDependencies(ComposerPackage.fromFile(loadFile("dependencies.json")));
+			doTestDependencies(new ComposerPackage(loadFile("dependencies.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -35,7 +35,7 @@ public class JsonParserTest extends ComposertTestCase {
 	@Test
 	public void testSupport() {
 		try {
-			doTestSupport(ComposerPackage.fromFile(loadFile("support.json")));
+			doTestSupport(new ComposerPackage(loadFile("support.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -45,7 +45,7 @@ public class JsonParserTest extends ComposertTestCase {
 	@Test
 	public void testConfig() {
 		try {
-			doTestConfig(ComposerPackage.fromFile(loadFile("config.json")));
+			doTestConfig(new ComposerPackage(loadFile("config.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -54,7 +54,7 @@ public class JsonParserTest extends ComposertTestCase {
 	
 	public void testRepositories() {
 		try {
-			doTestRepositories(ComposerPackage.fromFile(loadFile("repositories.json")));
+			doTestRepositories(new ComposerPackage(loadFile("repositories.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -64,7 +64,7 @@ public class JsonParserTest extends ComposertTestCase {
 	@Test
 	public void testAutoload() {
 		try {
-			doTestAutoload(ComposerPackage.fromFile(loadFile("autoload.json")));
+			doTestAutoload(new ComposerPackage(loadFile("autoload.json")));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
@@ -74,7 +74,7 @@ public class JsonParserTest extends ComposertTestCase {
 	@Test
 	public void testEmptyJson() {
 		try {
-			ComposerPackage phpPackage = ComposerPackage.fromFile(loadFile("empty.json"));
+			ComposerPackage phpPackage = new ComposerPackage(loadFile("empty.json"));
 			assertNotNull(phpPackage);
 		} catch (Exception e) {
 			e.printStackTrace();

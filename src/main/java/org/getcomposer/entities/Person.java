@@ -1,6 +1,10 @@
 package org.getcomposer.entities;
 
+import java.io.File;
+import java.io.IOException;
+
 import org.getcomposer.serialization.ClientEntitySerializer;
+import org.json.simple.JSONValue;
 
 
 /**
@@ -20,12 +24,19 @@ public class Person extends GenericEntity implements Cloneable {
 		
 	}
 	
-	/**
-	 * Creates a person with a name
-	 * @param name
-	 */
-	public Person(String name) {
-		set("name", name);
+	public Person(Object json) {
+		super();
+		parse(json);
+	}
+	
+	public Person(String json) {
+		super();
+		parse(JSONValue.parse(json));
+	}
+	
+	public Person(File file) throws IOException {
+		super();
+		load(file);
 	}
 
 	/**

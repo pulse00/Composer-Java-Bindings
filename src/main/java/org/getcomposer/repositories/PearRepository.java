@@ -5,13 +5,9 @@ import java.io.FileNotFoundException;
 
 import org.getcomposer.serialization.ExtendedClientEntitySerializer;
 
-import com.google.gson.annotations.SerializedName;
 
 public class PearRepository extends Repository {
 
-	@SerializedName("vendor-alias")
-	private String vendorAlias;
-	
 	public PearRepository() {
 		super("pear");
 	}
@@ -21,7 +17,7 @@ public class PearRepository extends Repository {
 	 * @return the vendor-alias
 	 */
 	public String getVendorAlias() {
-		return vendorAlias;
+		return getAsString("vendor-alias");
 	}
 
 	/**
@@ -30,7 +26,7 @@ public class PearRepository extends Repository {
 	 * @param vendorAlias the vendor-alias to set
 	 */
 	public void setVendorAlias(String vendorAlias) {
-		this.vendorAlias = vendorAlias;
+		set("vendor-alias", vendorAlias);
 	}
 
 	public static PearRepository fromFile(File input) throws FileNotFoundException {

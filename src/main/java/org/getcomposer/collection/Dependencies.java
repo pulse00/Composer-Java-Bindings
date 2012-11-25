@@ -1,9 +1,12 @@
 package org.getcomposer.collection;
 
 import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.getcomposer.entities.Dependency;
 import org.getcomposer.serialization.DependenciesSerializer;
+import org.json.simple.JSONObject;
 
 /**
  * Represents a dependencies collection of a composer package, either require or
@@ -17,6 +20,18 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 	
 	public Dependencies() {
 		super(Dependency.class);
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected void parse(Object obj) {
+		if (obj instanceof JSONObject) {
+			for (Entry<String, Object> entry : ((Map<String, Object>)((JSONObject)obj)).entrySet()) {
+				Dependency dep = new Dependency();
+				dep.setName(entry.getKey());
+				dep.setVersion((String)entry.getValue());
+				add(dep);
+			}
+		}
 	}
 	
 	/**

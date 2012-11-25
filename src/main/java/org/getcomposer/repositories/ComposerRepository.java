@@ -8,6 +8,7 @@ import java.util.Map;
 import org.getcomposer.collection.Versions;
 import org.getcomposer.entities.GenericEntity;
 import org.getcomposer.serialization.ExtendedClientEntitySerializer;
+import org.json.simple.JSONObject;
 
 /**
  * Represents a composer repository
@@ -23,6 +24,18 @@ public class ComposerRepository extends Repository {
 	public ComposerRepository() {
 		super("composer");
 		listen();
+	}
+	
+	protected void parse(Object obj) {
+		if (obj instanceof JSONObject) {
+			JSONObject json = (JSONObject) obj;
+			
+			if (json.containsKey("options")) {
+				options.load(json.get("options"));
+			}
+		}
+		
+		super.parse(obj);
 	}
 	
 	public Versions getVersions(String name) {

@@ -3,6 +3,11 @@ package org.getcomposer.collection;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import org.getcomposer.entities.GenericEntity;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 
 public abstract class JsonMap<C, V> extends JsonCollection<V> {
@@ -13,12 +18,43 @@ public abstract class JsonMap<C, V> extends JsonCollection<V> {
 		super(type);
 	}
 	
+	@SuppressWarnings("unchecked")
+	protected void parse(Object obj) {
+		clear();
+		if (obj instanceof JSONObject) {
+			for (Entry<String, Object> entry : ((Map<String, Object>)obj).entrySet()) {
+				parseValue((JSONObject)obj, entry.getKey());
+			}
+		}
+	}
+
+	protected void parseValue(JSONObject json, String property) {
+		Object value = null;
+		if (json.containsKey(property)) {
+			value = json.get(property);
+			if (value instanceof JSONArray) {
+				value = new GenericArray(value);
+			} else if (value instanceof JSONObject) {
+				value = new GenericEntity(value);
+			}
+		}
+		set(property, value);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see org.getcomposer.properties.JsonCollection#size()
 	 */
 	public int size() {
 		return properties.size();
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see org.getcomposer.collection.JsonCollection#clear()
+	 */
+	public void clear() {
+		properties.clear();
 	}
 	
 	/**

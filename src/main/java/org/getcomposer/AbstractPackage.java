@@ -3,12 +3,39 @@ package org.getcomposer;
 import org.getcomposer.entities.Autoload;
 import org.getcomposer.entities.Distribution;
 import org.getcomposer.entities.Source;
+import org.json.simple.JSONObject;
 
 public abstract class AbstractPackage extends Resource {
 
 	protected Autoload autoload = new Autoload();
 	protected Distribution dist = new Distribution();
 	protected Source source = new Source();
+	
+	protected void parse(Object obj) {
+		if (obj instanceof JSONObject) {
+
+			JSONObject json = (JSONObject)obj;
+
+			parseValue(json, "name");
+			parseValue(json, "description");
+			parseValue(json, "type");
+			parseValue(json, "version");
+			
+			if (json.containsKey("autoload")) {
+				autoload.load(json.get("autoload"));
+			}
+			
+			if (json.containsKey("dist")) {
+				dist.load(json.get("dist"));
+			}
+			
+			if (json.containsKey("source")) {
+				source.load(json.get("source"));
+			}
+		}
+		
+		super.parse(obj);
+	}
 	
 	/**
 	 * Returns the <code>name</code> property.
