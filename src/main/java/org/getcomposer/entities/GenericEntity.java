@@ -6,12 +6,12 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 
 import org.getcomposer.GenericValue;
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.JsonMap;
-import org.getcomposer.serialization.GenericEntitySerializer;
 import org.json.simple.JSONValue;
 
 /**
@@ -45,8 +45,6 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 		super(Object.class);
 		load(file);
 	}
-
-
 	
 	/**
 	 * Returns whether the property is instance of the given type.
@@ -244,9 +242,5 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 		} catch (CloneNotSupportedException e) {
 			return null;
 		}
-	}
-	
-	public static Object getSerializer() {
-		return new GenericEntitySerializer();
 	}
 }

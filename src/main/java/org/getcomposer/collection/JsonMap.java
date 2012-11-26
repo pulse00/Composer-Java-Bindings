@@ -1,13 +1,23 @@
 package org.getcomposer.collection;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.getcomposer.Entity;
+import org.getcomposer.GenericValue;
+import org.getcomposer.annotation.Name;
 import org.getcomposer.entities.GenericEntity;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 
 public abstract class JsonMap<C, V> extends JsonCollection<V> {
@@ -39,6 +49,95 @@ public abstract class JsonMap<C, V> extends JsonCollection<V> {
 			}
 		}
 		set(property, value);
+	}
+	
+	public Object prepareJson(LinkedList<String> fields) {
+		
+		// First: add properties that aren't in the hashmap yet
+		for (Entry<String, V> entry : properties.entrySet()) {
+			fields.add(entry.getKey());
+		}
+		
+		// create an index to search for field names
+		HashMap<String, Field> namedFields = new HashMap<String, Field>();
+		for (Field field : getFields(this.getClass())) {
+			field.setAccessible(true);
+			namedFields.put(getFieldName(field), field);
+		}
+		
+		LinkedHashMap<String, Object> out = new LinkedHashMap<String, Object>();
+		// Second: find field contents (either field or property key)
+		for (String entry : fields) {
+			if (out.containsKey(entry)) {
+				continue;
+			}
+			Object value = null;
+			
+			// check properties first
+			if (properties.containsKey(entry)) {
+				value = properties.get(entry);
+			} 
+			
+			// search class fields
+			else if (namedFields.containsKey(entry)) {
+				try {
+					value = namedFields.get(entry).get(this);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+			
+			if (value == null) {
+				continue;
+			}
+			
+			// run value.toJson() if available
+			if (value instanceof GenericValue) {
+				out.put(entry, ((GenericValue)value).toJsonValue());
+			} else if (value instanceof GenericEntity) {
+				GenericEntity entity = (GenericEntity) value;
+				if (entity.size() > 0 ) {
+					out.put(entry, entity.prepareJson(new LinkedList<String>()));
+				}
+			} else if (value instanceof GenericArray) {
+				GenericArray array = (GenericArray) value;
+				if (array.size() > 0) {
+					out.put(entry, array.prepareJson(new LinkedList<String>()));
+				}
+			} else {
+				out.put(entry, value);	
+			}
+			
+		}
+		
+		return out;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private ArrayList<Field> getFields(Class entity) {
+		ArrayList<Field> fields = new ArrayList<Field>();
+		Class superClass = entity;
+		
+		while (superClass != null) {
+			for (Field field : superClass.getDeclaredFields()) {
+				if (!((field.getModifiers() & Modifier.TRANSIENT) == Modifier.TRANSIENT)) {
+					fields.add(field);
+				}
+			}
+			superClass = superClass.getSuperclass();		
+		}
+		
+		return fields;
+	}
+	
+	private String getFieldName(Field field) {
+		String name = field.getName();
+		for (Annotation anno : field.getAnnotations()) {
+			if (anno.annotationType() == Name.class) {
+				name = ((Name) anno).value();
+			}
+		}
+		return name;
 	}
 
 	/*

@@ -1,7 +1,6 @@
 package org.getcomposer.collection;
 
 import org.getcomposer.entities.Person;
-import org.getcomposer.serialization.ListSerializer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -28,9 +27,5 @@ public class Persons extends JsonList<Person> implements Iterable<Person> {
 				}
 			}
 		}
-	}
-	
-	public static Object getSerializer() {
-		return new ListSerializer<Persons, Person>();
 	}
 }

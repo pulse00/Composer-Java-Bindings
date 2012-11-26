@@ -6,12 +6,11 @@ Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: https://github.com/pulse00
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.getcomposer,
+ org.getcomposer.annotation,
  org.getcomposer.collection,
  org.getcomposer.entities,
  org.getcomposer.packagist,
- org.getcomposer.repositories,
- org.getcomposer.serialization
+ org.getcomposer.repositories
 Require-Bundle: org.junit,
- com.google.gson,
  org.apache.httpcomponents.httpclient,
  org.apache.httpcomponents.httpcore

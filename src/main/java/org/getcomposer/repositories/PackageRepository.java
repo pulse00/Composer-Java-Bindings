@@ -1,19 +1,16 @@
 package org.getcomposer.repositories;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.getcomposer.RepositoryPackage;
-import org.getcomposer.serialization.ExtendedClientEntitySerializer;
+import org.getcomposer.annotation.Name;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
-import com.google.gson.annotations.SerializedName;
-
 public class PackageRepository extends Repository {
 
-	@SerializedName("package")
+	@Name("package")
 	private RepositoryPackage repositoryPackage = new RepositoryPackage();
 	
 	public PackageRepository() {
@@ -50,17 +47,5 @@ public class PackageRepository extends Repository {
 	
 	public RepositoryPackage getPackage() {
 		return repositoryPackage;
-	}
-
-	public static PackageRepository fromFile(File input) throws FileNotFoundException {
-		return fromFile(input, PackageRepository.class);
-	}
-	
-	public static PackageRepository fromJson(String json) throws FileNotFoundException {
-		return fromJson(json, PackageRepository.class);
-	}
-	
-	public static Object getSerializer() {
-		return new ExtendedClientEntitySerializer<PackageRepository>();
 	}
 }

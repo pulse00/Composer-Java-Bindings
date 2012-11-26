@@ -7,7 +7,6 @@
  ******************************************************************************/
 package org.getcomposer.collection;
 
-import org.getcomposer.serialization.LicenseSerializer;
 import org.json.simple.JSONArray;
 
 /**
@@ -50,10 +49,5 @@ public class License extends JsonList<String> {
 	 */
 	public void remove(String license) {
 		super.remove(license);
-	}
-
-	
-	public static Object getSerializer() {
-		return new LicenseSerializer();
 	}
 }

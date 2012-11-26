@@ -8,9 +8,12 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.LinkedList;
 
 import org.getcomposer.collection.JsonCollection;
 import org.getcomposer.entities.GenericEntity;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 public abstract class Entity {
@@ -21,7 +24,6 @@ public abstract class Entity {
 	public Entity() {
 		
 	}
-	
 	
 	protected void listen() {
 		try {
@@ -46,8 +48,15 @@ public abstract class Entity {
 		}
 	}
 	
+	
 	// subclasses should implement that
 	protected abstract void parse(Object obj);
+	
+	public abstract Object prepareJson(LinkedList<String> fields);
+	
+	public String toJson() {
+		return JsonFormatter.format(prepareJson(new LinkedList<String>()));
+	}
 	
 	public void load(Object json) {
 		parse(json);

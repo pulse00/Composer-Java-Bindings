@@ -1,7 +1,5 @@
 package org.getcomposer.entities;
 
-import org.getcomposer.serialization.ClientEntitySerializer;
-
 /**
  * Represents a <code>dist</code> entity in a package
  * 
@@ -27,9 +25,5 @@ public class Distribution extends Storage {
 	 */
 	public void setShaSum(String shaSum) {
 		set("shasum", shaSum);
-	}
-
-	public static Object getSerializer() {
-		return new ClientEntitySerializer<Distribution>();
 	}
 }

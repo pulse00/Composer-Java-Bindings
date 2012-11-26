@@ -1,5 +1,8 @@
 package org.getcomposer;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import org.getcomposer.entities.Autoload;
 import org.getcomposer.entities.Distribution;
 import org.getcomposer.entities.Source;
@@ -35,6 +38,16 @@ public abstract class AbstractPackage extends Resource {
 		}
 		
 		super.parse(obj);
+	}
+	
+	@Override
+	public Object prepareJson(LinkedList<String> fields) {
+		String[] before = new String[]{"name", "description", "type", "version"};
+		fields.addAll(0, new LinkedList<String>(Arrays.asList(before)));
+		
+		String[] after = new String[]{"autoload", "dist", "source"};
+		fields.addAll(new LinkedList<String>(Arrays.asList(after)));
+		return super.prepareJson(fields);
 	}
 	
 	/**

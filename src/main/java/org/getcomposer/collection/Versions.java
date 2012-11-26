@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.getcomposer.ComposerPackage;
-import org.getcomposer.serialization.MapSerializer;
 import org.json.simple.JSONObject;
 
 
@@ -40,9 +39,5 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 	 */
 	public String getDefaultVersion() {
 		return (String)properties.entrySet().iterator().next().getKey();
-	}
-
-	public static Object getSerializer() {
-		return new MapSerializer<Versions, ComposerPackage>();
 	}
 }

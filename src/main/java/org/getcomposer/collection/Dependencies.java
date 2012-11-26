@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.getcomposer.entities.Dependency;
-import org.getcomposer.serialization.DependenciesSerializer;
 import org.json.simple.JSONObject;
 
 /**
@@ -56,9 +55,5 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 
 	public Iterator<Dependency> iterator() {
 		return (Iterator<Dependency>)properties.values().iterator();
-	}
-
-	public static Object getSerializer() {
-		return new DependenciesSerializer();
 	}
 }

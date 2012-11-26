@@ -29,9 +29,4 @@ public abstract class Repository extends Resource {
 	public void setUrl(String url) {
 		set("url", url);
 	}
-	
-//	public static Object getSerializer() {
-//		return new RepositorySerializer();
-//	}
-
 }

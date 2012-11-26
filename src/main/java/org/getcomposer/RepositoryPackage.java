@@ -2,12 +2,13 @@ package org.getcomposer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import org.getcomposer.collection.Persons;
 import org.getcomposer.collection.Versions;
 import org.getcomposer.packagist.PackagistDownloader;
 import org.getcomposer.repositories.PackageRepository;
-import org.getcomposer.serialization.ExtendedClientEntitySerializer;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -55,6 +56,12 @@ public class RepositoryPackage extends AbstractPackage {
 		super.parse(obj);
 	}
 	
+	@Override
+	public Object prepareJson(LinkedList<String> fields) {
+		String[] order = new String[]{"maintainers", "repository", "versions"};
+		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
+	}
+	
 	/**
 	 * Deserializes packages from packagist.org, e.g.
 	 * http://packagist.org/packages/react/react.json
@@ -67,21 +74,6 @@ public class RepositoryPackage extends AbstractPackage {
 		PackageRepository repo = new PackageRepository(input);
 		return repo.getPackage();
 	}
-	
-//	/**
-//	 * Deserializes packages from packagist.org, e.g.
-//	 * http://packagist.org/packages/react/react.json
-//	 * 
-//	 * @param input
-//	 * @return the deserialized package
-//	 * @throws FileNotFoundException
-//	 */
-//	public static RepositoryPackage fromPackageRepository(Reader input)
-//			throws FileNotFoundException {
-//		
-//		PackageRepository repo = new PackageRepository(input);
-//		return repo.getPackage();
-//	}
 	
 	/**
 	 * Deserializes packages from packagist.org, e.g.
@@ -148,10 +140,5 @@ public class RepositoryPackage extends AbstractPackage {
 	 */
 	public void setRepository(String repository) {
 		set("repository", repository);
-	}
-	
-	
-	public static Object getSerializer() {
-		return new ExtendedClientEntitySerializer<RepositoryPackage>();
 	}
 }

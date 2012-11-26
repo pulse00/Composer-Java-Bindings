@@ -8,9 +8,11 @@
 package org.getcomposer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
 
+import org.getcomposer.annotation.Name;
 import org.getcomposer.collection.Dependencies;
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.License;
@@ -19,12 +21,8 @@ import org.getcomposer.collection.Repositories;
 import org.getcomposer.entities.Config;
 import org.getcomposer.entities.Extra;
 import org.getcomposer.entities.Support;
-import org.getcomposer.serialization.ComposerPackageSerializer;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-
-import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Represents a composer package. The source can either be a composer.json file
@@ -44,7 +42,7 @@ public class ComposerPackage extends AbstractPackage {
 	
 //	private GenericArray bin = new GenericArray();
 
-	@SerializedName("require-dev")
+	@Name("require-dev")
 	private Dependencies requireDev = new Dependencies();
 
 	private Support support = new Support();
@@ -74,11 +72,6 @@ public class ComposerPackage extends AbstractPackage {
 	public ComposerPackage(File file) throws IOException {
 		super();
 		load(file);
-	}
-
-
-	public String toString() {
-		return getName();
 	}
 	
 	protected void parse(Object obj) {
@@ -127,36 +120,11 @@ public class ComposerPackage extends AbstractPackage {
 		
 		super.parse(obj);
 	}
-
-	/**
-	 * Deserializes a package from a composer.json file
-	 * 
-	 * @param input
-	 * @return the deserialized package
-	 * @throws FileNotFoundException
-	 */
-	public static ComposerPackage fromFile(File input) throws FileNotFoundException {
-		return fromFile(input, ComposerPackage.class);
-	}
 	
-	/**
-	 * Deserializes a package from a string
-	 * 
-	 * @param input
-	 * @return the deserialized package
-	 */
-	public static ComposerPackage fromJson(String json) {
-		return fromJson(json, ComposerPackage.class);
-	}
-
-	/**
-	 * Serializes the package to json
-	 * 
-	 * @return the serialized json package
-	 */
-	public String toJson() {
-		Gson gson = getBuilder();
-		return gson.toJson(this, ComposerPackage.class);
+	@Override
+	public Object prepareJson(LinkedList<String> fields) {
+		String[] order = new String[]{"authors", "version", "keywords", "homepage", "license", "require", "require-dev","autoload","target-dir","minimum-stability","support","repositories","config","extra","bin"};
+		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
 	}
 
 	/**
@@ -315,7 +283,7 @@ public class ComposerPackage extends AbstractPackage {
 		return getAsArray("bin");
 	}
 	
-	public static Object getSerializer() {
-		return new ComposerPackageSerializer();
+	public String toString() {
+		return getName();
 	}
 }

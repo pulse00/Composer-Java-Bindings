@@ -1,5 +1,7 @@
 package org.getcomposer.entities;
 
+import java.util.LinkedList;
+
 import org.getcomposer.collection.GenericArray;
 
 /**
@@ -14,6 +16,11 @@ public class Namespace extends GenericEntity {
 	private transient GenericArray paths = new GenericArray();
 	
 	public Namespace() {
+	}
+	
+	@Override
+	public String prepareJson(LinkedList<String> fields) {
+		return paths.toJson();
 	}
 	
 	/**

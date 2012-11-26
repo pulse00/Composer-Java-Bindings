@@ -1,7 +1,5 @@
 package org.getcomposer.entities;
 
-import org.getcomposer.serialization.ClientEntitySerializer;
-
 /**
  * Represents a <code>source</code> entity in a package
  * 
@@ -11,7 +9,4 @@ import org.getcomposer.serialization.ClientEntitySerializer;
  */
 public class Source extends Storage {
 
-	public static Object getSerializer() {
-		return new ClientEntitySerializer<Source>();
-	}
 }

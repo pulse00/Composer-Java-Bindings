@@ -3,7 +3,6 @@ package org.getcomposer.entities;
 import java.io.File;
 import java.io.IOException;
 
-import org.getcomposer.serialization.ClientEntitySerializer;
 import org.json.simple.JSONValue;
 
 
@@ -127,9 +126,5 @@ public class Person extends GenericEntity implements Cloneable {
 	 */
 	public Person clone() {
 		return (Person)super.clone();
-	}
-	
-	public static Object getSerializer() {
-		return new ClientEntitySerializer<Person>();
 	}
 }

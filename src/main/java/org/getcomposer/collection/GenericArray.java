@@ -3,7 +3,6 @@ package org.getcomposer.collection;
 import java.io.File;
 import java.io.IOException;
 
-import org.getcomposer.serialization.GenericArraySerializer;
 import org.json.simple.JSONValue;
 
 
@@ -40,9 +39,5 @@ public class GenericArray extends JsonList<Object>  implements Iterable<Object> 
 			arr[i++] = (String) val;
 		}
 		return arr;
-	}
-	
-	public static Object getSerializer() {
-		return new GenericArraySerializer();
 	}
 }

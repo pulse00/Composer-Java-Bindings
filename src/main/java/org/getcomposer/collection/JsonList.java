@@ -3,6 +3,7 @@ package org.getcomposer.collection;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.json.simple.JSONArray;
@@ -23,6 +24,10 @@ public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<
 			values = (List<V>)obj;
 			firePropertyChange("values", oldValues, values);
 		}
+	}
+	
+	public Object prepareJson(LinkedList<String> fields) {
+		return values;
 	}
 	
 	/*

@@ -14,7 +14,6 @@ public class Support extends GenericEntity implements Cloneable {
 	 * @return the email
 	 */
 	public String getEmail() {
-//		System.out.println("Supprt.getEmail " + get("email").));
 		return getAsString("email");
 	}
 	

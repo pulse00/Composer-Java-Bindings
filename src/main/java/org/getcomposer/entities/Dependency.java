@@ -1,5 +1,9 @@
 package org.getcomposer.entities;
 
+import java.util.LinkedList;
+
+import org.json.simple.JSONValue;
+
 /**
  * Represents a dependency entry in require or require-dev
  * 
@@ -10,6 +14,11 @@ package org.getcomposer.entities;
  */
 public class Dependency extends GenericEntity {
 
+	@Override
+	public String prepareJson(LinkedList<String> fields) {
+		return JSONValue.toJSONString(getAsString("version"));
+	}
+	
 	/**
 	 * Returns the name.
 	 * 

@@ -1,9 +1,11 @@
 package org.getcomposer;
 
 import java.lang.reflect.Type;
+import java.util.LinkedList;
 
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.entities.GenericEntity;
+
 
 public class GenericValue {
 
@@ -13,6 +15,20 @@ public class GenericValue {
 		this.value = value;
 	}
 	
+	public Object toJsonValue() {
+		if (isArray()) {
+			return getAsArray().prepareJson(new LinkedList<String>());
+		} else if(isEntity()) {
+			return getAsEntity().prepareJson(new LinkedList<String>());
+		} else if(isNumber()) {
+			return getAsNumber();
+		} else if(isBoolean()) {
+			return getAsBoolean();
+		} else {
+			return getAsString();
+		}
+	}
+
 	/**
 	 * Returns whether the value is instance of the given type.
 	 * 

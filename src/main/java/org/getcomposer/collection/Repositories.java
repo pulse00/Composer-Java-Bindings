@@ -2,7 +2,6 @@ package org.getcomposer.collection;
 
 import org.getcomposer.repositories.Repository;
 import org.getcomposer.repositories.RepositoryFactory;
-import org.getcomposer.serialization.RepositoriesSerializer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -30,10 +29,5 @@ public class Repositories extends JsonList<Repository> {
 				}
 			}
 		}
-	}
-	
-
-	public static Object getSerializer() {
-		return new RepositoriesSerializer();
 	}
 }

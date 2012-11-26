@@ -21,37 +21,37 @@ public class JsonWriterTest extends ComposertTestCase {
 	@Test
 	public void testToJson() {
 		assertNotNull(json);
-//		System.out.println(json);
+		System.out.println(json);
 	}
 	
 	@Test
 	public void testComposerPackage() {
-		doTestComposerPackage(ComposerPackage.fromJson(json));
+		doTestComposerPackage(new ComposerPackage(json));
 	}
 	
 	@Test
 	public void testDependencies() {
-		doTestDependencies(ComposerPackage.fromJson(json));
+		doTestDependencies(new ComposerPackage(json));
 	}
 	
 	@Test
 	public void testAutoload() {
-		doTestAutoload(ComposerPackage.fromJson(json));
+		doTestAutoload(new ComposerPackage(json));
 	}
 	
 	@Test
 	public void testConfig() {
-		doTestConfig(ComposerPackage.fromJson(json));
+		doTestConfig(new ComposerPackage(json));
 	}
 	
 	@Test
 	public void testSupport() {
-		doTestSupport(ComposerPackage.fromJson(json));
+		doTestSupport(new ComposerPackage(json));
 	}
 
 	@Test
 	public void testRepositories() {
-		doTestRepositories(ComposerPackage.fromJson(json));
+		doTestRepositories(new ComposerPackage(json));
 	}
 	
 	@Test public void testSimplePackage() {
@@ -59,6 +59,6 @@ public class JsonWriterTest extends ComposertTestCase {
 		pkg.setName("test/package");
 		pkg.setType("");
 		
-		System.out.println(pkg.toJson());
+//		System.out.println(pkg.toJson());
 	}
 }

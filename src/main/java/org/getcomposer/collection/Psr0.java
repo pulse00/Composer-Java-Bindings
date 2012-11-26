@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 
 import org.getcomposer.entities.Dependency;
 import org.getcomposer.entities.Namespace;
-import org.getcomposer.serialization.Psr0Serializer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -70,9 +69,5 @@ public class Psr0 extends JsonMap<Psr0, Namespace> implements Iterable<Namespace
 
 	public Iterator<Namespace> iterator() {
 		return (Iterator<Namespace>)properties.values().iterator();
-	}
-
-	public static Object getSerializer() {
-		return new Psr0Serializer();
 	}
 }

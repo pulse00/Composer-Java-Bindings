@@ -7,12 +7,14 @@
  ******************************************************************************/
 package org.getcomposer.entities;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
+import org.getcomposer.annotation.Name;
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.Psr0;
-import org.getcomposer.serialization.AutoloadSerializer;
 import org.json.simple.JSONObject;
 
-import com.google.gson.annotations.SerializedName;
 
 /**
  * Represents the autoload entity of a composer package.
@@ -26,7 +28,7 @@ public class Autoload extends GenericEntity {
 	private GenericArray classmap = new GenericArray();
 	private GenericArray files = new GenericArray();
 	
-	@SerializedName("psr-0")
+	@Name("psr-0")
 	private Psr0 psr0 = new Psr0();
 	
 	protected void parse(Object obj) {
@@ -45,7 +47,13 @@ public class Autoload extends GenericEntity {
 				files.load(json.get("files"));
 			}
 		}
-	} 
+	}
+	
+	@Override
+	public Object prepareJson(LinkedList<String> fields) {
+		String[] order = new String[]{"psr-0", "classmap", "files"};
+		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
+	}
 	
 	public String getPsr0Path() {
 		if (psr0.size() > 0) {
@@ -81,10 +89,5 @@ public class Autoload extends GenericEntity {
 	
 	public GenericArray getFiles() {
 		return files;
-	}
-	
-	
-	public static Object getSerializer() {
-		return new AutoloadSerializer();
 	}
 }
