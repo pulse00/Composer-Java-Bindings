@@ -1,6 +1,8 @@
 package org.getcomposer.collection;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -31,6 +33,14 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 				add(dep);
 			}
 		}
+	}
+	
+	public Object prepareJson(LinkedList<String> fields) {
+		LinkedHashMap<String, Object> out = new LinkedHashMap<String, Object>();
+		for (Dependency dep : this) {
+			out.put(dep.getName(), dep.getVersion());
+		}
+		return out;
 	}
 	
 	/**

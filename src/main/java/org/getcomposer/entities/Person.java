@@ -2,8 +2,9 @@ package org.getcomposer.entities;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.json.simple.JSONValue;
+import java.io.Reader;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 
 /**
@@ -25,17 +26,29 @@ public class Person extends GenericEntity implements Cloneable {
 	
 	public Person(Object json) {
 		super();
-		parse(json);
+		fromJson(json);
 	}
 	
 	public Person(String json) {
 		super();
-		parse(JSONValue.parse(json));
+		fromJson(json);
 	}
 	
 	public Person(File file) throws IOException {
 		super();
-		load(file);
+		fromJson(file);
+	}
+	
+	public Person(Reader reader) throws IOException {
+		super();
+		fromJson(reader);
+	}
+	
+	@Override
+	public Object prepareJson(LinkedList<String> fields) {
+		String[] order = new String[]{"name", "email", "homepage", "role"};
+		fields.addAll(Arrays.asList(order));
+		return super.prepareJson(fields);
 	}
 
 	/**

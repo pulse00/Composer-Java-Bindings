@@ -1,11 +1,22 @@
 package org.getcomposer.repositories;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+
 import org.getcomposer.Resource;
 
 public abstract class Repository extends Resource {
 
 	public Repository(String type) {
 		set("type", type);
+	}
+	
+	
+	@Override
+	public Object prepareJson(LinkedList<String> fields) {
+		String[] before = new String[]{"type", "url"};
+		fields.addAll(0, new LinkedList<String>(Arrays.asList(before)));
+		return super.prepareJson(fields);
 	}
 
 	/**

@@ -25,15 +25,15 @@ public abstract class AbstractPackage extends Resource {
 			parseValue(json, "version");
 			
 			if (json.containsKey("autoload")) {
-				autoload.load(json.get("autoload"));
+				autoload.fromJson(json.get("autoload"));
 			}
 			
 			if (json.containsKey("dist")) {
-				dist.load(json.get("dist"));
+				dist.fromJson(json.get("dist"));
 			}
 			
 			if (json.containsKey("source")) {
-				source.load(json.get("source"));
+				source.fromJson(json.get("source"));
 			}
 		}
 		

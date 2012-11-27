@@ -352,16 +352,16 @@ public abstract class ComposertTestCase extends TestCase {
 		
 		assertEquals(4, psr.size());
 		assertEquals(1, psr.get(NAMESPACE).size());
-		assertEquals(NAMESPACE_PATH1, psr.get(NAMESPACE).get());
+		assertEquals(NAMESPACE_PATH1, psr.get(NAMESPACE).getFirst());
 		
 		assertEquals(2, psr.get(NAMESPACE2).size());
 		assertEquals(NAMESPACE_PATH2, psr.get(NAMESPACE2).getAll().get(1));
 		
 		assertEquals(1, psr.get(NAMESPACE3).size());
-		assertEquals("", psr.get(NAMESPACE3).get());
+		assertEquals("", psr.get(NAMESPACE3).getFirst());
 		
 		assertNotNull(psr.get(""));
-		assertEquals(NAMESPACE_PATH1, psr.get("").get());
+		assertEquals(NAMESPACE_PATH1, psr.get("").getFirst());
 		
 		// classmap
 		assertTrue(al.hasClassMap());

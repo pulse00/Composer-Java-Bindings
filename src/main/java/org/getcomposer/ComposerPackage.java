@@ -9,6 +9,7 @@ package org.getcomposer;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -22,7 +23,6 @@ import org.getcomposer.entities.Config;
 import org.getcomposer.entities.Extra;
 import org.getcomposer.entities.Support;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 /**
  * Represents a composer package. The source can either be a composer.json file
@@ -61,17 +61,22 @@ public class ComposerPackage extends AbstractPackage {
 	
 	public ComposerPackage(Object json) {
 		super();
-		parse(json);
+		fromJson(json);
 	}
 	
 	public ComposerPackage(String json) {
 		super();
-		parse(JSONValue.parse(json));
+		fromJson(json);
 	}
 	
 	public ComposerPackage(File file) throws IOException {
 		super();
-		load(file);
+		fromJson(file);
+	}
+	
+	public ComposerPackage(Reader reader) throws IOException {
+		super();
+		fromJson(reader);
 	}
 	
 	protected void parse(Object obj) {
@@ -86,35 +91,35 @@ public class ComposerPackage extends AbstractPackage {
 			parseValue(json, "target-dir");
 			
 			if (json.containsKey("require")) {
-				require.load(json.get("require"));
+				require.fromJson(json.get("require"));
 			}
 			
 			if (json.containsKey("require-dev")) {
-				requireDev.load(json.get("require-dev"));
+				requireDev.fromJson(json.get("require-dev"));
 			}
 			
 			if (json.containsKey("support")) {
-				support.load(json.get("support"));
+				support.fromJson(json.get("support"));
 			}
 			
 			if (json.containsKey("license")) {
-				license.load(json.get("license"));
+				license.fromJson(json.get("license"));
 			}
 			
 			if (json.containsKey("extra")) {
-				extra.load(json.get("extra"));
+				extra.fromJson(json.get("extra"));
 			}
 			
 			if (json.containsKey("authors")) {
-				authors.load(json.get("authors"));
+				authors.fromJson(json.get("authors"));
 			}
 			
 			if (json.containsKey("config")) {
-				config.load(json.get("config"));
+				config.fromJson(json.get("config"));
 			}
 			
 			if (json.containsKey("repositories")) {
-				repositories.load(json.get("repositories"));
+				repositories.fromJson(json.get("repositories"));
 			}
 		}
 		

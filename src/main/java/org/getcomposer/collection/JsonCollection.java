@@ -1,8 +1,11 @@
 package org.getcomposer.collection;
 
 import java.lang.reflect.Type;
+import java.util.LinkedList;
 
 import org.getcomposer.Entity;
+import org.getcomposer.GenericValue;
+import org.getcomposer.entities.Autoload;
 
 /**
  * Represents a dependency section of a composer package, either require or
@@ -23,6 +26,22 @@ public abstract class JsonCollection<V> extends Entity {
 	
 	public Type getValueType() {
 		return valueType;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	protected Object prepareJsonValue(Object value) {
+		if (value instanceof GenericValue) {
+			return ((GenericValue)value).toJsonValue();
+		} else if (value instanceof JsonCollection) {
+			JsonCollection coll = (JsonCollection) value;
+			if (coll.size() > 0 || value instanceof Autoload) {
+				return coll.prepareJson(new LinkedList<String>());
+			}
+		} else {
+			return value;	
+		}
+		
+		return null;
 	}
 	
 	/**

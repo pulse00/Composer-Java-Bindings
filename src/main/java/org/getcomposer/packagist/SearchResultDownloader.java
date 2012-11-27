@@ -16,10 +16,9 @@ import java.util.List;
 
 import org.getcomposer.ComposerConstants;
 import org.getcomposer.ComposerPackage;
-import org.getcomposer.Resource;
-
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 public class SearchResultDownloader extends Downloader {
 	public SearchResultDownloader() {
@@ -59,15 +58,35 @@ public class SearchResultDownloader extends Downloader {
 		setUrl(url);
 		InputStream resource = downloadResource();
 		InputStreamReader reader = new InputStreamReader(resource);
-		JsonReader jsonReader = new JsonReader(reader);
-		Gson gson = Resource.getBuilder();
 
-		return gson.fromJson(jsonReader, SearchResult.class);
+		return new SearchResult(JSONValue.parse(reader));
 	}
 
-	public static class SearchResult {
+	public class SearchResult {
 		public List<ComposerPackage> results;
 		public String next;
 		public String total;
+		
+		public SearchResult(Object obj) {
+			fromJson(obj);
+		}
+		
+		public void fromJson(Object obj) {
+			if (obj instanceof JSONObject) {
+				JSONObject json = (JSONObject) obj;
+				
+				next = (String)json.get("next");
+				total = json.get("total").toString();
+				results = new ArrayList<ComposerPackage>();
+				Object r = json.get("results");
+				
+				if (r instanceof JSONArray) {
+					
+					for (Object p : (JSONArray) r) {
+						results.add(new ComposerPackage(p));
+					}
+				}
+			}
+		}
 	}
 }

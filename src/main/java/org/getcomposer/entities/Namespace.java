@@ -50,7 +50,7 @@ public class Namespace extends GenericEntity {
 	 * 
 	 * @return the version
 	 */
-	public String get() {
+	public String getFirst() {
 		return (String) paths.get(0);
 	}
 	

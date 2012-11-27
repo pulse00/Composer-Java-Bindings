@@ -11,13 +11,10 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.getcomposer.Entity;
-import org.getcomposer.GenericValue;
 import org.getcomposer.annotation.Name;
 import org.getcomposer.entities.GenericEntity;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 
 public abstract class JsonMap<C, V> extends JsonCollection<V> {
@@ -92,22 +89,7 @@ public abstract class JsonMap<C, V> extends JsonCollection<V> {
 			}
 			
 			// run value.toJson() if available
-			if (value instanceof GenericValue) {
-				out.put(entry, ((GenericValue)value).toJsonValue());
-			} else if (value instanceof GenericEntity) {
-				GenericEntity entity = (GenericEntity) value;
-				if (entity.size() > 0 ) {
-					out.put(entry, entity.prepareJson(new LinkedList<String>()));
-				}
-			} else if (value instanceof GenericArray) {
-				GenericArray array = (GenericArray) value;
-				if (array.size() > 0) {
-					out.put(entry, array.prepareJson(new LinkedList<String>()));
-				}
-			} else {
-				out.put(entry, value);	
-			}
-			
+			out.put(entry, prepareJsonValue(value));
 		}
 		
 		return out;

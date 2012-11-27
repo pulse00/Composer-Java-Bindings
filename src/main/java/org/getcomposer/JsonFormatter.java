@@ -1,8 +1,8 @@
 package org.getcomposer;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.json.simple.JSONObject;
@@ -12,7 +12,13 @@ public class JsonFormatter {
 	public static String format(final Object object) {
 		final JsonVisitor visitor = new JsonVisitor(1, '\t');
 		visitor.visit(object, 0);
-		return visitor.toString();
+		return JsonFormatter.postProcessing(visitor.toString());
+	}
+	
+	private static String postProcessing(String json) {
+		json = json.replace("[\n{", "[{");
+		json = json.replace("},\n{", "}, {");
+		return json;
 	}
 	
 	private static class JsonVisitor {
@@ -44,7 +50,7 @@ public class JsonFormatter {
 
 		}
 
-		private void visit(final HashMap<String, Object> obj, final int indent) {
+		private void visit(final Map<String, Object> obj, final int indent) {
 			final int length = obj.size();
 			if (length == 0) {
 				write("{}", 0);
@@ -69,8 +75,8 @@ public class JsonFormatter {
 		private void visit(final Object object, int indent) {
 			if (object instanceof List) {
 				visit((List<Object>) object, indent);
-			} else if (object instanceof HashMap) {
-				visit((HashMap<String, Object>) object, indent);
+			} else if (object instanceof Map) {
+				visit((Map<String, Object>) object, indent);
 			} else {
 				if (builder.charAt(builder.length() - 1) != '\n') {
 					indent = 0;

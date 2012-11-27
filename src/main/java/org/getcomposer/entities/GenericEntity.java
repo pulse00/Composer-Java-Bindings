@@ -4,15 +4,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import org.getcomposer.GenericValue;
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.JsonMap;
-import org.json.simple.JSONValue;
 
 /**
  * Represents a generic entity.
@@ -33,17 +32,22 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	
 	public GenericEntity(Object json) {
 		super(Object.class);
-		parse(json);
+		fromJson(json);
 	}
 	
 	public GenericEntity(String json) {
 		super(Object.class);
-		parse(JSONValue.parse(json));
+		fromJson(json);
 	}
 	
 	public GenericEntity(File file) throws IOException {
 		super(Object.class);
-		load(file);
+		fromJson(file);
+	}
+	
+	public GenericEntity(Reader reader) throws IOException {
+		super(Object.class);
+		fromJson(reader);
 	}
 	
 	/**

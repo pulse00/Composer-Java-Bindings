@@ -2,11 +2,13 @@ package org.getcomposer.repositories;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
+import java.util.Arrays;
+import java.util.LinkedList;
 
 import org.getcomposer.RepositoryPackage;
 import org.getcomposer.annotation.Name;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 public class PackageRepository extends Repository {
 
@@ -15,22 +17,28 @@ public class PackageRepository extends Repository {
 	
 	public PackageRepository() {
 		super("package");
+		listen();
 	}
 	
 	
 	public PackageRepository(Object json) {
 		super("package");
-		parse(json);
+		fromJson(json);
 	}
 	
 	public PackageRepository(String json) {
 		super("package");
-		parse(JSONValue.parse(json));
+		fromJson(json);
 	}
 	
 	public PackageRepository(File file) throws IOException {
 		super("package");
-		load(file);
+		fromJson(file);
+	}
+	
+	public PackageRepository(Reader reader) throws IOException {
+		super("package");
+		fromJson(reader);
 	}
 	
 	protected void parse(Object obj) {
@@ -38,11 +46,17 @@ public class PackageRepository extends Repository {
 			JSONObject json = (JSONObject) obj;
 			
 			if (json.containsKey("package")) {
-				repositoryPackage.load(json.get("package"));
+				repositoryPackage.fromJson(json.get("package"));
 			}
 		}
 		
 		super.parse(obj);
+	}
+	
+	@Override
+	public Object prepareJson(LinkedList<String> fields) {
+		String[] order = new String[]{"package"};
+		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
 	}
 	
 	public RepositoryPackage getPackage() {

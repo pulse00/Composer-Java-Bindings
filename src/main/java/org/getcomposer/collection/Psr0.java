@@ -1,6 +1,8 @@
 package org.getcomposer.collection;
 
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -42,6 +44,24 @@ public class Psr0 extends JsonMap<Psr0, Namespace> implements Iterable<Namespace
 				add(nmspc);
 			}
 		}
+	}
+	
+	@Override
+	public Object prepareJson(LinkedList<String> fields) {
+		LinkedHashMap<String, Object> out = new LinkedHashMap<String, Object>();
+		for (Namespace nmspc : this) {
+			Object value = "";
+			
+			if (nmspc.size() > 1) {
+				value = prepareJsonValue(nmspc.getAll());
+			} else if (nmspc.size() == 1) {
+				value = nmspc.getFirst();
+			}
+			
+			out.put(nmspc.getNamespace(), value);
+		}
+			
+		return out;
 	}
 	
 	/**

@@ -27,7 +27,14 @@ public abstract class JsonList<V> extends JsonCollection<V> implements Iterable<
 	}
 	
 	public Object prepareJson(LinkedList<String> fields) {
-		return values;
+		LinkedList<Object> out = new LinkedList<Object>();
+		for (V val : values) {
+			if (val == null) {
+				continue;
+			}
+			out.add(prepareJsonValue(val));
+		}
+		return out;
 	}
 	
 	/*

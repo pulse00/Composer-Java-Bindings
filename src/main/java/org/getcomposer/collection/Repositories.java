@@ -24,7 +24,7 @@ public class Repositories extends JsonList<Repository> {
 				if (repo instanceof JSONObject && ((JSONObject)repo).containsKey("type")) {
 					String type = (String)((JSONObject)repo).get("type");
 					Repository r = RepositoryFactory.create(type);
-					r.load(repo);
+					r.fromJson(repo);
 					add(r);
 				}
 			}

@@ -2,8 +2,7 @@ package org.getcomposer.collection;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.json.simple.JSONValue;
+import java.io.Reader;
 
 
 public class GenericArray extends JsonList<Object>  implements Iterable<Object> {
@@ -14,17 +13,22 @@ public class GenericArray extends JsonList<Object>  implements Iterable<Object> 
 	
 	public GenericArray(Object json) {
 		super(Object.class);
-		parse(json);
+		fromJson(json);
 	}
 	
 	public GenericArray(String json) {
 		super(Object.class);
-		parse(JSONValue.parse(json));
+		fromJson(json);
 	}
 	
 	public GenericArray(File file) throws IOException {
 		super(Object.class);
-		load(file);
+		fromJson(file);
+	}
+	
+	public GenericArray(Reader reader) throws IOException {
+		super(Object.class);
+		fromJson(reader);
 	}
 
 	/**

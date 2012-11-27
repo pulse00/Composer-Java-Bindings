@@ -35,16 +35,16 @@ public class Autoload extends GenericEntity {
 		if (obj instanceof JSONObject) {
 			JSONObject json = (JSONObject) obj;
 			
-			if (json.containsKey("psr-0")) {
-				psr0.load(json.get("psr-0"));
+			if (json.containsKey("psr-0")) { 
+				psr0.fromJson(json.get("psr-0"));
 			}
 			
 			if (json.containsKey("classmap")) {
-				classmap.load(json.get("classmap"));
+				classmap.fromJson(json.get("classmap"));
 			}
 			
 			if (json.containsKey("files")) {
-				files.load(json.get("files"));
+				files.fromJson(json.get("files"));
 			}
 		}
 	}
@@ -52,12 +52,13 @@ public class Autoload extends GenericEntity {
 	@Override
 	public Object prepareJson(LinkedList<String> fields) {
 		String[] order = new String[]{"psr-0", "classmap", "files"};
-		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
+		fields.addAll(Arrays.asList(order));
+		return super.prepareJson(fields);
 	}
 	
 	public String getPsr0Path() {
 		if (psr0.size() > 0) {
-			return ((Namespace)psr0.iterator().next()).get();
+			return ((Namespace)psr0.iterator().next()).getFirst();
 		}
 		return null;
 	}
@@ -77,11 +78,6 @@ public class Autoload extends GenericEntity {
 	public Psr0 getPsr0() {
 		return psr0;
 	}
-
-//	public Autoload setPsr0(Psr0 psr0) {
-//		firePropertyChange("psr-0", this.psr0, this.psr0 = psr0);
-//		return this;
-//	}
 	
 	public GenericArray getClassMap() {
 		return classmap;

@@ -2,6 +2,7 @@ package org.getcomposer;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -10,7 +11,6 @@ import org.getcomposer.collection.Versions;
 import org.getcomposer.packagist.PackagistDownloader;
 import org.getcomposer.repositories.PackageRepository;
 import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 
 public class RepositoryPackage extends AbstractPackage {
 	
@@ -23,17 +23,22 @@ public class RepositoryPackage extends AbstractPackage {
 	
 	public RepositoryPackage(Object json) {
 		super();
-		parse(json);
+		fromJson(json);
 	}
 	
 	public RepositoryPackage(String json) {
 		super();
-		parse(JSONValue.parse(json));
+		fromJson(json);
 	}
 	
 	public RepositoryPackage(File file) throws IOException {
 		super();
-		load(file);
+		fromJson(file);
+	}
+	
+	public RepositoryPackage(Reader reader) throws IOException {
+		super();
+		fromJson(reader);
 	}
 	
 	protected void parse(Object obj) {
@@ -44,11 +49,11 @@ public class RepositoryPackage extends AbstractPackage {
 			parseValue(json, "repository");
 			
 			if (json.containsKey("versions")) {
-				versions.load(json.get("versions"));
+				versions.fromJson(json.get("versions"));
 			}
 			
 			if (json.containsKey("maintainers")) {
-				maintainers.load(json.get("maintainers"));
+				maintainers.fromJson(json.get("maintainers"));
 			}
 
 		}
