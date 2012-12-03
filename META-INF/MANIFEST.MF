@@ -4,7 +4,6 @@ Bundle-Name: Composer Java Library
 Bundle-SymbolicName: org.getcomposer
 Bundle-Version: 0.0.1.qualifier
 Bundle-Vendor: https://github.com/pulse00
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.getcomposer;uses:="org.getcomposer.collection,org.getcomposer.entities",
  org.getcomposer.annotation,
  org.getcomposer.collection;uses:="org.getcomposer,org.json.simple,org.getcomposer.entities",
@@ -15,3 +14,4 @@ Require-Bundle: org.junit,
  org.apache.httpcomponents.httpclient,
  org.apache.httpcomponents.httpcore
 Bundle-ClassPath: lib/json-simple-1.1.1.jar
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
