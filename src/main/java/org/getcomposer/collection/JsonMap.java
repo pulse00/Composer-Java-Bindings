@@ -84,12 +84,14 @@ public abstract class JsonMap<C, V> extends JsonCollection<V> {
 				}
 			}
 			
-			if (value == null) {
+			value = prepareJsonValue(value);
+			
+			if (value == null || value.equals("")) {
 				continue;
 			}
 			
 			// run value.toJson() if available
-			out.put(entry, prepareJsonValue(value));
+			out.put(entry, value);
 		}
 		
 		return out;

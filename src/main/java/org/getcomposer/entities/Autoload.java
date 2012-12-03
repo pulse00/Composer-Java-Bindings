@@ -51,6 +51,9 @@ public class Autoload extends GenericEntity {
 	
 	@Override
 	public Object prepareJson(LinkedList<String> fields) {
+		if (classmap.size() == 0 && files.size() == 0 && psr0.size() == 0) {
+			return null;
+		}
 		String[] order = new String[]{"psr-0", "classmap", "files"};
 		fields.addAll(Arrays.asList(order));
 		return super.prepareJson(fields);

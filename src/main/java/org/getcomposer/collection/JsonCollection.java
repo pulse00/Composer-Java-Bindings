@@ -38,7 +38,7 @@ public abstract class JsonCollection<V> extends Entity {
 				return coll.prepareJson(new LinkedList<String>());
 			}
 		} else {
-			return value;	
+			return value;
 		}
 		
 		return null;
