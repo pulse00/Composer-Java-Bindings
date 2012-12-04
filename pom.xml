@@ -4,28 +4,13 @@
 
 	<groupId>org.getcomposer</groupId>
 	<artifactId>org.getcomposer.core</artifactId>
-	<packaging>jar</packaging>
+	<packaging>eclipse-plugin</packaging>
+
 
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Java Composer API</name>
 	<description>Javabindings for the PHP dependency manager composer.</description>
-	<dependencies>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.2.1</version>
-		</dependency>
-	</dependencies>
+
 	<organization>
 		<name>PDT Extension Group</name>
 		<url>http://pdt-extensions.org/</url>
@@ -33,7 +18,7 @@
 	<scm>
 		<url>https://github.com/pulse00/Composer-Java-Bindings.git</url>
 		<connection>git</connection>
-		<developerConnection>Robert GrŸndler</developerConnection>
+		<developerConnection>Robert Grï¿½ndler</developerConnection>
 		<tag>composer</tag>
 	</scm>
 	<ciManagement>
@@ -42,29 +27,85 @@
 	</ciManagement>
 	<url>https://github.com/pulse00/Composer-Java-Bindings</url>
 
+	<properties>
+		<tycho-version>0.15.0</tycho-version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>github</id>
+			<layout>p2</layout>
+			<url>http://pulse00.github.com/p2/</url>
+		</repository>
+		<repository>
+			<id>orbit</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/tools/orbit/downloads/drops/I20121015230140/repository</url>
+		</repository>
+		<repository>
+			<id>dltk-tests</id>
+			<layout>p2</layout>
+			<url>https://hudson.eclipse.org/hudson/job/dltk-nightly/lastSuccessfulBuild/artifact/org.eclipse.dltk.releng/build/update.site/target/site/</url>
+		</repository>
+		<repository>
+			<id>juno</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/juno</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>tycho repo public</id>
+			<url>https://repository.sonatype.org/content/groups/public</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>tycho repo snapshots</id>
+			<url>https://repository.sonatype.org/content/repositories/snapshots</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>maven.eclipse.org</id>
+			<url>http://maven.eclipse.org/nexus/content/repositories/milestone-indigo</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>tycho</id>
+			<url>http://mvnrepository.com/artifact/org.eclipse.tycho/</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Repository for Maven</name>
+			<url>http://download.java.net/maven/2/</url>
+			<layout>default</layout>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<build>
 		<plugins>
 			<plugin>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-compiler-plugin</artifactId>
-			<configuration>
-				<fork>true</fork>
-				<source>1.5</source>
-				<target>1.5</target>
-			</configuration>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
 			</plugin>
-
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-compiler-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-packaging-plugin</artifactId>
+				<version>${tycho-version}</version>
 				<configuration>
 					<archive>
-						<manifestFile>META-INF/MANIFEST.MF</manifestFile>
+						<addMavenDescriptor>false</addMavenDescriptor>
 					</archive>
 				</configuration>
 			</plugin>
-		</plugins> 
-
+		</plugins>
 	</build>
 
 </project>
