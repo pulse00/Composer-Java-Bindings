@@ -48,31 +48,6 @@
 			<url>http://download.eclipse.org/releases/juno</url>
 		</repository>
 	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>tycho repo public</id>
-			<url>https://repository.sonatype.org/content/groups/public</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>tycho repo snapshots</id>
-			<url>https://repository.sonatype.org/content/repositories/snapshots</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>maven.eclipse.org</id>
-			<url>http://maven.eclipse.org/nexus/content/repositories/milestone-indigo</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>tycho</id>
-			<url>http://mvnrepository.com/artifact/org.eclipse.tycho/</url>
-		</pluginRepository>
-		<pluginRepository>
-			<id>maven2-repository.dev.java.net</id>
-			<name>Java.net Repository for Maven</name>
-			<url>http://download.java.net/maven/2/</url>
-			<layout>default</layout>
-		</pluginRepository>
-	</pluginRepositories>
-
 	<build>
 		<plugins>
 			<plugin>
