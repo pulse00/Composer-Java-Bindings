@@ -1,5 +1,7 @@
 package org.getcomposer.collection;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -20,6 +22,12 @@ import org.json.simple.JSONObject;
  */
 public class Psr0 extends JsonMap<Psr0, Namespace> implements Iterable<Namespace> {
 
+	private transient PropertyChangeListener listener = new PropertyChangeListener() {
+		public void propertyChange(PropertyChangeEvent evt) {
+			firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+		}
+	};
+	
 	public Psr0() {
 		super(Dependency.class);
 	}
@@ -71,6 +79,7 @@ public class Psr0 extends JsonMap<Psr0, Namespace> implements Iterable<Namespace
 	 * @return this
 	 */
 	public void add(Namespace namespace) {
+		namespace.addPropertyChangeListener(listener);
 		super.set(namespace.getNamespace(), namespace);
 	}
 
@@ -80,6 +89,7 @@ public class Psr0 extends JsonMap<Psr0, Namespace> implements Iterable<Namespace
 	 * @param dependency the dependency to remove
 	 */
 	public void remove(Namespace namespace) {
+		namespace.removePropertyChangeListener(listener);
 		super.remove(namespace.getNamespace());
 	}
 	

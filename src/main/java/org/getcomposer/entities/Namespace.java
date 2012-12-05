@@ -1,5 +1,7 @@
 package org.getcomposer.entities;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.LinkedList;
 
 import org.getcomposer.collection.GenericArray;
@@ -16,6 +18,12 @@ public class Namespace extends GenericEntity {
 	private transient GenericArray paths = new GenericArray();
 	
 	public Namespace() {
+		listen();
+		paths.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent evt) {
+				firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+			}
+		});
 	}
 	
 	@Override

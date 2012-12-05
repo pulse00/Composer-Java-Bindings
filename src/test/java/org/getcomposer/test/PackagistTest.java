@@ -75,7 +75,7 @@ public class PackagistTest extends TestCase {
 		
 		for (ComposerPackage phpPackage : packages) {
 			if (query.equals("foo bar")) {
-				System.err.println(phpPackage.getName());
+//				System.err.println(phpPackage.getName());
 			}
 			assertNotNull(phpPackage);
 			assertNotNull(phpPackage.getName());

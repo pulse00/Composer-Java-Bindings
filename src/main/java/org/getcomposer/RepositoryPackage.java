@@ -19,26 +19,31 @@ public class RepositoryPackage extends AbstractPackage {
 	
 	public RepositoryPackage() {
 		super();
+		listen();
 	}
 	
 	public RepositoryPackage(Object json) {
-		super();
+		this();
 		fromJson(json);
+		listen();
 	}
 	
 	public RepositoryPackage(String json) {
-		super();
+		this();
 		fromJson(json);
+		listen();
 	}
 	
 	public RepositoryPackage(File file) throws IOException {
-		super();
+		this();
 		fromJson(file);
+		listen();
 	}
 	
 	public RepositoryPackage(Reader reader) throws IOException {
-		super();
+		this();
 		fromJson(reader);
+		listen();
 	}
 	
 	protected void parse(Object obj) {

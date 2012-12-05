@@ -8,11 +8,8 @@ import org.getcomposer.GenericValue;
 import org.getcomposer.entities.Autoload;
 
 /**
- * Represents a dependency section of a composer package, either require or
- * require-dev
+ * Represents a collection
  * 
- * @see http://getcomposer.org/doc/04-schema.md#require
- * @see http://getcomposer.org/doc/04-schema.md#require-dev
  * @author Thomas Gossmann <gos.si>
  */
 public abstract class JsonCollection<V> extends Entity {
@@ -24,6 +21,11 @@ public abstract class JsonCollection<V> extends Entity {
 		this.valueType = type;
 	}
 	
+	/**
+	 * Returns the type for the values of this collection
+	 * 
+	 * @return the type
+	 */
 	public Type getValueType() {
 		return valueType;
 	}

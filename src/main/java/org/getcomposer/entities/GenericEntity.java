@@ -6,9 +6,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.getcomposer.Entity;
 import org.getcomposer.GenericValue;
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.JsonMap;
@@ -22,32 +25,49 @@ import org.getcomposer.collection.JsonMap;
 public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implements Cloneable {
 
 	private transient Map<String, PropertyChangeListener> listeners = new HashMap<String, PropertyChangeListener>();
+	private transient List<String> silentProps;
 	
 	/**
 	 * Creates an empty entity
 	 */
 	public GenericEntity() {
 		super(Object.class);
+		listen();
 	}
 	
 	public GenericEntity(Object json) {
 		super(Object.class);
 		fromJson(json);
+		listen();
 	}
 	
 	public GenericEntity(String json) {
 		super(Object.class);
 		fromJson(json);
+		listen();
 	}
 	
 	public GenericEntity(File file) throws IOException {
 		super(Object.class);
 		fromJson(file);
+		listen();
 	}
 	
 	public GenericEntity(Reader reader) throws IOException {
 		super(Object.class);
 		fromJson(reader);
+		listen();
+	}
+	
+	@Override
+	protected void initialize() {
+		super.initialize();
+		
+		this.silentProps = getSilentProperties();
+	}
+	
+	protected List<String> getSilentProperties() {
+		return new ArrayList<String>();
 	}
 	
 	/**
@@ -61,8 +81,8 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * </ul>
 	 */
 	public boolean is(String property, Type type) {
-		if (properties.containsKey(property)) {
-			return properties.get(property).is(type);
+		if (has(property)) {
+			return get(property).is(type);
 		}
 		return false;
 	}
@@ -78,8 +98,8 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * </ul>
 	 */
 	public boolean isArray(String property) {
-		if (properties.containsKey(property)) {
-			return properties.get(property).isArray();
+		if (has(property)) {
+			return get(property).isArray();
 		}
 		return false;
 	}
@@ -95,8 +115,8 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * </ul>
 	 */
 	public boolean isEntity(String property) {
-		if (properties.containsKey(property)) {
-			return properties.get(property).isEntity();
+		if (has(property)) {
+			return get(property).isEntity();
 		}
 		return false;
 	}
@@ -108,7 +128,7 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value
 	 */
 	public Object getAsObject(String property) {
-		return properties.get(property);
+		return get(property).getAsObject();
 	}
 	
 	/**
@@ -118,10 +138,10 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value
 	 */
 	public GenericArray getAsArray(String property) {
-		if (!properties.containsKey(property)) {
-			properties.put(property, new GenericValue(new GenericArray()));
+		if (!has(property)) {
+			set(property, new GenericArray());
 		}
-		return properties.get(property).getAsArray();
+		return get(property).getAsArray();
 	}
 	
 	/**
@@ -131,8 +151,8 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value as string
 	 */
 	public String getAsString(String property) {
-		if (properties.containsKey(property)) {
-			return properties.get(property).getAsString();
+		if (has(property)) {
+			return get(property).getAsString();
 		}
 		return null;
 	}
@@ -144,8 +164,8 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value as boolean
 	 */
 	public Boolean getAsBoolean(String property) {
-		if (properties.containsKey(property)) {
-			return properties.get(property).getAsBoolean();
+		if (has(property)) {
+			return get(property).getAsBoolean();
 		}
 		return null;
 	}
@@ -157,8 +177,8 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value as integer
 	 */
 	public Integer getAsInteger(String property) {
-		if (properties.containsKey(property)) {
-			return properties.get(property).getAsInteger();
+		if (has(property)) {
+			return get(property).getAsInteger();
 		}
 		return null;
 	}
@@ -170,8 +190,8 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value as double
 	 */
 	public Float getAsFloat(String property) {
-		if (properties.containsKey(property)) {
-			return properties.get(property).getAsFloat();
+		if (has(property)) {
+			return get(property).getAsFloat();
 		}
 		return null;
 	}
@@ -183,10 +203,10 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @return the value as entity
 	 */
 	public GenericEntity getAsEntity(String property) {
-		if (!properties.containsKey(property)) {
-			properties.put(property, new GenericValue(new GenericEntity()));
+		if (!has(property)) {
+			set(property, new GenericEntity());
 		}
-		return properties.get(property).getAsEntity();
+		return get(property).getAsEntity();
 	}
 
 	/**
@@ -207,23 +227,58 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @param value the new value
 	 */
 	public void set(final String property, GenericValue value) {
-		super.set(property, value);
+
+		// install listener to be aware of changes 		
+		if ((value.isEntity() || value.isArray()) && !listeners.containsKey(property)) {
+			installListener(property, value);
+		}
+
+		// remove listener if new value is a primitive
+		if (!(value.isEntity() || value.isArray()) && listeners.containsKey(property)) {
+			uninstallListener(property);
+		}
+
+		if (silentProps.contains(property)) {
+			properties.put(property, value);
+		} else {
+			super.set(property, value);
+		}
+	}
+	
+	private void installListener(final String property, GenericValue value) {
+		Entity entity = getEntity(value);
 		
-		// install listener to be aware of changes 
-		if ((value.isEntity() || value.isArray())
-				&& !listeners.containsKey(property)) {
+		if (value != null) {
 			listeners.put(property, new PropertyChangeListener() {
 				public void propertyChange(PropertyChangeEvent evt) {
 					firePropertyChange(property, evt.getOldValue(), evt.getNewValue());
 				}
 			});
+
+			entity.addPropertyChangeListener(listeners.get(property));
 		}
-		
-		// remove listener if new value is a primitive
-		if (!(value.isEntity() || value.isArray())
-				&& listeners.containsKey(property)) {
+	}
+	
+	private void uninstallListener(String property) {
+		if (listeners.containsKey(property)) {
+			Entity entity = getEntity(get(property));
+			entity.removePropertyChangeListener(listeners.get(property));
 			listeners.remove(property);
 		}
+	}
+	
+	private Entity getEntity(GenericValue value) {
+		Entity entity = null;
+		
+		if (value.isArray()) {
+			entity = value.getAsArray();
+		}
+		
+		if (value.isEntity()) {
+			entity = value.getAsEntity();
+		}
+		
+		return entity;
 	}
 	
 	/**
@@ -232,8 +287,8 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 * @param property the property
 	 */
 	public void remove(String property) {
+		uninstallListener(property);
 		remove(property);
-		listeners.remove(property);
 	}
 	
 	/*

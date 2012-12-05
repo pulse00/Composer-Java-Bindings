@@ -21,27 +21,31 @@ public class Person extends GenericEntity implements Cloneable {
 	 * Creates an empty person
 	 */
 	public Person() {
-		
+		listen();
 	}
 	
 	public Person(Object json) {
 		super();
 		fromJson(json);
+		listen();
 	}
 	
 	public Person(String json) {
 		super();
 		fromJson(json);
+		listen();
 	}
 	
 	public Person(File file) throws IOException {
 		super();
 		fromJson(file);
+		listen();
 	}
 	
 	public Person(Reader reader) throws IOException {
 		super();
 		fromJson(reader);
+		listen();
 	}
 	
 	@Override

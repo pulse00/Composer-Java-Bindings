@@ -1,17 +1,13 @@
 package org.getcomposer.collection;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.getcomposer.annotation.Name;
 import org.getcomposer.entities.GenericEntity;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -95,33 +91,6 @@ public abstract class JsonMap<C, V> extends JsonCollection<V> {
 		}
 		
 		return out;
-	}
-	
-	@SuppressWarnings("rawtypes")
-	private ArrayList<Field> getFields(Class entity) {
-		ArrayList<Field> fields = new ArrayList<Field>();
-		Class superClass = entity;
-		
-		while (superClass != null) {
-			for (Field field : superClass.getDeclaredFields()) {
-				if (!((field.getModifiers() & Modifier.TRANSIENT) == Modifier.TRANSIENT)) {
-					fields.add(field);
-				}
-			}
-			superClass = superClass.getSuperclass();		
-		}
-		
-		return fields;
-	}
-	
-	private String getFieldName(Field field) {
-		String name = field.getName();
-		for (Annotation anno : field.getAnnotations()) {
-			if (anno.annotationType() == Name.class) {
-				name = ((Name) anno).value();
-			}
-		}
-		return name;
 	}
 
 	/*

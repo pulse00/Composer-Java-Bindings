@@ -7,43 +7,87 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
+import org.getcomposer.annotation.Name;
 import org.getcomposer.collection.JsonCollection;
-import org.getcomposer.entities.GenericEntity;
 import org.json.simple.JSONValue;
 
 public abstract class Entity {
 
 	private transient PropertyChangeSupport changeSupport = new PropertyChangeSupport(
 			this);
+	private transient Set<String> listening = new HashSet<String>(); 
 
 	public Entity() {
-		
+		listen();
+		initialize();
+	}
+	
+	// can be filled by subclasses
+	protected void initialize() {
 	}
 	
 	protected void listen() {
 		try {
-			for (Field field : this.getClass().getDeclaredFields()) {
-				if (field.getType().isAssignableFrom(JsonCollection.class) ||
-						field.getType().isAssignableFrom(GenericEntity.class)) {
-					final String prop = field.getName();
+			for (Field field : getFields(this.getClass())) {
+				if (JsonCollection.class.isAssignableFrom(field.getType())) {
+					final String prop = getFieldName(field);	
+					
+					if (listening.contains(prop)) {
+						continue;
+					}
+					
 					field.setAccessible(true);
 					Entity obj = (Entity)field.get(this);
-					obj.addPropertyChangeListener(new PropertyChangeListener() {
-						public void propertyChange(PropertyChangeEvent e) {
-							firePropertyChange(prop, e.getOldValue(), e.getNewValue());
-						}
-					});
-					
+
+					if (obj != null) {
+						obj.addPropertyChangeListener(new PropertyChangeListener() {
+							public void propertyChange(PropertyChangeEvent e) {
+								firePropertyChange(prop, e.getOldValue(), e.getNewValue());
+							}
+						});
+						
+						listening.add(prop);
+					}
 				}
 			}
-			
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings("rawtypes")
+	protected ArrayList<Field> getFields(Class entity) {
+		ArrayList<Field> fields = new ArrayList<Field>();
+		Class superClass = entity;
+		
+		while (superClass != null) {
+			for (Field field : superClass.getDeclaredFields()) {
+				if (!((field.getModifiers() & Modifier.TRANSIENT) == Modifier.TRANSIENT)) {
+					fields.add(field);
+				}
+			}
+			superClass = superClass.getSuperclass();		
+		}
+		
+		return fields;
+	}
+	
+	protected String getFieldName(Field field) {
+		String name = field.getName();
+		for (Annotation anno : field.getAnnotations()) {
+			if (anno.annotationType() == Name.class) {
+				name = ((Name) anno).value();
+			}
+		}
+		return name;
 	}
 	
 	

@@ -31,6 +31,10 @@ public class Autoload extends GenericEntity {
 	@Name("psr-0")
 	private Psr0 psr0 = new Psr0();
 	
+	public Autoload() {
+		listen();
+	}
+	
 	protected void parse(Object obj) {
 		if (obj instanceof JSONObject) {
 			JSONObject json = (JSONObject) obj;

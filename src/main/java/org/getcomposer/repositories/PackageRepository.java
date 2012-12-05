@@ -24,21 +24,25 @@ public class PackageRepository extends Repository {
 	public PackageRepository(Object json) {
 		super("package");
 		fromJson(json);
+		listen();
 	}
 	
 	public PackageRepository(String json) {
 		super("package");
 		fromJson(json);
+		listen();
 	}
 	
 	public PackageRepository(File file) throws IOException {
 		super("package");
 		fromJson(file);
+		listen();
 	}
 	
 	public PackageRepository(Reader reader) throws IOException {
 		super("package");
 		fromJson(reader);
+		listen();
 	}
 	
 	protected void parse(Object obj) {

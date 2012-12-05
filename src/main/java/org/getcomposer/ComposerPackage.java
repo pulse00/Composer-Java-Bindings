@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.getcomposer.annotation.Name;
 import org.getcomposer.collection.Dependencies;
@@ -39,15 +40,12 @@ public class ComposerPackage extends AbstractPackage {
 
 	private Dependencies require = new Dependencies();
 	private Repositories repositories = new Repositories();
-	
-//	private GenericArray bin = new GenericArray();
 
 	@Name("require-dev")
 	private Dependencies requireDev = new Dependencies();
 
 	private Support support = new Support();
 	private License license = new License();
-//	private GenericArray keywords = new GenericArray();
 	
 	private Persons authors = new Persons();
 	
@@ -57,26 +55,37 @@ public class ComposerPackage extends AbstractPackage {
 
 	public ComposerPackage() {
 		super();
+		listen();
 	}
 	
 	public ComposerPackage(Object json) {
 		super();
 		fromJson(json);
+		listen();
 	}
 	
 	public ComposerPackage(String json) {
 		super();
 		fromJson(json);
+		listen();
 	}
 	
 	public ComposerPackage(File file) throws IOException {
 		super();
 		fromJson(file);
+		listen();
 	}
 	
 	public ComposerPackage(Reader reader) throws IOException {
 		super();
 		fromJson(reader);
+		listen();
+	}
+	
+	protected List<String> getSilentProperties() {
+		List<String> props = super.getSilentProperties();
+		props.addAll(Arrays.asList(new String[]{"bin", "keywords"}));
+		return props;
 	}
 	
 	protected void parse(Object obj) {
