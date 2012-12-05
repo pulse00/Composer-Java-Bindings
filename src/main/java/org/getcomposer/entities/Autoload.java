@@ -39,17 +39,9 @@ public class Autoload extends GenericEntity {
 		if (obj instanceof JSONObject) {
 			JSONObject json = (JSONObject) obj;
 			
-			if (json.containsKey("psr-0")) { 
-				psr0.fromJson(json.get("psr-0"));
-			}
-			
-			if (json.containsKey("classmap")) {
-				classmap.fromJson(json.get("classmap"));
-			}
-			
-			if (json.containsKey("files")) {
-				files.fromJson(json.get("files"));
-			}
+			parseField(json, "psr-0");
+			parseField(json, "classmap");
+			parseField(json, "files");
 		}
 	}
 	

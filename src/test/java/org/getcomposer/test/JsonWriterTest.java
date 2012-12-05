@@ -8,8 +8,6 @@ public class JsonWriterTest extends ComposertTestCase {
 	private ComposerPackage phpPackage;
 	private String json;
 
-	
-	
 	/*
 	 * would be better in a @BeforeClass as so, this does not work for me
 	 */
@@ -45,6 +43,11 @@ public class JsonWriterTest extends ComposertTestCase {
 	}
 	
 	@Test
+	public void testScripts() {
+		doTestScripts(new ComposerPackage(json));
+	}
+	
+	@Test
 	public void testSupport() {
 		doTestSupport(new ComposerPackage(json));
 	}
@@ -54,7 +57,8 @@ public class JsonWriterTest extends ComposertTestCase {
 		doTestRepositories(new ComposerPackage(json));
 	}
 	
-	@Test public void testSimplePackage() {
+	@Test 
+	public void testSimplePackage() {
 		ComposerPackage pkg = new ComposerPackage();
 		pkg.setName("test/package");
 		pkg.setType("");

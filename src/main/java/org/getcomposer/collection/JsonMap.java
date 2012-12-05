@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.getcomposer.Entity;
 import org.getcomposer.entities.GenericEntity;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -44,6 +45,23 @@ public abstract class JsonMap<C, V> extends JsonCollection<V> {
 		set(property, value);
 	}
 	
+	protected void parseField(JSONObject json, String property) {
+		if (json.containsKey(property)) {
+			Field field = getFieldByName(this.getClass(), property);
+			
+			if (field != null && Entity.class.isAssignableFrom(field.getType())) {
+				try {
+					field.setAccessible(true);
+					Entity entity = (Entity)field.get(this);
+					entity.fromJson(json.get(property));
+					json.remove(property);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	public Object prepareJson(LinkedList<String> fields) {
 		
 		// First: add properties that aren't in the hashmap yet
@@ -66,19 +84,22 @@ public abstract class JsonMap<C, V> extends JsonCollection<V> {
 			}
 			Object value = null;
 			
-			// check properties first
-			if (properties.containsKey(entry)) {
-				value = properties.get(entry);
-			} 
 			
-			// search class fields
-			else if (namedFields.containsKey(entry)) {
+			// search class fields first
+			if (namedFields.containsKey(entry)) {
 				try {
 					value = namedFields.get(entry).get(this);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
+			
+			// check properties
+			else if (properties.containsKey(entry)) {
+				value = properties.get(entry);
+			} 
+			
+			
 			
 			value = prepareJsonValue(value);
 			

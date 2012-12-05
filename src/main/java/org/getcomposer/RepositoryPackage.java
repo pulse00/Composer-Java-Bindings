@@ -51,16 +51,11 @@ public class RepositoryPackage extends AbstractPackage {
 
 			JSONObject json = (JSONObject)obj;
 
-			parseValue(json, "repository");
+			// parsed from super:
+			// repository
 			
-			if (json.containsKey("versions")) {
-				versions.fromJson(json.get("versions"));
-			}
-			
-			if (json.containsKey("maintainers")) {
-				maintainers.fromJson(json.get("maintainers"));
-			}
-
+			parseField(json, "versions");
+			parseField(json, "maintainers");
 		}
 		
 		super.parse(obj);

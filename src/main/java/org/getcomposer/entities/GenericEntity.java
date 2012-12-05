@@ -228,16 +228,14 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	 */
 	public void set(final String property, GenericValue value) {
 
+		// remove listener on the current value if there is one yet
+		uninstallListener(property);
+		
 		// install listener to be aware of changes 		
 		if ((value.isEntity() || value.isArray()) && !listeners.containsKey(property)) {
 			installListener(property, value);
 		}
-
-		// remove listener if new value is a primitive
-		if (!(value.isEntity() || value.isArray()) && listeners.containsKey(property)) {
-			uninstallListener(property);
-		}
-
+		
 		if (silentProps.contains(property)) {
 			properties.put(property, value);
 		} else {
@@ -261,8 +259,12 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	
 	private void uninstallListener(String property) {
 		if (listeners.containsKey(property)) {
-			Entity entity = getEntity(get(property));
-			entity.removePropertyChangeListener(listeners.get(property));
+			if (has(property)) {
+				Entity entity = getEntity(get(property));
+				if (entity != null) {
+					entity.removePropertyChangeListener(listeners.get(property));
+				}
+			}
 			listeners.remove(property);
 		}
 	}

@@ -22,6 +22,7 @@ import org.getcomposer.collection.Persons;
 import org.getcomposer.collection.Repositories;
 import org.getcomposer.entities.Config;
 import org.getcomposer.entities.Extra;
+import org.getcomposer.entities.Scripts;
 import org.getcomposer.entities.Support;
 import org.json.simple.JSONObject;
 
@@ -51,6 +52,8 @@ public class ComposerPackage extends AbstractPackage {
 	
 	private Extra extra = new Extra();
 	private Config config = new Config();
+	
+	private Scripts scripts = new Scripts();
 	
 
 	public ComposerPackage() {
@@ -93,43 +96,18 @@ public class ComposerPackage extends AbstractPackage {
 
 			JSONObject json = (JSONObject)obj;
 
-			parseValue(json, "bin");
-			parseValue(json, "homepage");
-			parseValue(json, "keywords");
-			parseValue(json, "minimum-stability");
-			parseValue(json, "target-dir");
+			// parsed from super:
+			// bin, homepage, keywords, minimum-stability, target-dir
 			
-			if (json.containsKey("require")) {
-				require.fromJson(json.get("require"));
-			}
-			
-			if (json.containsKey("require-dev")) {
-				requireDev.fromJson(json.get("require-dev"));
-			}
-			
-			if (json.containsKey("support")) {
-				support.fromJson(json.get("support"));
-			}
-			
-			if (json.containsKey("license")) {
-				license.fromJson(json.get("license"));
-			}
-			
-			if (json.containsKey("extra")) {
-				extra.fromJson(json.get("extra"));
-			}
-			
-			if (json.containsKey("authors")) {
-				authors.fromJson(json.get("authors"));
-			}
-			
-			if (json.containsKey("config")) {
-				config.fromJson(json.get("config"));
-			}
-			
-			if (json.containsKey("repositories")) {
-				repositories.fromJson(json.get("repositories"));
-			}
+			parseField(json, "require");
+			parseField(json, "require-dev");
+			parseField(json, "support");
+			parseField(json, "license");
+			parseField(json, "extra");
+			parseField(json, "authors");
+			parseField(json, "config");
+			parseField(json, "scripts");
+			parseField(json, "repositories");
 		}
 		
 		super.parse(obj);
@@ -137,7 +115,7 @@ public class ComposerPackage extends AbstractPackage {
 	
 	@Override
 	public Object prepareJson(LinkedList<String> fields) {
-		String[] order = new String[]{"authors", "version", "keywords", "homepage", "license", "require", "require-dev","autoload","target-dir","minimum-stability","support","repositories","config","extra","bin"};
+		String[] order = new String[]{"authors", "version", "keywords", "homepage", "license", "require", "require-dev","autoload","target-dir","minimum-stability","support","repositories","config","scripts","extra","bin"};
 		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
 	}
 
@@ -286,6 +264,15 @@ public class ComposerPackage extends AbstractPackage {
 	 */
 	public Config getConfig() {
 		return config;
+	}
+	
+	/**
+	 * Returns the scripts entity
+	 * 
+	 * @return the scripts
+	 */
+	public Scripts getScripts() {
+		return scripts;
 	}
 
 	/**

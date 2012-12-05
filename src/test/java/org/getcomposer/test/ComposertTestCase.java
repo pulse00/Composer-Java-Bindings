@@ -18,6 +18,7 @@ import org.getcomposer.entities.Extra;
 import org.getcomposer.entities.GenericEntity;
 import org.getcomposer.entities.Namespace;
 import org.getcomposer.entities.Person;
+import org.getcomposer.entities.Scripts;
 import org.getcomposer.entities.Source;
 import org.getcomposer.entities.Support;
 import org.getcomposer.repositories.ComposerRepository;
@@ -99,6 +100,20 @@ public abstract class ComposertTestCase extends TestCase {
 	protected static String SMARTY_SOURCE = "svn";
 	protected static String SMARTY_REFERENCE = "tags/Smarty_3_1_7/distribution/";
 	
+	// scripts
+	
+	protected static String PRE_INSTALL_CMD = "pre\\install::cmd()";
+	protected static String POST_INSTALL_CMD = "post\\install::cmd()";
+	protected static String POST_INSTALL_TEST = "phpunit";
+	protected static String PRE_UPDATE_CMD = "pre\\update::cmd()";
+	protected static String POST_UPDATE_CMD = "post\\update::cmd()";
+	protected static String PRE_PACKAGE_INSTALL = "pre\\package::install()";
+	protected static String POST_PACKAGE_INSTALL = "post\\package::install()";
+	protected static String PRE_PACKAGE_UPDATE = "pre\\package::update()";
+	protected static String POST_PACKAGE_UPDATE = "post\\package::update()";
+	protected static String PRE_PACKAGE_UNINSTALL = "pre\\package::uninstall()";
+	protected static String POST_PACKAGE_UNINSTALL = "post\\package::uninstall()";
+	
 	protected File loadFile(String name) throws URISyntaxException {
 		ClassLoader loader = getClass().getClassLoader();
 		URL resource = loader.getResource(name);
@@ -165,6 +180,9 @@ public abstract class ComposertTestCase extends TestCase {
 
 		// config
 		createConfig(phpPackage);
+		
+		// scripts
+		createScripts(phpPackage);
 		
 		// extras
 		Extra extra = phpPackage.getExtra();
@@ -247,6 +265,25 @@ public abstract class ComposertTestCase extends TestCase {
 			githubProtocols.add(p);
 		}
 		config.setGithubProtocols(githubProtocols);
+	}
+	
+	private void createScripts(ComposerPackage phpPackage) {
+		Scripts scripts = phpPackage.getScripts();
+		
+		scripts.getPreInstallCmd().add(PRE_INSTALL_CMD);
+		scripts.getPostInstallCmd().add(POST_INSTALL_CMD);
+		scripts.getPostInstallCmd().add(POST_INSTALL_TEST);
+		scripts.getPreUpdateCmd().add(PRE_UPDATE_CMD);
+		scripts.getPostUpdateCmd().add(POST_UPDATE_CMD);
+		
+		scripts.getPrePackageInstall().add(PRE_PACKAGE_INSTALL);
+		scripts.getPostPackageInstall().add(POST_PACKAGE_INSTALL);
+		
+		scripts.getPrePackageUpdate().add(PRE_PACKAGE_UPDATE);
+		scripts.getPostPackageUpdate().add(POST_PACKAGE_UPDATE);
+		
+		scripts.getPrePackageUninstall().add(PRE_PACKAGE_UNINSTALL);
+		scripts.getPostPackageUninstall().add(POST_PACKAGE_UNINSTALL);
 	}
 	
 	private void createRepositories(ComposerPackage phpPackage) {
@@ -385,6 +422,26 @@ public abstract class ComposertTestCase extends TestCase {
 		assertEquals(FORUM, support.getForum());
 		assertEquals(WIKI, support.getWiki());
 		assertEquals(SOURCE, support.getSource());
+	}
+	
+	protected void doTestScripts(ComposerPackage phpPackage) {
+		Scripts scripts = phpPackage.getScripts();
+		
+		assertEquals(PRE_INSTALL_CMD, scripts.getPreInstallCmd().get(0));
+		assertEquals(2, scripts.getPostInstallCmd().size());
+		assertEquals(POST_INSTALL_CMD, scripts.getPostInstallCmd().get(0));
+		assertEquals(POST_INSTALL_TEST, scripts.getPostInstallCmd().get(1));
+		assertEquals(PRE_UPDATE_CMD, scripts.getPreUpdateCmd().get(0));
+		assertEquals(POST_UPDATE_CMD, scripts.getPostUpdateCmd().get(0));
+		
+		assertEquals(PRE_PACKAGE_INSTALL, scripts.getPrePackageInstall().get(0));
+		assertEquals(POST_PACKAGE_INSTALL, scripts.getPostPackageInstall().get(0));
+		
+		assertEquals(PRE_PACKAGE_UPDATE, scripts.getPrePackageUpdate().get(0));
+		assertEquals(POST_PACKAGE_UPDATE, scripts.getPostPackageUpdate().get(0));
+		
+		assertEquals(PRE_PACKAGE_UNINSTALL, scripts.getPrePackageUninstall().get(0));
+		assertEquals(POST_PACKAGE_UNINSTALL, scripts.getPostPackageUninstall().get(0));
 	}
 	
 	protected void doTestConfig(ComposerPackage phpPackage) {

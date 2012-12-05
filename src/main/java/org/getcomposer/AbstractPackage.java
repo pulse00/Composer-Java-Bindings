@@ -19,22 +19,13 @@ public abstract class AbstractPackage extends Resource {
 
 			JSONObject json = (JSONObject)obj;
 
-			parseValue(json, "name");
-			parseValue(json, "description");
-			parseValue(json, "type");
-			parseValue(json, "version");
+			// parsed from super:
+			// name, description, type, version
 			
-			if (json.containsKey("autoload")) {
-				autoload.fromJson(json.get("autoload"));
-			}
+			parseField(json, "autoload");
+			parseField(json, "dist");
+			parseField(json, "source");
 			
-			if (json.containsKey("dist")) {
-				dist.fromJson(json.get("dist"));
-			}
-			
-			if (json.containsKey("source")) {
-				source.fromJson(json.get("source"));
-			}
 		}
 		
 		super.parse(obj);

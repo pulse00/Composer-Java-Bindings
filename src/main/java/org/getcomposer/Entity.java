@@ -11,8 +11,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Set;
 
 import org.getcomposer.annotation.Name;
@@ -23,7 +25,9 @@ public abstract class Entity {
 
 	private transient PropertyChangeSupport changeSupport = new PropertyChangeSupport(
 			this);
-	private transient Set<String> listening = new HashSet<String>(); 
+	private transient Set<String> listening = new HashSet<String>();
+	@SuppressWarnings("rawtypes")
+	private transient Map<Class, Map<String, Field>> fieldNameCache = new HashMap<Class, Map<String, Field>>();
 
 	public Entity() {
 		listen();
@@ -88,6 +92,28 @@ public abstract class Entity {
 			}
 		}
 		return name;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	protected Field getFieldByName(Class entity, String fieldName) {
+		
+		// create cache
+		if (!fieldNameCache.containsKey(entity)) {
+			Map<String, Field> mapping = new HashMap<String, Field>();
+			
+			for (Field field : getFields(entity)) {
+				mapping.put(getFieldName(field), field);
+			}
+			fieldNameCache.put(entity, mapping);
+		}
+		
+		Map<String, Field> mapping = fieldNameCache.get(entity);
+		
+		if (mapping.containsKey(fieldName)) {
+			return mapping.get(fieldName);
+		}
+		
+		return null;
 	}
 	
 	

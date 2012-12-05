@@ -52,6 +52,16 @@ public class JsonParserTest extends ComposertTestCase {
 		}
 	}
 	
+	@Test
+	public void testScripts() {
+		try {
+			doTestScripts(new ComposerPackage(loadFile("scripts.json")));
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
 	public void testRepositories() {
 		try {
 			doTestRepositories(new ComposerPackage(loadFile("repositories.json")));
