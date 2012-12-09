@@ -2,6 +2,7 @@ package org.getcomposer.collection;
 
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.getcomposer.ComposerPackage;
 import org.json.simple.JSONObject;
@@ -39,5 +40,13 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 	 */
 	public String getDefaultVersion() {
 		return (String)properties.entrySet().iterator().next().getKey();
+	}
+	
+	public Set<String> toSet() {
+		return properties.keySet();
+	}
+	
+	public String[] toArray() {
+		return properties.keySet().toArray(new String[0]);
 	}
 }

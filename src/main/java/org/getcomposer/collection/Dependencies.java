@@ -61,6 +61,10 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 	public void remove(Dependency dependency) {
 		super.remove(dependency.getName());
 	}
+	
+	public Dependencies[] toArray() {
+		return properties.values().toArray(new Dependencies[0]);
+	}
 
 
 	public Iterator<Dependency> iterator() {
