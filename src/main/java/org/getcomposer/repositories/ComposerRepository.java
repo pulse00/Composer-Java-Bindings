@@ -42,9 +42,9 @@ public class ComposerRepository extends Repository {
 		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
 	}
 	
-	public Versions getVersions(String name) {
-		if (packages.containsKey(name)) {
-			return packages.get(name);
+	public Versions getVersions(String packageName) {
+		if (packages.containsKey(packageName)) {
+			return packages.get(packageName);
 		}
 		return null;
 	}

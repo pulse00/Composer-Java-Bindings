@@ -13,6 +13,7 @@ public abstract class AbstractPackage extends Resource {
 	protected Autoload autoload = new Autoload();
 	protected Distribution dist = new Distribution();
 	protected Source source = new Source();
+	protected transient DetailedVersion detailedVersion = null;
 	
 	protected void parse(Object obj) {
 		if (obj instanceof JSONObject) {
@@ -111,6 +112,13 @@ public abstract class AbstractPackage extends Resource {
 	 */
 	public void setVersion(String version) {
 		set("version", version);
+	}
+	
+	public DetailedVersion getDetailedVersion() {
+		if (detailedVersion == null) {
+			detailedVersion = new DetailedVersion(getVersion());
+		}
+		return detailedVersion;
 	}
 	
 
