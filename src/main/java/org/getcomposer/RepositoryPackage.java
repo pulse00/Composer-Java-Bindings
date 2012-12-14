@@ -12,7 +12,7 @@ import org.getcomposer.packagist.PackagistDownloader;
 import org.getcomposer.repositories.PackageRepository;
 import org.json.simple.JSONObject;
 
-public class RepositoryPackage extends AbstractPackage {
+public class RepositoryPackage extends DistributedPackage {
 	
 	private Versions versions = new Versions();
 	private Persons maintainers = new Persons();
@@ -88,10 +88,10 @@ public class RepositoryPackage extends AbstractPackage {
 	 * @return the deserialized package
 	 * @throws IOException
 	 */
-	public static RepositoryPackage fromPackagist(String name) throws IOException {
+	public static RepositoryPackage fromPackagist(String name) throws Exception {
 		
 		PackagistDownloader downloader = new PackagistDownloader(name);
-		return downloader.getPackage();
+		return downloader.loadPackage();
 	}
 	
 	

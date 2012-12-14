@@ -61,15 +61,11 @@ public class DetailedVersion {
 		
 		
 		// stability modifier
-		System.out.println("Has @: " + version.matches(".+@.+"));
 		if (version.matches(".+@.+")) {
 			parts = version.split("@");
 			version = parts[0];
 			stabilityModifier = normalizeStability(parts[1]);
 		}
-		
-		System.out.println("New Version: " + version);
-		System.out.println("Stabi mod: " + stabilityModifier);
 		
 		parts = version.split("-");
 		int len = parts.length;

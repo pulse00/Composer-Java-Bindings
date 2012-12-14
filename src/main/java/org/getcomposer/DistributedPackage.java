@@ -8,7 +8,7 @@ import org.getcomposer.entities.Distribution;
 import org.getcomposer.entities.Source;
 import org.json.simple.JSONObject;
 
-public abstract class AbstractPackage extends Resource {
+public abstract class DistributedPackage extends VersionedPackage {
 
 	protected Autoload autoload = new Autoload();
 	protected Distribution dist = new Distribution();
@@ -41,25 +41,6 @@ public abstract class AbstractPackage extends Resource {
 		fields.addAll(new LinkedList<String>(Arrays.asList(after)));
 		return super.prepareJson(fields);
 	}
-	
-	/**
-	 * Returns the <code>name</code> property.
-	 * 
-	 * @return the <code>name</code> value
-	 */
-	public String getName() {
-		return getAsString("name");
-	}
-	
-	/**
-	 * Sets the <code>name</code> property.
-	 * 
-	 * @param name the new <code>name</code> value
-	 */
-	public void setName(String name) {
-		set("name", name);
-	}
-
 
 	/**
 	 * Returns the <code>type</code> property.
@@ -78,49 +59,6 @@ public abstract class AbstractPackage extends Resource {
 	public void setType(String type) {
 		set("type", type);
 	}
-
-	
-	/**
-	 * Returns the <code>description</code> property.
-	 * @return
-	 */
-	public String getDescription() {
-		return getAsString("description");
-	}
-	
-	/**
-	 * Sets the <code>description</code> property.
-	 * 
-	 * @param description the new <code>description</code> value
-	 */
-	public void setDescription(String description) {
-		set("description", description);
-	}
-	
-	/**
-	 * Returns the version
-	 * 
-	 * @return the version
-	 */
-	public String getVersion() {
-		return getAsString("version");
-	}
-	
-	/**
-	 * Sets the version
-	 * 
-	 */
-	public void setVersion(String version) {
-		set("version", version);
-	}
-	
-	public DetailedVersion getDetailedVersion() {
-		if (detailedVersion == null) {
-			detailedVersion = new DetailedVersion(getVersion());
-		}
-		return detailedVersion;
-	}
-	
 
 	/**
 	 * Returns the <code>autoload</code> entity.

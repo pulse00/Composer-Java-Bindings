@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.getcomposer.entities.Dependency;
+import org.getcomposer.VersionedPackage;
 import org.json.simple.JSONObject;
 
 /**
@@ -17,17 +17,17 @@ import org.json.simple.JSONObject;
  * @see http://getcomposer.org/doc/04-schema.md#require-dev
  * @author Thomas Gossmann <gos.si>
  */
-public class Dependencies extends JsonMap<Dependencies, Dependency> implements Iterable<Dependency> {
+public class Dependencies extends JsonMap<Dependencies, VersionedPackage> implements Iterable<VersionedPackage> {
 	
 	public Dependencies() {
-		super(Dependency.class);
+		super(VersionedPackage.class);
 	}
 	
 	@SuppressWarnings("unchecked")
 	protected void parse(Object obj) {
 		if (obj instanceof JSONObject) {
 			for (Entry<String, Object> entry : ((Map<String, Object>)((JSONObject)obj)).entrySet()) {
-				Dependency dep = new Dependency();
+				VersionedPackage dep = new VersionedPackage();
 				dep.setName(entry.getKey());
 				dep.setVersion((String)entry.getValue());
 				add(dep);
@@ -37,7 +37,7 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 	
 	public Object prepareJson(LinkedList<String> fields) {
 		LinkedHashMap<String, Object> out = new LinkedHashMap<String, Object>();
-		for (Dependency dep : this) {
+		for (VersionedPackage dep : this) {
 			out.put(dep.getName(), dep.getVersion());
 		}
 		return out;
@@ -49,7 +49,7 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 	 * @param dependency the new dependency
 	 * @return this
 	 */
-	public void add(Dependency dependency) {
+	public void add(VersionedPackage dependency) {
 		super.set(dependency.getName(), dependency);
 	}
 
@@ -58,7 +58,7 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 	 * 
 	 * @param dependency the dependency to remove
 	 */
-	public void remove(Dependency dependency) {
+	public void remove(VersionedPackage dependency) {
 		super.remove(dependency.getName());
 	}
 	
@@ -67,7 +67,7 @@ public class Dependencies extends JsonMap<Dependencies, Dependency> implements I
 	}
 
 
-	public Iterator<Dependency> iterator() {
-		return (Iterator<Dependency>)properties.values().iterator();
+	public Iterator<VersionedPackage> iterator() {
+		return (Iterator<VersionedPackage>)properties.values().iterator();
 	}
 }

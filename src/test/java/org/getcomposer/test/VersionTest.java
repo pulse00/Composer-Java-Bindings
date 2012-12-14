@@ -39,8 +39,6 @@ public class VersionTest extends TestCase {
 		
 		DetailedVersion t = new DetailedVersion(v.toString());
 		
-		System.out.println(v.toString());
-		
 		assertEquals(">", t.getConstraint());
 		assertEquals("1", t.getMajor());
 		assertEquals("2", t.getMinor());

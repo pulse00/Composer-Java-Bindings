@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.getcomposer.entities.Dependency;
+import org.getcomposer.VersionedPackage;
 import org.getcomposer.entities.Namespace;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -29,7 +29,7 @@ public class Psr0 extends JsonMap<Psr0, Namespace> implements Iterable<Namespace
 	};
 	
 	public Psr0() {
-		super(Dependency.class);
+		super(VersionedPackage.class);
 	}
 	
 	@SuppressWarnings("unchecked")

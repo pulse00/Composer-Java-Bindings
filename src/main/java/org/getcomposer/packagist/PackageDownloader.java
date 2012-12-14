@@ -7,29 +7,64 @@
  ******************************************************************************/
 package org.getcomposer.packagist;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.getcomposer.RepositoryPackage;
 import org.getcomposer.repositories.PackageRepository;
 
 public class PackageDownloader extends Downloader {
 	
+	private List<PackageListenerInterface> pkgListeners = new ArrayList<PackageListenerInterface>();
+	
 	public PackageDownloader(String packageName) {
 		super(packageName);
 	}
-
-	public RepositoryPackage getPackage() throws IOException {
-		if (!url.endsWith(".json")) {
-			url += ".json";
+	
+	public void addPackageListener(PackageListenerInterface listener) {
+		if (!pkgListeners.contains(listener)) {
+			pkgListeners.add(listener);
 		}
-
-		InputStream resource = downloadResource();
+	}
+	
+	public void removePackageListener(PackageListenerInterface listener) {
+		pkgListeners.remove(listener);
+	}
+	
+	protected void notifyPackageListener(RepositoryPackage pkg) {
+		for (PackageListenerInterface listener : pkgListeners) {
+			listener.packageLoaded(pkg);
+		}
+	}
+	
+	private RepositoryPackage getPackage(InputStream resource) throws Exception {
 		InputStreamReader reader = new InputStreamReader(resource);
 
 		PackageRepository repo = new PackageRepository(reader);
 		return repo.getPackage();
+	}
 
+	public RepositoryPackage loadPackage() throws Exception {
+		if (!url.endsWith(".json")) {
+			url += ".json";
+		}
+
+		return getPackage(download());
+	}
+	
+	public void loadPackageAsync() {
+		addDownloadListener(new DownloadListenerAdapater() {
+			@Override
+			public void dataReceived(InputStream content) {
+				try {
+					notifyPackageListener(getPackage(content));
+				} catch (Exception e) {
+					// oupsi, not catched, its the ioexception, we can ignore that here?
+				}
+			}
+		});
+		downloadAsync();
 	}
 }

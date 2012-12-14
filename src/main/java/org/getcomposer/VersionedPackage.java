@@ -1,8 +1,7 @@
-package org.getcomposer.entities;
+package org.getcomposer;
 
+import java.util.Arrays;
 import java.util.LinkedList;
-
-import org.json.simple.JSONValue;
 
 /**
  * Represents a dependency entry in require or require-dev
@@ -12,30 +11,24 @@ import org.json.simple.JSONValue;
  * @author Thomas Gossmann <gos.si>
  *
  */
-public class Dependency extends GenericEntity {
+public class VersionedPackage extends MinimalPackage {
+
+	protected transient DetailedVersion detailedVersion = null;
 
 	@Override
-	public String prepareJson(LinkedList<String> fields) {
-		return JSONValue.toJSONString(getAsString("version"));
+	public Object prepareJson(LinkedList<String> fields) {
+		String[] before = new String[]{"version"};
+		fields.addAll(0, new LinkedList<String>(Arrays.asList(before)));
+		return super.prepareJson(fields);
 	}
 	
-	/**
-	 * Returns the name.
-	 * 
-	 * @return the name
-	 */
-	public String getName() {
-		return getAsString("name");
+	public DetailedVersion getDetailedVersion() {
+		if (detailedVersion == null) {
+			detailedVersion = new DetailedVersion(getVersion());
+		}
+		return detailedVersion;
 	}
 	
-	/**
-	 * Sets the name.
-	 * 
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		set("name", name);
-	}
 	
 	/**
 	 * Returns the version.
@@ -59,7 +52,7 @@ public class Dependency extends GenericEntity {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#clone()
 	 */
-	public Dependency clone() {
-		return (Dependency)super.clone();
+	public VersionedPackage clone() {
+		return (VersionedPackage)super.clone();
 	}
 }

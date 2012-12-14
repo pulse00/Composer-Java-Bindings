@@ -3,9 +3,9 @@ package org.getcomposer.repositories;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import org.getcomposer.Resource;
+import org.getcomposer.MinimalPackage;
 
-public abstract class Repository extends Resource {
+public abstract class Repository extends MinimalPackage {
 
 	public Repository(String type) {
 		set("type", type);

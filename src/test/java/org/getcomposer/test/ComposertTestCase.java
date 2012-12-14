@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.getcomposer.ComposerPackage;
+import org.getcomposer.VersionedPackage;
 import org.getcomposer.RepositoryPackage;
 import org.getcomposer.collection.Dependencies;
 import org.getcomposer.collection.GenericArray;
@@ -12,7 +13,6 @@ import org.getcomposer.collection.Psr0;
 import org.getcomposer.collection.Repositories;
 import org.getcomposer.entities.Autoload;
 import org.getcomposer.entities.Config;
-import org.getcomposer.entities.Dependency;
 import org.getcomposer.entities.Distribution;
 import org.getcomposer.entities.Extra;
 import org.getcomposer.entities.GenericEntity;
@@ -231,13 +231,13 @@ public abstract class ComposertTestCase extends TestCase {
 	
 	private void createDependencies(ComposerPackage phpPackage) {
 		Dependencies require = phpPackage.getRequire();
-		Dependency php = new Dependency();
+		VersionedPackage php = new VersionedPackage();
 		php.setName(PHP);
 		php.setVersion(PHP_VERSION);
 		require.add(php);
 		
 		Dependencies requireDev = phpPackage.getRequireDev();
-		Dependency phpUnit = new Dependency();
+		VersionedPackage phpUnit = new VersionedPackage();
 		phpUnit.setName(PHPUNIT);
 		phpUnit.setVersion(PHPUNIT_VERSION);
 		requireDev.add(phpUnit);
@@ -370,7 +370,7 @@ public abstract class ComposertTestCase extends TestCase {
 	
 		Dependencies require = phpPackage.getRequire();
 		
-		for (Dependency dep : require) {
+		for (VersionedPackage dep : require) {
 			assertNotNull(dep.getName());
 			assertNotNull(dep.getVersion());
 		}

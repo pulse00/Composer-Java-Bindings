@@ -7,28 +7,102 @@
  ******************************************************************************/
 package org.getcomposer.test;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import junit.framework.TestCase;
 
 import org.getcomposer.ComposerPackage;
 import org.getcomposer.RepositoryPackage;
+import org.getcomposer.packagist.DownloadListenerAdapater;
+import org.getcomposer.packagist.PackageListenerInterface;
+import org.getcomposer.packagist.PackageSearchListenerInterface;
+import org.getcomposer.packagist.PackagistDownloader;
 import org.getcomposer.packagist.PharDownloader;
-import org.getcomposer.packagist.SearchResultDownloader;
+import org.getcomposer.packagist.PackagistSearch;
+import org.getcomposer.packagist.SearchResult;
 import org.junit.Test;
 
 
 public class PackagistTest extends TestCase {
-
+	
+	private CountDownLatch counter = new CountDownLatch(1);
+	private Object asyncResult;
+	private String asyncQuery;
+	private int asyncCounter;
+	
+	public void setUp() {
+		asyncResult = null;
+		asyncQuery = "";
+		asyncCounter = 0;
+	}
+	
 	public void testComposerDownload() {
-		
 		try {
 			PharDownloader downloader = new PharDownloader();
-			InputStream resource = downloader.downloadResource();
-			assertNotNull(resource);
-		} catch (IOException e) {
+			InputStream content = downloader.download(); 
+			assertNotNull(content);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	public void testAsyncComposerDownload() {
+		try {
+			PharDownloader downloader = new PharDownloader();
+			downloader.addDownloadListener(new DownloadListenerAdapater() {
+				public void dataReceived(InputStream content) {
+					asyncResult = content;
+					counter.countDown();
+				}
+				
+				public void errorOccured(Exception e) {
+					e.printStackTrace();
+				}
+			});
+			downloader.downloadAsync();
+
+			counter.await(10, TimeUnit.SECONDS);
+
+			assertNotNull(asyncResult);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	public void testPackageDownloader() {
+		try {
+			PackagistDownloader downloader = new PackagistDownloader("gossi/ldap");
+			RepositoryPackage pkg = downloader.loadPackage();
+			assertNotNull(pkg);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	public void testAsyncPackageDownloader() {
+		try {
+			PackagistDownloader downloader = new PackagistDownloader("gossi/ldap");
+			downloader.addPackageListener(new PackageListenerInterface() {
+				public void packageLoaded(RepositoryPackage repositoryPackage) {
+					asyncResult = repositoryPackage;
+					counter.countDown();
+				}
+			});
+			downloader.loadPackageAsync();
+			
+			counter.await(10, TimeUnit.SECONDS);
+
+			assertNotNull(asyncResult);
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
 		}
@@ -65,9 +139,9 @@ public class PackagistTest extends TestCase {
 		}
 	}
 	
-	protected void assertSearchResult(String query) throws IOException {
+	protected void assertSearchResult(String query) throws Exception {
 		
-		SearchResultDownloader downloader = new SearchResultDownloader();
+		PackagistSearch downloader = new PackagistSearch();
 		List<ComposerPackage> packages = downloader.searchPackages(query);
 
 		assertNotNull(packages);
@@ -80,6 +154,58 @@ public class PackagistTest extends TestCase {
 			assertNotNull(phpPackage);
 			assertNotNull(phpPackage.getName());
 			assertNotNull(phpPackage.getDescription());
+		}
+	}
+	
+	@Test
+	public void testAsyncSearch() {
+		try {
+			PackagistSearch downloader = new PackagistSearch();
+			downloader.addPackageSearchListener(new PackageSearchListenerInterface() {
+				public void packagesFound(List<ComposerPackage> packages, String query, SearchResult result) {
+					asyncResult = packages;
+					asyncQuery = query;
+					asyncCounter++;
+					
+					counter.countDown();
+				}
+			});
+			String query = "gossi/ldap";
+			downloader.searchPackagesAsync(query);
+			
+			counter.await(10, TimeUnit.SECONDS);
+			
+			assertNotNull(asyncResult);
+			assertEquals(query, asyncQuery);
+		} catch(Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	public void testAsyncSearchWithPages() {
+		try {
+			PackagistSearch downloader = new PackagistSearch();
+			downloader.addPackageSearchListener(new PackageSearchListenerInterface() {
+				public void packagesFound(List<ComposerPackage> packages, String query, SearchResult result) {
+					asyncResult = packages;
+					asyncQuery = query;
+					asyncCounter++;
+				}
+			});
+			String query = "test";
+			downloader.setPageLimit(2);
+			downloader.searchPackagesAsync(query);
+			
+			counter.await(10, TimeUnit.SECONDS);
+			
+			assertNotNull(asyncResult);
+			assertEquals(query, asyncQuery);
+			assertEquals(2, asyncCounter);
+		} catch(Exception e) {
+			e.printStackTrace();
+			fail();
 		}
 	}
 }

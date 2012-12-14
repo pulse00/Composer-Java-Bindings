@@ -37,7 +37,7 @@ import org.json.simple.JSONObject;
  * @author Thomas Gossmann <gos.si>
  * 
  */
-public class ComposerPackage extends AbstractPackage {
+public class ComposerPackage extends DistributedPackage {
 
 	private Dependencies require = new Dependencies();
 	private Repositories repositories = new Repositories();
