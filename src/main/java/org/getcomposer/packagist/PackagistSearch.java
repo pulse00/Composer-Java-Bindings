@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.getcomposer.ComposerConstants;
-import org.getcomposer.ComposerPackage;
+import org.getcomposer.MinimalPackage;
 import org.json.simple.JSONValue;
 
 public class PackagistSearch extends Downloader {
@@ -45,8 +45,8 @@ public class PackagistSearch extends Downloader {
 		pkgListeners.remove(listener);
 	}
 
-	public List<ComposerPackage> searchPackages(String query) throws Exception {
-		List<ComposerPackage> packages = new ArrayList<ComposerPackage>();
+	public List<MinimalPackage> searchPackages(String query) throws Exception {
+		List<MinimalPackage> packages = new ArrayList<MinimalPackage>();
 		setUrl(createQueryUrl(query));
 
 		SearchResult result = loadPackages(getUrl());

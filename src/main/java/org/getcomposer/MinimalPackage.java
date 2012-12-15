@@ -1,5 +1,8 @@
 package org.getcomposer;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.LinkedList;
 
@@ -14,6 +17,34 @@ import org.getcomposer.entities.GenericEntity;
  */
 public class MinimalPackage extends GenericEntity {
 	
+	public MinimalPackage() {
+		super();
+		listen();
+	}
+	
+	public MinimalPackage(Object json) {
+		super();
+		fromJson(json);
+		listen();
+	}
+	
+	public MinimalPackage(String json) {
+		super();
+		fromJson(json);
+		listen();
+	}
+	
+	public MinimalPackage(File file) throws IOException {
+		super();
+		fromJson(file);
+		listen();
+	}
+	
+	public MinimalPackage(Reader reader) throws IOException {
+		super();
+		fromJson(reader);
+		listen();
+	}
 
 	@Override
 	public Object prepareJson(LinkedList<String> fields) {

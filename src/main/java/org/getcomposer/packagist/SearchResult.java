@@ -3,12 +3,12 @@ package org.getcomposer.packagist;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.getcomposer.ComposerPackage;
+import org.getcomposer.MinimalPackage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 public class SearchResult {
-	public List<ComposerPackage> results;
+	public List<MinimalPackage> results;
 	public String next;
 	public String total;
 	
@@ -22,13 +22,13 @@ public class SearchResult {
 			
 			next = (String)json.get("next");
 			total = json.get("total").toString();
-			results = new ArrayList<ComposerPackage>();
+			results = new ArrayList<MinimalPackage>();
 			Object r = json.get("results");
 			
 			if (r instanceof JSONArray) {
 				
 				for (Object p : (JSONArray) r) {
-					results.add(new ComposerPackage(p));
+					results.add(new MinimalPackage(p));
 				}
 			}
 		}

@@ -10,7 +10,7 @@ public interface DownloadListenerInterface {
 
 	void setTotalWork(int total);
 
-	void dataReceived(InputStream content, String url);
+	void dataReceived(InputStream resource, String url);
 
 	void errorOccured(Exception e);
 }

@@ -46,8 +46,9 @@ public class Downloader {
 	public InputStream download() throws Exception {
 		downloadContent = null;
 		downloadError = null;
+		
 		addDownloadListener(new DownloadListenerAdapater() {
-			public void dataReceived(InputStream resource) {
+			public void dataReceived(InputStream resource, String url) {
 				downloadContent = resource;
 			}
 			
