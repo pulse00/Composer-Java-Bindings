@@ -19,7 +19,7 @@ import org.getcomposer.ComposerPackage;
 import org.json.simple.JSONValue;
 
 public class PackagistSearch extends Downloader {
-	private int pageLimit = 5;
+	private int pageLimit = 3;
 	protected List<PackageSearchListenerInterface> pkgListeners = new ArrayList<PackageSearchListenerInterface>();
 	
 	public PackagistSearch() {
@@ -71,12 +71,20 @@ public class PackagistSearch extends Downloader {
 		return packages;
 	}
 	
-	public void searchPackagesAsync(final String query) {
+	public void searchPackagesAsync(String query) {
 		addDownloadListener(new DownloadListenerAdapater() {
 			private int counter = 1;
-			public void dataReceived(InputStream content) {
+			private boolean aborted = false;
+			
+			public void dataReceived(InputStream content, String url) {
+				if (aborted) {
+					return;
+				}
 				SearchResult result = getPackages(content);
 				
+				// parse query from url
+				String query = url.replaceFirst(".+q=([^?&]+).*", "$1");
+
 				if (result != null && result.results != null) {
 					for (PackageSearchListenerInterface listener : pkgListeners) {
 						listener.packagesFound(result.results, query, result);
@@ -89,6 +97,10 @@ public class PackagistSearch extends Downloader {
 					downloadAsync();
 					counter++;
 				}
+			}
+			
+			public void aborted() {
+				aborted = true;
 			}
 		});
 		setUrl(createQueryUrl(query));

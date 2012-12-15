@@ -32,9 +32,9 @@ public class DownloadThread extends Thread {
 	}
 
 	public void abort() {
-		synchronized (httpGet) {
-			if (httpGet != null) {
-				httpGet.abort();
+		if (httpGet != null) {
+			synchronized (httpGet) {
+				httpGet.abort();				
 			}
 		}
 		interrupt();
@@ -63,7 +63,16 @@ public class DownloadThread extends Thread {
 				httpGet = new HttpGet(url);
 				HttpResponse response = null;
 				InputStream content = null;				
+				
+				if (httpGet.isAborted()) {
+					return;
+				}
+				
 				response = client.execute(httpGet);
+				
+				if (httpGet.isAborted()) {
+					return;
+				}
 				
 				for (DownloadListenerInterface listener : listeners) {
 					listener.progressChanged(1);
@@ -77,7 +86,7 @@ public class DownloadThread extends Thread {
 				}
 
 				for (DownloadListenerInterface listener : listeners) {
-					listener.dataReceived(content);
+					listener.dataReceived(content, url);
 				}
 				
 			} catch (Exception e) {

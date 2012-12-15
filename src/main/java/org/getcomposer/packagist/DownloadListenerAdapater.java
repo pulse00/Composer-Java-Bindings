@@ -17,7 +17,7 @@ public class DownloadListenerAdapater implements DownloadListenerInterface {
 	}
 
 	@Override
-	public void dataReceived(InputStream content) {
+	public void dataReceived(InputStream content, String url) {
 	}
 
 	@Override

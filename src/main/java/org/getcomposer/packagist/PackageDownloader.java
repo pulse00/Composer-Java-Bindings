@@ -57,7 +57,7 @@ public class PackageDownloader extends Downloader {
 	public void loadPackageAsync() {
 		addDownloadListener(new DownloadListenerAdapater() {
 			@Override
-			public void dataReceived(InputStream content) {
+			public void dataReceived(InputStream content, String url) {
 				try {
 					notifyPackageListener(getPackage(content));
 				} catch (Exception e) {
