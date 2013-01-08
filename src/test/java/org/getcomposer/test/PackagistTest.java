@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 import junit.framework.TestCase;
 
-import org.getcomposer.ComposerPackage;
+import org.getcomposer.MinimalPackage;
 import org.getcomposer.RepositoryPackage;
 import org.getcomposer.packagist.DownloadListenerAdapater;
 import org.getcomposer.packagist.PackageListenerInterface;
@@ -55,6 +55,7 @@ public class PackagistTest extends TestCase {
 		try {
 			PharDownloader downloader = new PharDownloader();
 			downloader.addDownloadListener(new DownloadListenerAdapater() {
+				@SuppressWarnings("unused")
 				public void dataReceived(InputStream content) {
 					asyncResult = content;
 					counter.countDown();
@@ -142,12 +143,12 @@ public class PackagistTest extends TestCase {
 	protected void assertSearchResult(String query) throws Exception {
 		
 		PackagistSearch downloader = new PackagistSearch();
-		List<ComposerPackage> packages = downloader.searchPackages(query);
+		List<MinimalPackage> packages = downloader.searchPackages(query);
 
 		assertNotNull(packages);
 		assertTrue(packages.size() > 0);
 		
-		for (ComposerPackage phpPackage : packages) {
+		for (MinimalPackage phpPackage : packages) {
 			if (query.equals("foo bar")) {
 //				System.err.println(phpPackage.getName());
 			}
@@ -162,7 +163,7 @@ public class PackagistTest extends TestCase {
 		try {
 			PackagistSearch downloader = new PackagistSearch();
 			downloader.addPackageSearchListener(new PackageSearchListenerInterface() {
-				public void packagesFound(List<ComposerPackage> packages, String query, SearchResult result) {
+				public void packagesFound(List<MinimalPackage> packages, String query, SearchResult result) {
 					asyncResult = packages;
 					asyncQuery = query;
 					asyncCounter++;
@@ -188,7 +189,7 @@ public class PackagistTest extends TestCase {
 		try {
 			PackagistSearch downloader = new PackagistSearch();
 			downloader.addPackageSearchListener(new PackageSearchListenerInterface() {
-				public void packagesFound(List<ComposerPackage> packages, String query, SearchResult result) {
+				public void packagesFound(List<MinimalPackage> packages, String query, SearchResult result) {
 					asyncResult = packages;
 					asyncQuery = query;
 					asyncCounter++;
