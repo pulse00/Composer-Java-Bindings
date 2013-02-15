@@ -1,4 +1,4 @@
-package org.getcomposer.packagist;
+package org.getcomposer.packages;
 
 import java.util.ArrayList;
 import java.util.List;

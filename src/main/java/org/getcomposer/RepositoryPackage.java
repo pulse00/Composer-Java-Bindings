@@ -8,7 +8,7 @@ import java.util.LinkedList;
 
 import org.getcomposer.collection.Persons;
 import org.getcomposer.collection.Versions;
-import org.getcomposer.packagist.PackagistDownloader;
+import org.getcomposer.packages.PackagistDownloader;
 import org.getcomposer.repositories.PackageRepository;
 import org.json.simple.JSONObject;
 
@@ -90,8 +90,8 @@ public class RepositoryPackage extends DistributedPackage {
 	 */
 	public static RepositoryPackage fromPackagist(String name) throws Exception {
 		
-		PackagistDownloader downloader = new PackagistDownloader(name);
-		return downloader.loadPackage();
+		PackagistDownloader downloader = new PackagistDownloader();
+		return downloader.loadPackage(name);
 	}
 	
 	
