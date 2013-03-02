@@ -2,6 +2,10 @@ package org.getcomposer.test;
 
 import org.getcomposer.ComposerConstants;
 import org.getcomposer.DetailedVersion;
+import org.getcomposer.RepositoryPackage;
+import org.getcomposer.collection.Versions;
+import org.getcomposer.packages.PackageDownloader;
+import org.getcomposer.packages.PackagistDownloader;
 import org.junit.Test;
 
 import junit.framework.TestCase;
@@ -22,6 +26,9 @@ public class VersionTest extends TestCase {
 		assertEquals("1", v.getSuffix());
 		assertEquals(ComposerConstants.BETA, v.getStabilityModifier());
 		assertEquals(ComposerConstants.RC, v.getStability());
+		
+		v.setVersion("dev-master");
+		assertEquals("master", v.getMajor());
 	}
 	
 	@Test
@@ -47,5 +54,29 @@ public class VersionTest extends TestCase {
 		assertEquals("2", t.getSuffix());
 		assertEquals(ComposerConstants.ALPHA, t.getStability());
 		assertEquals(ComposerConstants.BETA, t.getStabilityModifier());
+		
+		v = new DetailedVersion();
+		v.setStability(ComposerConstants.DEV);
+		v.setMajor("master");
+	
+		assertEquals("dev-master", v.toString());
+	}
+	
+	@Test
+	public void testSymfony() {
+		try {
+			PackageDownloader downloader = new PackagistDownloader();
+			RepositoryPackage pkg = downloader.loadPackage("symfony/symfony");
+			
+			Versions versions = pkg.getVersions();
+			
+			assertNotNull(versions.getMajors());
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+		
+		
+		
 	}
 }

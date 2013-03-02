@@ -7,9 +7,15 @@ import java.util.regex.Pattern;
 
 public class DetailedVersion {
 
-	private String version;
+	public final int BEGIN = 0;
+	public final int END = 1;
 	
 	private List<DetailedVersion> versions = new ArrayList<DetailedVersion>();
+	
+	/**
+	 * Passed version string
+	 */
+	private String version;
 	
 	private String constraint;
 	private String stabilityModifier;
@@ -19,18 +25,29 @@ public class DetailedVersion {
 	private String build;
 	private String stability;
 	private String suffix;
+	private int devPosition = BEGIN;
 	
 	public DetailedVersion() {
 		
 	}
 	
 	public DetailedVersion(String version) {
-		this.version = version;
-		
 		parse(version);
 	}
 	
 	private void parse(String version) {
+		// reset
+		versions.clear();
+		constraint = null;
+		stabilityModifier = null;
+		major = null;
+		minor = null;
+		fix = null;
+		build = null;
+		stability = null;
+		suffix = null;
+		
+		// start parsing
 		if (version.matches(",")) {
 			String parts[] = version.split(",");
 			
@@ -42,14 +59,18 @@ public class DetailedVersion {
 			for (int i = 1; i < parts.length; i++) {
 				versions.add(new DetailedVersion(parts[i]));
 			}
+			
+			// reset
+			// TODO add listeners on them to reset on changes on the versions
+			this.version = null;
 		} else {
 			parseVersion(version);
 		}
 	}
 	
 	private void parseVersion(String version) {
+		this.version = version;
 		String parts[];
-		stabilityModifier = null;
 		
 		// constraint
 		String constraintPattern = "^(<>|!=|>=?|<=?|==?)?(.+)";
@@ -58,13 +79,17 @@ public class DetailedVersion {
 			version = version.replaceAll(constraintPattern, "$2");
 		}
 		
-		
-		
 		// stability modifier
 		if (version.matches(".+@.+")) {
 			parts = version.split("@");
 			version = parts[0];
 			stabilityModifier = normalizeStability(parts[1]);
+		}
+		
+		// dev version?
+		if (version.startsWith("dev-")) {
+			stability = ComposerConstants.DEV;
+			version = version.substring(4);
 		}
 		
 		parts = version.split("-");
@@ -76,6 +101,10 @@ public class DetailedVersion {
 		
 		if (len > 1) {
 			parseTail(parts[1]);
+		}
+		
+		if (stability == null) {
+			stability = ComposerConstants.STABLE;
 		}
 	}
 	
@@ -101,29 +130,26 @@ public class DetailedVersion {
 	}
 	
 	private void parseTail(String tail) {
-		if (version.startsWith("dev-") || version.endsWith("-dev")) {
-			stability = ComposerConstants.DEV;
-		}
-
 		Pattern pattern = Pattern.compile("[._-]?(?:(stable|beta|b|RC|alpha|a|patch|pl|p)(?:[.-]?(\\d+))?)?([.-]?dev)?", Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(tail);
 
 		matcher.find();
-		int len = matcher.groupCount();
 		
-		
-		if (len > 3 && !matcher.group(3).isEmpty()) {
-			stability = ComposerConstants.DEV;
-		}
-
-		if (len > 2 && !matcher.group(2).isEmpty()) {
+		if (matcher.group(2) != null && !matcher.group(2).isEmpty()) {
 			suffix = matcher.group(2);
 		}
 
-		if (!matcher.group(1).isEmpty()) {
-			stability = normalizeStability(matcher.group(1));
-		} else {
-			stability = ComposerConstants.STABLE;
+		// stability 
+		if (stability == null) {
+			// -dev present?
+			if (matcher.group(3) != null && !matcher.group(3).isEmpty()) {
+				stability = ComposerConstants.DEV;
+			} 
+			
+			// stability
+			else if (matcher.group(1) != null && !matcher.group(1).isEmpty()) {
+				stability = normalizeStability(matcher.group(1));
+			}
 		}
 	}
 	
@@ -154,6 +180,52 @@ public class DetailedVersion {
 	private String build() {
 		StringBuilder sb = new StringBuilder();
 		
+		if (constraint != null) {
+			sb.append(constraint);
+		}
+		
+		if (devPosition == BEGIN && stability == ComposerConstants.DEV) {
+			sb.append("dev-");
+		}
+		
+		sb.append(major);
+		
+		if (minor != null) {
+			sb.append(".");
+			sb.append(minor);
+		}
+		
+		if (fix != null) {
+			sb.append(".");
+			sb.append(fix);
+		}
+		
+		if (build != null) {
+			sb.append(".");
+			sb.append(build);
+		}
+		
+		StringBuilder sx = new StringBuilder();
+		
+		if (stability != null 
+				&& (stability == ComposerConstants.DEV ? devPosition != BEGIN : true)) {
+			sx.append(stability);
+		}
+
+		if (suffix != null) {
+			sx.append(suffix);
+		}
+		
+		if (stabilityModifier != null) {
+			sx.append("@");
+			sx.append(stabilityModifier);
+		}
+		
+		if (sx.length() > 0) {
+			sb.append("-");
+			sb.append(sx);
+		}
+		
 		if (versions.size() > 0) {
 			int i = 1;
 			for (DetailedVersion v : versions) {
@@ -163,45 +235,6 @@ public class DetailedVersion {
 				}
 				i++;
 			}
-			return sb.toString();
-		}
-		
-		sb.append(constraint);
-		sb.append(major);
-		
-		if (!minor.isEmpty()) {
-			sb.append(".");
-			sb.append(minor);
-		}
-		
-		if (!fix.isEmpty()) {
-			sb.append(".");
-			sb.append(fix);
-		}
-		
-		if (!build.isEmpty()) {
-			sb.append(".");
-			sb.append(build);
-		}
-		
-		StringBuilder sx = new StringBuilder();
-		
-		if (!stability.isEmpty()) {
-			sx.append(stability);
-		}
-		
-		if (!suffix.isEmpty()) {
-			sx.append(suffix);
-		}
-		
-		if (!stabilityModifier.isEmpty()) {
-			sx.append("@");
-			sx.append(stabilityModifier);
-		}
-		
-		if (sx.length() > 0) {
-			sb.append("-");
-			sb.append(sx);
 		}
 		
 		return sb.toString();
@@ -379,6 +412,15 @@ public class DetailedVersion {
 	 */
 	public void setSuffix(String suffix) {
 		this.suffix = suffix;
+		reset();
+	}
+
+	public int getDevPosition() {
+		return devPosition;
+	}
+
+	public void setDevPosition(int devPosition) {
+		this.devPosition = devPosition;
 		reset();
 	}
 }

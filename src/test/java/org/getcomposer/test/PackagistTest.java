@@ -143,12 +143,13 @@ public class PackagistTest extends TestCase {
 					fail();
 				}
 			});
-			downloader.loadPackage("gossi/ldap");
+			String pkg = "symfony/symfony";
+			downloader.loadPackage(pkg);
 			
 			counter.await(TIMEOUT, TimeUnit.SECONDS);
 
 			assertNotNull(asyncResult);
-			assertEquals("gossi/ldap", ((RepositoryPackage)asyncResult).getName());
+			assertEquals(pkg, ((RepositoryPackage)asyncResult).getName());
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
