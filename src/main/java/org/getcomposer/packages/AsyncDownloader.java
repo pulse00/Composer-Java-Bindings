@@ -63,6 +63,7 @@ public class AsyncDownloader extends AbstractDownloader {
 			
 			final HttpGet httpGet = new HttpGet(url);
 			
+			
 			if (httpGet.isAborted()) {
 				httpGet.reset();
 			}
@@ -90,7 +91,7 @@ public class AsyncDownloader extends AbstractDownloader {
 				@Override
 				public void cancelled() {
 					for (DownloadListenerInterface listener : listeners) {
-						listener.aborted();
+						listener.aborted(httpGet.getURI().toString());
 					}
 				}
 			});
@@ -99,7 +100,7 @@ public class AsyncDownloader extends AbstractDownloader {
 //			client.shutdown();
 			
 			lastSlot = httpGets.size() - 1;
-			
+						
 			return lastSlot;
 			
 		} catch (Exception e) {
@@ -137,7 +138,7 @@ public class AsyncDownloader extends AbstractDownloader {
 		try {
 			httpGets.get(slot).abort();
 		} catch(Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 	

@@ -54,7 +54,7 @@ public class Downloader extends AbstractDownloader {
 	
 			if (httpGet.isAborted()) {
 				for (DownloadListenerInterface listener : listeners) {
-					listener.aborted();
+					listener.aborted(url);
 				}
 				return null;
 			}

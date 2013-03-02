@@ -5,7 +5,7 @@ import java.io.InputStream;
 public class DownloadListenerAdapater implements DownloadListenerInterface {
 
 	@Override
-	public void aborted() {
+	public void aborted(String url) {
 	}
 
 	@Override

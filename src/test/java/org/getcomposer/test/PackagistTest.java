@@ -136,7 +136,7 @@ public class PackagistTest extends TestCase {
 					counter.countDown();
 				}
 				
-				public void aborted() {}
+				public void aborted(String url) {}
 				
 				public void errorOccured(Exception e) {
 					e.printStackTrace();
@@ -214,7 +214,7 @@ public class PackagistTest extends TestCase {
 					counter.countDown();
 				}
 				
-				public void aborted() {}
+				public void aborted(String url) {}
 				
 				public void errorOccured(Exception e) {}
 			});
@@ -234,6 +234,42 @@ public class PackagistTest extends TestCase {
 	@Test
 	public void testAsyncSearchWithPages() {
 		try {
+			final int pages = 3;
+			AsyncPackageSearch downloader = new AsyncPackagistSearch();
+			downloader.addPackageSearchListener(new PackageSearchListenerInterface() {
+				public void packagesFound(List<MinimalPackage> packages, String query, SearchResult result) {
+					asyncResult = packages;
+					asyncQuery = query;
+					asyncCounter++;
+//					
+//					if (asyncCounter == pages) {
+//						counter.countDown();
+//					}
+				}
+				
+				public void aborted(String url) {}
+				
+				public void errorOccured(Exception e) {}
+			});
+			String query = "symfony";
+			downloader.setPageLimit(pages);
+			downloader.search(query);
+			
+			counter.await(TIMEOUT, TimeUnit.SECONDS);
+			
+			assertNotNull(asyncResult);
+			assertEquals(query, asyncQuery);
+			assertEquals(pages, asyncCounter);
+		} catch(Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@Test
+	public void testAsyncSearchAbortNDownload() {
+		try {
+			final int pages = 1;
 			AsyncPackageSearch downloader = new AsyncPackagistSearch();
 			downloader.addPackageSearchListener(new PackageSearchListenerInterface() {
 				public void packagesFound(List<MinimalPackage> packages, String query, SearchResult result) {
@@ -241,24 +277,31 @@ public class PackagistTest extends TestCase {
 					asyncQuery = query;
 					asyncCounter++;
 					
-					if (asyncCounter == 2) {
+					if (asyncCounter == pages) {
 						counter.countDown();
 					}
 				}
 				
-				public void aborted() {}
+				public void aborted(String url) {
+					System.out.println("testAsyncSearchAbortNDownload aborted on: " + url);
+				}
 				
-				public void errorOccured(Exception e) {}
+				public void errorOccured(Exception e) {
+					e.printStackTrace();
+				}
 			});
 			String query = "symfony";
-			downloader.setPageLimit(2);
+			downloader.setPageLimit(pages);
+			downloader.search(query);
+			downloader.abort();
+			query = "zend";
 			downloader.search(query);
 			
 			counter.await(TIMEOUT, TimeUnit.SECONDS);
 			
 			assertNotNull(asyncResult);
 			assertEquals(query, asyncQuery);
-			assertEquals(2, asyncCounter);
+			assertEquals(pages, asyncCounter);
 		} catch(Exception e) {
 			e.printStackTrace();
 			fail();
@@ -281,7 +324,7 @@ public class PackagistTest extends TestCase {
 				}
 				
 				@Override
-				public void aborted() {
+				public void aborted(String url) {
 					asyncAborts++;
 					
 					if (asyncAborts == 1 && asyncCounter == 1) {
