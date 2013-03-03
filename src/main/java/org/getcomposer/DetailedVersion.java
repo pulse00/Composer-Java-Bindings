@@ -7,8 +7,8 @@ import java.util.regex.Pattern;
 
 public class DetailedVersion {
 
-	public final int BEGIN = 0;
-	public final int END = 1;
+	public final static int BEGIN = 0;
+	public final static int END = 1;
 	
 	private List<DetailedVersion> versions = new ArrayList<DetailedVersion>();
 	
@@ -25,7 +25,8 @@ public class DetailedVersion {
 	private String build;
 	private String stability;
 	private String suffix;
-	private int devPosition = BEGIN;
+	private String prefix;
+	private int devPosition = END;
 	
 	public DetailedVersion() {
 		
@@ -46,6 +47,8 @@ public class DetailedVersion {
 		build = null;
 		stability = null;
 		suffix = null;
+		setPrefix(null);
+		devPosition = END;
 		
 		// start parsing
 		if (version.matches(",")) {
@@ -109,23 +112,38 @@ public class DetailedVersion {
 	}
 	
 	private void parseMain(String main) {
-		String parts[] = main.split("\\.");
-		int len = parts.length;
+		if (main.contains(".")) {
 		
-		if (len > 0) {
-			major = parts[0];
-		}
-		
-		if (len > 1) {
-			minor = parts[1];
-		}
-		
-		if (len > 2) {
-			fix = parts[2];
-		}
-		
-		if (len > 3) {
-			build = parts[3];
+			String parts[] = main.split("\\.");
+			int len = parts.length;
+			
+			if (len > 0) {
+				Pattern pattern = Pattern.compile("(\\D+)?(\\d+)", Pattern.CASE_INSENSITIVE);
+				Matcher matcher = pattern.matcher(parts[0]);
+				matcher.find();
+				
+				if (matcher.group(1) != null) {
+					prefix = matcher.group(1);
+				}
+				
+				if (matcher.group(2) != null) {
+					major = matcher.group(2);
+				}
+			}
+			
+			if (len > 1) {
+				minor = parts[1];
+			}
+			
+			if (len > 2) {
+				fix = parts[2];
+			}
+			
+			if (len > 3) {
+				build = parts[3];
+			}
+		} else {
+			major = main;
 		}
 	}
 	
@@ -186,6 +204,10 @@ public class DetailedVersion {
 		
 		if (devPosition == BEGIN && stability == ComposerConstants.DEV) {
 			sb.append("dev-");
+		}
+		
+		if (prefix != null) {
+			sb.append(prefix);
 		}
 		
 		sb.append(major);
@@ -421,6 +443,15 @@ public class DetailedVersion {
 
 	public void setDevPosition(int devPosition) {
 		this.devPosition = devPosition;
+		reset();
+	}
+
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
 		reset();
 	}
 }

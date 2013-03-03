@@ -86,9 +86,10 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 				List<String> majorList = majors.get(major);
 				
 				String minor = v.getMinor();
-				if (minor != null) {
-					majorList.add(minor);
+				if (minor != null && !majorList.contains(minor)) {
+					majors.get(major).add(minor);
 					Collections.sort(majorList);
+					Collections.reverse(majorList);
 				}
 			}
 		}
@@ -132,6 +133,7 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 	public String[] getMinors(String major) {
 		prepareDetailedVersions();
 		
+		
 		if (majors.containsKey(major)) {
 			return majors.get(major).toArray(new String[]{});
 		}
@@ -151,7 +153,7 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 		
 		if (majors.containsKey(major) && majors.get(major).size() > 0) {
 			return majors.get(major).get(0);
-		}
+		} 
 		
 		return null;
 	}

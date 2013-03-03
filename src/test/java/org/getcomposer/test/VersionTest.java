@@ -29,6 +29,10 @@ public class VersionTest extends TestCase {
 		
 		v.setVersion("dev-master");
 		assertEquals("master", v.getMajor());
+		
+		v.setVersion("v2.0.17");
+		assertEquals("2", v.getMajor());
+		assertEquals("v", v.getPrefix());
 	}
 	
 	@Test
@@ -44,7 +48,10 @@ public class VersionTest extends TestCase {
 		v.setStability(ComposerConstants.ALPHA);
 		v.setSuffix("2");
 		
-		DetailedVersion t = new DetailedVersion(v.toString());
+		String version = v.toString();
+		assertEquals(">1.2.4.5648-alpha2@beta", version);
+		
+		DetailedVersion t = new DetailedVersion(version);
 		
 		assertEquals(">", t.getConstraint());
 		assertEquals("1", t.getMajor());
@@ -58,8 +65,14 @@ public class VersionTest extends TestCase {
 		v = new DetailedVersion();
 		v.setStability(ComposerConstants.DEV);
 		v.setMajor("master");
-	
+		v.setDevPosition(DetailedVersion.BEGIN);
 		assertEquals("dev-master", v.toString());
+		
+		v = new DetailedVersion();
+		v.setMajor("2");
+		v.setPrefix("v");
+		
+		assertEquals("v2", v.toString());
 	}
 	
 	@Test
@@ -71,6 +84,8 @@ public class VersionTest extends TestCase {
 			Versions versions = pkg.getVersions();
 			
 			assertNotNull(versions.getMajors());
+			assertTrue(Integer.parseInt(versions.getRecentMajor()) >= 2);
+			assertTrue(Integer.parseInt(versions.getRecentMinor("2")) >= 2);
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();
