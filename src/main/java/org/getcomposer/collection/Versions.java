@@ -12,7 +12,7 @@ import java.util.TreeMap;
 
 import org.getcomposer.ComposerConstants;
 import org.getcomposer.ComposerPackage;
-import org.getcomposer.DetailedVersion;
+import org.getcomposer.entities.DetailedVersion;
 import org.json.simple.JSONObject;
 
 
@@ -132,7 +132,6 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 	 */
 	public String[] getMinors(String major) {
 		prepareDetailedVersions();
-		
 		
 		if (majors.containsKey(major)) {
 			return majors.get(major).toArray(new String[]{});

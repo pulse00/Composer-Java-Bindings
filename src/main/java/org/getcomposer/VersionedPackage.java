@@ -3,6 +3,8 @@ package org.getcomposer;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import org.getcomposer.entities.DetailedVersion;
+
 /**
  * Represents a dependency entry in require or require-dev
  * 

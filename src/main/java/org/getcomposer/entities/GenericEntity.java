@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.getcomposer.Entity;
 import org.getcomposer.GenericValue;
 import org.getcomposer.collection.GenericArray;
 import org.getcomposer.collection.JsonMap;
@@ -244,7 +243,7 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	}
 	
 	private void installListener(final String property, GenericValue value) {
-		Entity entity = getEntity(value);
+		JsonEntity entity = getEntity(value);
 		
 		if (value != null) {
 			listeners.put(property, new PropertyChangeListener() {
@@ -260,7 +259,7 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 	private void uninstallListener(String property) {
 		if (listeners.containsKey(property)) {
 			if (has(property)) {
-				Entity entity = getEntity(get(property));
+				JsonEntity entity = getEntity(get(property));
 				if (entity != null) {
 					entity.removePropertyChangeListener(listeners.get(property));
 				}
@@ -269,8 +268,8 @@ public class GenericEntity extends JsonMap<GenericEntity, GenericValue> implemen
 		}
 	}
 	
-	private Entity getEntity(GenericValue value) {
-		Entity entity = null;
+	private JsonEntity getEntity(GenericValue value) {
+		JsonEntity entity = null;
 		
 		if (value.isArray()) {
 			entity = value.getAsArray();

@@ -50,7 +50,6 @@ public class AsyncPackageSearch extends AsyncDownloadClient {
 					int counter = getCounter(query);
 				
 					if (result != null && result.results != null) {
-						System.out.println("AsyncPackageSearch found packages for " + query + " => " + result.results.size());
 						for (PackageSearchListenerInterface listener : listeners) {
 							listener.packagesFound(result.results, query, result);
 						}

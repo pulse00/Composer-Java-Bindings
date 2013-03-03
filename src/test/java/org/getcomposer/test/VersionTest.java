@@ -1,9 +1,9 @@
 package org.getcomposer.test;
 
 import org.getcomposer.ComposerConstants;
-import org.getcomposer.DetailedVersion;
 import org.getcomposer.RepositoryPackage;
 import org.getcomposer.collection.Versions;
+import org.getcomposer.entities.DetailedVersion;
 import org.getcomposer.packages.PackageDownloader;
 import org.getcomposer.packages.PackagistDownloader;
 import org.junit.Test;

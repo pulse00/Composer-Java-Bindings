@@ -3,16 +3,16 @@ package org.getcomposer.collection;
 import java.lang.reflect.Type;
 import java.util.LinkedList;
 
-import org.getcomposer.Entity;
 import org.getcomposer.GenericValue;
 import org.getcomposer.entities.Autoload;
+import org.getcomposer.entities.JsonEntity;
 
 /**
  * Represents a collection
  * 
  * @author Thomas Gossmann <gos.si>
  */
-public abstract class JsonCollection<V> extends Entity {
+public abstract class JsonCollection<V> extends JsonEntity {
 	
 	private transient Type valueType;
 	

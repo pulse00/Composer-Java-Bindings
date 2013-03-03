@@ -33,7 +33,7 @@ import org.getcomposer.packages.SearchResult;
 import org.junit.Test;
 
 
-public class PackagistTest extends TestCase {
+public class PackagesTest extends TestCase {
 	
 	private final static int TIMEOUT = 10;
 	
@@ -284,7 +284,7 @@ public class PackagistTest extends TestCase {
 				}
 				
 				public void aborted(String url) {
-					System.out.println("testAsyncSearchAbortNDownload aborted on: " + url);
+//					System.out.println("testAsyncSearchAbortNDownload aborted on: " + url);
 				}
 				
 				public void errorOccured(Exception e) {

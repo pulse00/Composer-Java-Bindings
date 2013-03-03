@@ -1,11 +1,15 @@
-package org.getcomposer;
+package org.getcomposer.entities;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DetailedVersion {
+import org.getcomposer.ComposerConstants;
+
+public class DetailedVersion extends Entity {
 
 	public final static int BEGIN = 0;
 	public final static int END = 1;
@@ -47,7 +51,7 @@ public class DetailedVersion {
 		build = null;
 		stability = null;
 		suffix = null;
-		setPrefix(null);
+		prefix = null;
 		devPosition = END;
 		
 		// start parsing
@@ -60,11 +64,16 @@ public class DetailedVersion {
 			
 			// all higher ones
 			for (int i = 1; i < parts.length; i++) {
-				versions.add(new DetailedVersion(parts[i]));
+				DetailedVersion v = new DetailedVersion(parts[i]);
+				v.addPropertyChangeListener(new PropertyChangeListener() {
+					public void propertyChange(PropertyChangeEvent evt) {
+						reset();
+					}
+				});
+				versions.add(v);
 			}
 			
 			// reset
-			// TODO add listeners on them to reset on changes on the versions
 			this.version = null;
 		} else {
 			parseVersion(version);
@@ -368,7 +377,7 @@ public class DetailedVersion {
 	 * @param version the version to set
 	 */
 	public void setVersion(String version) {
-		this.version = version;
+		firePropertyChange("version", this.version, this.version = version);
 		versions.clear();
 		parse(version);
 	}
@@ -377,7 +386,7 @@ public class DetailedVersion {
 	 * @param constraint the constraint to set
 	 */
 	public void setConstraint(String constraint) {
-		this.constraint = constraint;
+		firePropertyChange("constraint", this.constraint, this.constraint = constraint);
 		reset();
 	}
 
@@ -385,7 +394,7 @@ public class DetailedVersion {
 	 * @param stabilityModifier the stabilityModifier to set
 	 */
 	public void setStabilityModifier(String stabilityModifier) {
-		this.stabilityModifier = stabilityModifier;
+		firePropertyChange("stabilityModifier", this.stabilityModifier, this.stabilityModifier = stabilityModifier);
 		reset();
 	}
 
@@ -393,7 +402,7 @@ public class DetailedVersion {
 	 * @param major the major to set
 	 */
 	public void setMajor(String major) {
-		this.major = major;
+		firePropertyChange("major", this.major, this.major = major);
 		reset();
 	}
 
@@ -401,7 +410,7 @@ public class DetailedVersion {
 	 * @param minor the minor to set
 	 */
 	public void setMinor(String minor) {
-		this.minor = minor;
+		firePropertyChange("minor", this.minor, this.minor = minor);
 		reset();
 	}
 
@@ -409,7 +418,7 @@ public class DetailedVersion {
 	 * @param fix the fix to set
 	 */
 	public void setFix(String fix) {
-		this.fix = fix;
+		firePropertyChange("fix", this.fix, this.fix = fix);
 		reset();
 	}
 
@@ -417,7 +426,7 @@ public class DetailedVersion {
 	 * @param build the build to set
 	 */
 	public void setBuild(String build) {
-		this.build = build;
+		firePropertyChange("build", this.build, this.build = build);
 		reset();
 	}
 
@@ -425,7 +434,7 @@ public class DetailedVersion {
 	 * @param stability the stability to set
 	 */
 	public void setStability(String stability) {
-		this.stability = stability;
+		firePropertyChange("stability", this.stability, this.stability = stability);
 		reset();
 	}
 	
@@ -433,7 +442,7 @@ public class DetailedVersion {
 	 * @param suffix the suffix to set
 	 */
 	public void setSuffix(String suffix) {
-		this.suffix = suffix;
+		firePropertyChange("suffix", this.suffix, this.suffix = suffix);
 		reset();
 	}
 
@@ -442,7 +451,7 @@ public class DetailedVersion {
 	}
 
 	public void setDevPosition(int devPosition) {
-		this.devPosition = devPosition;
+		firePropertyChange("devPosition", this.devPosition, this.devPosition = devPosition);
 		reset();
 	}
 
@@ -451,7 +460,7 @@ public class DetailedVersion {
 	}
 
 	public void setPrefix(String prefix) {
-		this.prefix = prefix;
+		firePropertyChange("prefix", this.prefix, this.prefix = prefix);
 		reset();
 	}
 }

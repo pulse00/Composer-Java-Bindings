@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.getcomposer.entities.Autoload;
+import org.getcomposer.entities.DetailedVersion;
 import org.getcomposer.entities.Distribution;
 import org.getcomposer.entities.Source;
 import org.json.simple.JSONObject;

@@ -8,8 +8,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.getcomposer.Entity;
 import org.getcomposer.entities.GenericEntity;
+import org.getcomposer.entities.JsonEntity;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -49,10 +49,10 @@ public abstract class JsonMap<C, V> extends JsonCollection<V> {
 		if (json.containsKey(property)) {
 			Field field = getFieldByName(this.getClass(), property);
 			
-			if (field != null && Entity.class.isAssignableFrom(field.getType())) {
+			if (field != null && JsonEntity.class.isAssignableFrom(field.getType())) {
 				try {
 					field.setAccessible(true);
-					Entity entity = (Entity)field.get(this);
+					JsonEntity entity = (JsonEntity)field.get(this);
 					entity.fromJson(json.get(property));
 					json.remove(property);
 				} catch (Exception e) {

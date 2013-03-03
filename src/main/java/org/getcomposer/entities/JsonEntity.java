@@ -1,8 +1,7 @@
-package org.getcomposer;
+package org.getcomposer.entities;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -17,19 +16,18 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import org.getcomposer.JsonFormatter;
 import org.getcomposer.annotation.Name;
 import org.getcomposer.collection.JsonCollection;
 import org.json.simple.JSONValue;
 
-public abstract class Entity {
+public abstract class JsonEntity extends Entity {
 
-	private transient PropertyChangeSupport changeSupport = new PropertyChangeSupport(
-			this);
 	private transient Set<String> listening = new HashSet<String>();
 	@SuppressWarnings("rawtypes")
 	private transient Map<Class, Map<String, Field>> fieldNameCache = new HashMap<Class, Map<String, Field>>();
 
-	public Entity() {
+	public JsonEntity() {
 		listen();
 		initialize();
 	}
@@ -49,7 +47,7 @@ public abstract class Entity {
 					}
 					
 					field.setAccessible(true);
-					Entity obj = (Entity)field.get(this);
+					JsonEntity obj = (JsonEntity)field.get(this);
 
 					if (obj != null) {
 						obj.addPropertyChangeListener(new PropertyChangeListener() {
@@ -140,58 +138,5 @@ public abstract class Entity {
 	
 	public void fromJson(Reader reader) throws IOException {
 		parse(JSONValue.parse(reader));
-	}
-	
-	/**
-	 * Adds a listener to be notified when a property changes
-	 * 
-	 * @param listener
-	 */
-	public void addPropertyChangeListener(PropertyChangeListener listener) {
-		changeSupport.addPropertyChangeListener(listener);
-	}
-
-	/**
-	 * Removes a listener that no longer receives notification about property changes
-	 * 
-	 * @param listener
-	 */
-	public void removePropertyChangeListener(PropertyChangeListener listener) {
-		changeSupport.removePropertyChangeListener(listener);
-	}
-
-	/**
-	 * Adds a listener to be notified when the passed property changes
-	 * 
-	 * @param propertyName the property upon which the listener will be notified
-	 * @param listener
-	 */
-	public void addPropertyChangeListener(String propertyName,
-			PropertyChangeListener listener) {
-		changeSupport.addPropertyChangeListener(propertyName, listener);
-	}
-
-	/**
-	 * Removes a listener that no longer receives notification about changes from
-	 * the passed property
-	 * 
-	 * @param propertyName the property upon which the listener has been notified
-	 * @param listener
-	 */
-	public void removePropertyChangeListener(String propertyName,
-			PropertyChangeListener listener) {
-		changeSupport.removePropertyChangeListener(propertyName, listener);
-	}
-
-	/**
-	 * Notify listeners that a property has changed its value
-	 * 
-	 * @param propertyName
-	 * @param oldValue
-	 * @param newValue
-	 */
-	protected void firePropertyChange(String propertyName, Object oldValue,
-			Object newValue) {
-		changeSupport.firePropertyChange(propertyName, oldValue, newValue);
 	}
 }
