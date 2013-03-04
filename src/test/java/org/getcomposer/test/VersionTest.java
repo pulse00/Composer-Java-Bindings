@@ -29,6 +29,7 @@ public class VersionTest extends TestCase {
 		
 		v.setVersion("dev-master");
 		assertEquals("master", v.getMajor());
+		assertEquals(Version.BEGIN, v.getDevPosition());
 		
 		v.setVersion("v2.0.17");
 		assertEquals("2", v.getMajor());

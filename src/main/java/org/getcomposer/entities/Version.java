@@ -93,6 +93,7 @@ public class Version extends Entity implements Comparable<Version> {
 		if (version.startsWith("dev-")) {
 			stability = ComposerConstants.DEV;
 			version = version.substring(4);
+			devPosition = BEGIN;
 		}
 		
 		parts = version.split("-");
