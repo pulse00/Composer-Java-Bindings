@@ -12,7 +12,7 @@ import java.util.TreeMap;
 
 import org.getcomposer.ComposerConstants;
 import org.getcomposer.ComposerPackage;
-import org.getcomposer.entities.DetailedVersion;
+import org.getcomposer.entities.Version;
 import org.json.simple.JSONObject;
 
 
@@ -27,7 +27,7 @@ import org.json.simple.JSONObject;
  */
 public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 
-	private Map<String, DetailedVersion> detailedVersions = null;
+	private Map<String, Version> detailedVersions = null;
 	private SortedMap<String, List<String>> majors = new TreeMap<String, List<String>>();
 
 	public Versions() {
@@ -63,7 +63,7 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 
 	private void compileDetailedVersions() {
 		if (detailedVersions == null) {
-			detailedVersions = new HashMap<String, DetailedVersion>();
+			detailedVersions = new HashMap<String, Version>();
 			
 			for (String version : toArray()) {
 				compileDetailedVersion(version);
@@ -72,7 +72,7 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 	}
 
 	private void compileDetailedVersion(String version) {
-		DetailedVersion v = new DetailedVersion(version);
+		Version v = new Version(version);
 		detailedVersions.put(version, v);
 		
 		// hierarchy
@@ -101,10 +101,13 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 		}
 	}
 	
-	public List<DetailedVersion> getDetailedVersions() {
+	public List<Version> getDetailedVersions() {
 		prepareDetailedVersions();
 		
-		return (List<DetailedVersion>)detailedVersions.values();
+		List<Version> all = new ArrayList<Version>();
+		all.addAll(detailedVersions.values());
+		
+		return all;
 	}
 	
 	public String[] getMajors() {
@@ -168,7 +171,7 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 	
 	public void remove(String version) {
 		if (detailedVersions != null) {
-			DetailedVersion v = getDetailedVersion(version);
+			Version v = getDetailedVersion(version);
 			detailedVersions.remove(version);
 			
 			// remove hierarchy
@@ -202,7 +205,7 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 	 * @param version
 	 * @return
 	 */
-	public DetailedVersion getDetailedVersion(String version) {
+	public Version getDetailedVersion(String version) {
 		prepareDetailedVersions();
 
 		if (detailedVersions.containsKey(version)) {

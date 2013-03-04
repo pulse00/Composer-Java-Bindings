@@ -3,56 +3,47 @@ package org.getcomposer.entities;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.getcomposer.ComposerConstants;
 
-public class DetailedVersion extends Entity {
+public class Version extends Entity implements Comparable<Version> {
 
 	public final static int BEGIN = 0;
 	public final static int END = 1;
 	
-	private List<DetailedVersion> versions = new ArrayList<DetailedVersion>();
+	private List<Version> versions = new ArrayList<Version>();
 	
 	/**
 	 * Passed version string
 	 */
 	private String version;
 	
-	private String constraint;
-	private String stabilityModifier;
-	private String major;
-	private String minor;
-	private String fix;
-	private String build;
-	private String stability;
-	private String suffix;
-	private String prefix;
+	private String constraint = "";
+	private String stabilityModifier = "";
+	private String major = "";
+	private String minor = "";
+	private String fix = "";
+	private String build = "";
+	private String stability = "";
+	private String suffix = "";
+	private String prefix = "";
 	private int devPosition = END;
 	
-	public DetailedVersion() {
+	public Version() {
 		
 	}
 	
-	public DetailedVersion(String version) {
+	public Version(String version) {
 		parse(version);
 	}
 	
 	private void parse(String version) {
 		// reset
-		versions.clear();
-		constraint = null;
-		stabilityModifier = null;
-		major = null;
-		minor = null;
-		fix = null;
-		build = null;
-		stability = null;
-		suffix = null;
-		prefix = null;
-		devPosition = END;
+		clear();
 		
 		// start parsing
 		if (version.matches(",")) {
@@ -64,7 +55,7 @@ public class DetailedVersion extends Entity {
 			
 			// all higher ones
 			for (int i = 1; i < parts.length; i++) {
-				DetailedVersion v = new DetailedVersion(parts[i]);
+				Version v = new Version(parts[i]);
 				v.addPropertyChangeListener(new PropertyChangeListener() {
 					public void propertyChange(PropertyChangeEvent evt) {
 						reset();
@@ -115,7 +106,7 @@ public class DetailedVersion extends Entity {
 			parseTail(parts[1]);
 		}
 		
-		if (stability == null) {
+		if (stability.isEmpty()) {
 			stability = ComposerConstants.STABLE;
 		}
 	}
@@ -167,7 +158,7 @@ public class DetailedVersion extends Entity {
 		}
 
 		// stability 
-		if (stability == null) {
+		if (stability.isEmpty()) {
 			// -dev present?
 			if (matcher.group(3) != null && !matcher.group(3).isEmpty()) {
 				stability = ComposerConstants.DEV;
@@ -207,7 +198,7 @@ public class DetailedVersion extends Entity {
 	private String build() {
 		StringBuilder sb = new StringBuilder();
 		
-		if (constraint != null) {
+		if (!constraint.isEmpty()) {
 			sb.append(constraint);
 		}
 		
@@ -215,41 +206,36 @@ public class DetailedVersion extends Entity {
 			sb.append("dev-");
 		}
 		
-		if (prefix != null) {
+		if (!prefix.isEmpty()) {
 			sb.append(prefix);
 		}
 		
 		sb.append(major);
 		
-		if (minor != null) {
+		if (!minor.isEmpty()) {
 			sb.append(".");
 			sb.append(minor);
 		}
 		
-		if (fix != null) {
+		if (!fix.isEmpty()) {
 			sb.append(".");
 			sb.append(fix);
 		}
 		
-		if (build != null) {
+		if (!build.isEmpty()) {
 			sb.append(".");
 			sb.append(build);
 		}
 		
 		StringBuilder sx = new StringBuilder();
 		
-		if (stability != null 
+		if (!stability.isEmpty() 
 				&& (stability == ComposerConstants.DEV ? devPosition != BEGIN : true)) {
 			sx.append(stability);
 		}
 
-		if (suffix != null) {
+		if (!suffix.isEmpty()) {
 			sx.append(suffix);
-		}
-		
-		if (stabilityModifier != null) {
-			sx.append("@");
-			sx.append(stabilityModifier);
 		}
 		
 		if (sx.length() > 0) {
@@ -257,9 +243,14 @@ public class DetailedVersion extends Entity {
 			sb.append(sx);
 		}
 		
+		if (!stabilityModifier.isEmpty()) {
+			sb.append("@");
+			sb.append(stabilityModifier);
+		}
+		
 		if (versions.size() > 0) {
 			int i = 1;
-			for (DetailedVersion v : versions) {
+			for (Version v : versions) {
 				sb.append(v.toString());
 				if (i < versions.size()) {
 					sb.append(",");
@@ -275,11 +266,11 @@ public class DetailedVersion extends Entity {
 		return versions.size() > 0;
 	}
 	
-	public DetailedVersion getLowest() {
+	public Version getLowest() {
 		return this;
 	}
 	
-	public DetailedVersion getHighest() {
+	public Version getHighest() {
 		if (versions == null) {
 			return null;
 		}
@@ -287,18 +278,37 @@ public class DetailedVersion extends Entity {
 		return versions.get(versions.size() - 1);
 	}
 	
-	public DetailedVersion getVerison(int index) {
+	public void clear() {
+		versions.clear();
+		constraint = "";
+		stabilityModifier = "";
+		major = "";
+		minor = "";
+		fix = "";
+		build = "";
+		stability = "";
+		suffix = "";
+		prefix = "";
+		devPosition = END;
+		version = null;
+	}
+	
+	public Version getVersion(int index) {
 		if (versions.size() > index) {
 			return versions.get(index);
 		}
 		return null;
 	}
 	
-	public void add(DetailedVersion version) {
+	public List<Version> getVersions() {
+		return versions;
+	}
+	
+	public void add(Version version) {
 		versions.add(versions.size(), version);
 	}
 	
-	public void add(int index, DetailedVersion version) {
+	public void add(int index, Version version) {
 		versions.add(index, version);
 		reset();
 	}
@@ -311,7 +321,7 @@ public class DetailedVersion extends Entity {
 	 * @return the version
 	 */
 	public String toString() {
-		if (version == "") {
+		if (version == "" || version == null) {
 			version = build();
 		}
 		return version;
@@ -377,73 +387,95 @@ public class DetailedVersion extends Entity {
 	 * @param version the version to set
 	 */
 	public void setVersion(String version) {
-		firePropertyChange("version", this.version, this.version = version);
+		String oldVersion = this.version;
 		versions.clear();
 		parse(version);
+		firePropertyChange("version", oldVersion, this.version);
+	}
+	
+	public void from(Version version) {
+		String oldVersion = this.version;
+		reset();
+		
+		versions.clear();
+		versions.addAll(version.getVersions());
+		
+		constraint = version.getConstraint();
+		stabilityModifier = version.getStabilityModifier();
+		major = version.getMajor();
+		minor = version.getMinor();
+		fix = version.getFix();
+		build = version.getBuild();
+		stability = version.getStability();
+		suffix = version.getSuffix();
+		prefix = version.getPrefix();
+		devPosition = END;
+		
+		firePropertyChange("version", oldVersion, toString());
 	}
 
 	/**
 	 * @param constraint the constraint to set
 	 */
 	public void setConstraint(String constraint) {
-		firePropertyChange("constraint", this.constraint, this.constraint = constraint);
 		reset();
+		firePropertyChange("constraint", this.constraint, this.constraint = constraint);
 	}
 
 	/**
 	 * @param stabilityModifier the stabilityModifier to set
 	 */
 	public void setStabilityModifier(String stabilityModifier) {
-		firePropertyChange("stabilityModifier", this.stabilityModifier, this.stabilityModifier = stabilityModifier);
 		reset();
+		firePropertyChange("stabilityModifier", this.stabilityModifier, this.stabilityModifier = stabilityModifier);
 	}
 
 	/**
 	 * @param major the major to set
 	 */
 	public void setMajor(String major) {
-		firePropertyChange("major", this.major, this.major = major);
 		reset();
+		firePropertyChange("major", this.major, this.major = major);
 	}
 
 	/**
 	 * @param minor the minor to set
 	 */
 	public void setMinor(String minor) {
-		firePropertyChange("minor", this.minor, this.minor = minor);
 		reset();
+		firePropertyChange("minor", this.minor, this.minor = minor);
 	}
 
 	/**
 	 * @param fix the fix to set
 	 */
 	public void setFix(String fix) {
-		firePropertyChange("fix", this.fix, this.fix = fix);
 		reset();
+		firePropertyChange("fix", this.fix, this.fix = fix);
 	}
 
 	/**
 	 * @param build the build to set
 	 */
 	public void setBuild(String build) {
-		firePropertyChange("build", this.build, this.build = build);
 		reset();
+		firePropertyChange("build", this.build, this.build = build);
 	}
 
 	/**
 	 * @param stability the stability to set
 	 */
 	public void setStability(String stability) {
-		firePropertyChange("stability", this.stability, this.stability = stability);
 		reset();
+		firePropertyChange("stability", this.stability, this.stability = stability);
 	}
 	
 	/**
 	 * @param suffix the suffix to set
 	 */
 	public void setSuffix(String suffix) {
-		firePropertyChange("suffix", this.suffix, this.suffix = suffix);
 		reset();
+		firePropertyChange("suffix", this.suffix, this.suffix = suffix);
 	}
 
 	public int getDevPosition() {
@@ -451,8 +483,8 @@ public class DetailedVersion extends Entity {
 	}
 
 	public void setDevPosition(int devPosition) {
-		firePropertyChange("devPosition", this.devPosition, this.devPosition = devPosition);
 		reset();
+		firePropertyChange("devPosition", this.devPosition, this.devPosition = devPosition);
 	}
 
 	public String getPrefix() {
@@ -460,7 +492,93 @@ public class DetailedVersion extends Entity {
 	}
 
 	public void setPrefix(String prefix) {
-		firePropertyChange("prefix", this.prefix, this.prefix = prefix);
 		reset();
+		firePropertyChange("prefix", this.prefix, this.prefix = prefix);
 	}
+
+	@Override
+	public int compareTo(Version anotherVersion) {
+		if (toString() == "dev-master") {
+			return -1;
+		}
+		
+		if (anotherVersion.toString() == "dev-master") {
+			return 1;
+		}
+		
+		// major
+		int major = cmp(getMajor(), anotherVersion.getMajor()); 
+		if (major == 0) {
+			int minor = cmp(getMinor(), anotherVersion.getMinor());
+			
+			if (minor == 0) {
+				int fix = cmp(getFix(), anotherVersion.getFix());
+				
+				if (fix == 0) {
+					int build = cmp(getBuild(), anotherVersion.getBuild());
+					
+					if (build == 0) {
+						int s1 = Arrays.binarySearch(ComposerConstants.STABILITIES, getStability());
+						int s2 = Arrays.binarySearch(ComposerConstants.STABILITIES, anotherVersion.getStability());
+						
+						if (s1 == s2) {
+							return cmp(getSuffix(), anotherVersion.getSuffix());
+						} else {
+							return s1 > s2 ? -1 : 1;
+						}
+					} else {
+						return build;
+					}
+				} else {
+					return fix;
+				}
+			} else {
+				return minor;
+			}
+		} else {
+			return major;
+		}
+	}
+
+	private int cmp(String s1, String s2) {
+		// ints
+		int i1 = 0, i2 = 0;
+		
+		// true = string contains chars, false = integer
+		boolean l1 = true, l2 = true;
+		
+		// convert
+		try {
+			i1 = Integer.parseInt(s1, 10);
+			l1 = false;
+		} catch(Exception e) {}
+		
+		try {
+			i2 = Integer.parseInt(s2, 10);
+			l2 = false;
+		} catch(Exception e) {}
+		
+		// both string
+		if (l1 && l2) {
+			return s1.compareTo(s2);
+		}
+		
+		// l1 string, l2 integer
+		if (l1 && !l2) {
+			return 1;
+		}
+		
+		// l1 integer, l2 string
+		if (!l1 && l2) {
+			return -1;
+		}
+		
+		// both integer
+		if (i1 == i2) {
+			return 0;
+		}
+		
+		return i1 > i2 ? 1 : -1;
+	}
+
 }

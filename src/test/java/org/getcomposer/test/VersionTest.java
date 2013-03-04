@@ -3,7 +3,7 @@ package org.getcomposer.test;
 import org.getcomposer.ComposerConstants;
 import org.getcomposer.RepositoryPackage;
 import org.getcomposer.collection.Versions;
-import org.getcomposer.entities.DetailedVersion;
+import org.getcomposer.entities.Version;
 import org.getcomposer.packages.PackageDownloader;
 import org.getcomposer.packages.PackagistDownloader;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class VersionTest extends TestCase {
 
 	@Test
 	public void testParser() {
-		DetailedVersion v = new DetailedVersion("1.2.3");
+		Version v = new Version("1.2.3");
 		
 		assertEquals("1", v.getMajor());
 		assertEquals("2", v.getMinor());
@@ -37,7 +37,7 @@ public class VersionTest extends TestCase {
 	
 	@Test
 	public void testBuilder() {
-		DetailedVersion v = new DetailedVersion();
+		Version v = new Version();
 		
 		v.setMajor("1");
 		v.setMinor("2");
@@ -51,7 +51,7 @@ public class VersionTest extends TestCase {
 		String version = v.toString();
 		assertEquals(">1.2.4.5648-alpha2@beta", version);
 		
-		DetailedVersion t = new DetailedVersion(version);
+		Version t = new Version(version);
 		
 		assertEquals(">", t.getConstraint());
 		assertEquals("1", t.getMajor());
@@ -62,13 +62,13 @@ public class VersionTest extends TestCase {
 		assertEquals(ComposerConstants.ALPHA, t.getStability());
 		assertEquals(ComposerConstants.BETA, t.getStabilityModifier());
 		
-		v = new DetailedVersion();
+		v = new Version();
 		v.setStability(ComposerConstants.DEV);
 		v.setMajor("master");
-		v.setDevPosition(DetailedVersion.BEGIN);
+		v.setDevPosition(Version.BEGIN);
 		assertEquals("dev-master", v.toString());
 		
-		v = new DetailedVersion();
+		v = new Version();
 		v.setMajor("2");
 		v.setPrefix("v");
 		
@@ -90,8 +90,24 @@ public class VersionTest extends TestCase {
 			e.printStackTrace();
 			fail();
 		}
+	}
+	
+	@Test
+	public void testComparison() {
+		Version v1 = new Version("2.0.10");
+		Version v2 = new Version("2.0.11");
+		assertEquals(-1, v1.compareTo(v2));
 		
+		v2.setVersion("2.0.7");
+		assertEquals(1, v1.compareTo(v2));
 		
+		v2.setVersion("2.0.10-beta2");
+		assertEquals(1, v1.compareTo(v2));
 		
+		v1.setVersion("2.0.10-beta3");
+		assertEquals(1, v1.compareTo(v2));
+		
+		v2.setVersion("2.0.x-dev");
+		assertEquals(-1, v1.compareTo(v2));
 	}
 }

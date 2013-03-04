@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import org.getcomposer.entities.Autoload;
-import org.getcomposer.entities.DetailedVersion;
+import org.getcomposer.entities.Version;
 import org.getcomposer.entities.Distribution;
 import org.getcomposer.entities.Source;
 import org.json.simple.JSONObject;
@@ -14,7 +14,7 @@ public abstract class DistributedPackage extends VersionedPackage {
 	protected Autoload autoload = new Autoload();
 	protected Distribution dist = new Distribution();
 	protected Source source = new Source();
-	protected transient DetailedVersion detailedVersion = null;
+	protected transient Version detailedVersion = null;
 	
 	protected void parse(Object obj) {
 		if (obj instanceof JSONObject) {

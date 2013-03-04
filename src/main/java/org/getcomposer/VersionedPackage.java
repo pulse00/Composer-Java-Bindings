@@ -3,7 +3,7 @@ package org.getcomposer;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-import org.getcomposer.entities.DetailedVersion;
+import org.getcomposer.entities.Version;
 
 /**
  * Represents a dependency entry in require or require-dev
@@ -15,7 +15,7 @@ import org.getcomposer.entities.DetailedVersion;
  */
 public class VersionedPackage extends MinimalPackage {
 
-	protected transient DetailedVersion detailedVersion = null;
+	protected transient Version detailedVersion = null;
 
 	@Override
 	public Object prepareJson(LinkedList<String> fields) {
@@ -24,9 +24,9 @@ public class VersionedPackage extends MinimalPackage {
 		return super.prepareJson(fields);
 	}
 	
-	public DetailedVersion getDetailedVersion() {
+	public Version getDetailedVersion() {
 		if (detailedVersion == null) {
-			detailedVersion = new DetailedVersion(getVersion());
+			detailedVersion = new Version(getVersion());
 		}
 		return detailedVersion;
 	}
