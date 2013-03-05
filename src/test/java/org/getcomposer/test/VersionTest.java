@@ -87,6 +87,7 @@ public class VersionTest extends TestCase {
 			assertNotNull(versions.getMajors());
 			assertTrue(Integer.parseInt(versions.getRecentMajor()) >= 2);
 			assertTrue(Integer.parseInt(versions.getRecentMinor("2")) >= 2);
+			assertNull(versions.getRecentMinor(null));
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

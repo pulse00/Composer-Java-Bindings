@@ -151,6 +151,9 @@ public class Versions extends IterableJsonMap<Versions, ComposerPackage> {
 	 * @return
 	 */
 	public String getRecentMinor(String major) {
+		if (major == null) {
+			return null;
+		}
 		prepareDetailedVersions();
 		
 		if (majors.containsKey(major) && majors.get(major).size() > 0) {

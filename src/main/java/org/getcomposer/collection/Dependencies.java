@@ -50,7 +50,13 @@ public class Dependencies extends JsonMap<Dependencies, VersionedPackage> implem
 	 * @return this
 	 */
 	public void add(VersionedPackage dependency) {
-		super.set(dependency.getName(), dependency);
+		set(dependency.getName(), dependency);
+	}
+	
+	public void addAll(Dependencies dependencies) {
+		for (VersionedPackage pkg : dependencies) {
+			add(pkg);
+		}
 	}
 
 	/**
@@ -62,8 +68,8 @@ public class Dependencies extends JsonMap<Dependencies, VersionedPackage> implem
 		super.remove(dependency.getName());
 	}
 	
-	public Dependencies[] toArray() {
-		return properties.values().toArray(new Dependencies[0]);
+	public VersionedPackage[] toArray() {
+		return properties.values().toArray(new VersionedPackage[]{});
 	}
 
 

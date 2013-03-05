@@ -230,7 +230,7 @@ public class Version extends Entity implements Comparable<Version> {
 		
 		StringBuilder sx = new StringBuilder();
 		
-		if (!stability.isEmpty() 
+		if (!stability.isEmpty() && stability != ComposerConstants.STABLE
 				&& (stability == ComposerConstants.DEV ? devPosition != BEGIN : true)) {
 			sx.append(stability);
 		}
