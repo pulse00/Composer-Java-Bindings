@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Composer Java Library
 Bundle-SymbolicName: org.getcomposer.core
-Bundle-Version: 0.0.1.qualifier
+Bundle-Version: 0.0.2
 Bundle-Vendor: https://github.com/pulse00
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.getcomposer.core,
