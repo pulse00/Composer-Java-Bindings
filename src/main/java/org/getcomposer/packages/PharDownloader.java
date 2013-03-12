@@ -2,7 +2,7 @@ package org.getcomposer.packages;
 
 import java.io.InputStream;
 
-import org.getcomposer.ComposerConstants;
+import org.getcomposer.core.ComposerConstants;
 
 public class PharDownloader extends DownloadClient {
 

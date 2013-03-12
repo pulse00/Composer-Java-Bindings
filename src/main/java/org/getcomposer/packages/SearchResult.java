@@ -3,7 +3,7 @@ package org.getcomposer.packages;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.getcomposer.MinimalPackage;
+import org.getcomposer.core.MinimalPackage;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 

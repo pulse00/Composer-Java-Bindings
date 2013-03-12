@@ -7,7 +7,7 @@
  ******************************************************************************/
 package org.getcomposer.packages;
 
-import org.getcomposer.RepositoryPackage;
+import org.getcomposer.core.RepositoryPackage;
 
 public class PackageDownloader extends DownloadClient {
 

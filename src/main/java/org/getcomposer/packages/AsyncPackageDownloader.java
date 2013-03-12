@@ -4,7 +4,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.getcomposer.RepositoryPackage;
+import org.getcomposer.core.RepositoryPackage;
 
 public class AsyncPackageDownloader extends AsyncDownloadClient {
 	

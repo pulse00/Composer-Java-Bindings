@@ -10,7 +10,7 @@ package org.getcomposer.packages;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.getcomposer.MinimalPackage;
+import org.getcomposer.core.MinimalPackage;
 
 public class PackageSearch extends DownloadClient {
 	

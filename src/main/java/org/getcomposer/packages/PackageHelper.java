@@ -3,8 +3,8 @@ package org.getcomposer.packages;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.getcomposer.RepositoryPackage;
-import org.getcomposer.repositories.PackageRepository;
+import org.getcomposer.core.RepositoryPackage;
+import org.getcomposer.core.repositories.PackageRepository;
 import org.json.simple.JSONValue;
 
 class PackageHelper {

@@ -1,6 +1,6 @@
 package org.getcomposer.packages;
 
-import org.getcomposer.ComposerConstants;
+import org.getcomposer.core.ComposerConstants;
 
 
 public class AsyncPharDownloader extends AsyncDownloadClient {
