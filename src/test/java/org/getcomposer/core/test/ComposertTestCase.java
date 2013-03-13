@@ -511,11 +511,4 @@ public abstract class ComposertTestCase extends TestCase {
 		assertEquals(SMARTY_SOURCE, pkg.getSource().getType());
 		assertEquals(SMARTY_REFERENCE, pkg.getSource().getReference());
 	}
-	
-	public abstract void testComposerPackage();
-	public abstract void testDependencies();
-	public abstract void testAutoload();
-	public abstract void testSupport();
-	public abstract void testRepositories();
-	public abstract void testConfig();
 }

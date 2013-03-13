@@ -68,9 +68,9 @@ public class Dependencies extends AbstractJsonObject<VersionedPackage> implement
 		super.remove(dependency.getName());
 	}
 	
-	public VersionedPackage[] toArray() {
-		return properties.values().toArray(new VersionedPackage[]{});
-	}
+//	public VersionedPackage[] toArray() {
+//		return properties.values().toArray(new VersionedPackage[]{});
+//	}
 
 	/*
 	 * (non-Javadoc)

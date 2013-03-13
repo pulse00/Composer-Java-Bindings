@@ -57,6 +57,28 @@ public class Entity {
 	 */
 	protected void firePropertyChange(String propertyName, Object oldValue,
 			Object newValue) {
+		
+		if (oldValue instanceof JsonValue) {
+			oldValue = getRawObject((JsonValue)oldValue);
+		}
+		
+		if (newValue instanceof JsonValue) {
+			newValue = getRawObject((JsonValue)newValue);
+		}
 		changeSupport.firePropertyChange(propertyName, oldValue, newValue);
+	}
+	
+	private Object getRawObject(JsonValue value) {
+		if (value.isArray()) {
+			return value.getAsArray();
+		} else if(value.isObject()) {
+			return value.getAsObject();
+		} else if(value.isNumber()) {
+			return value.getAsNumber();
+		} else if(value.isBoolean()) {
+			return value.getAsBoolean();
+		} else {
+			return value.getAsString();
+		}
 	}
 }

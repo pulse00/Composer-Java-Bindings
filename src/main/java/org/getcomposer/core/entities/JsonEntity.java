@@ -52,7 +52,8 @@ public abstract class JsonEntity extends Entity {
 					if (obj != null) {
 						obj.addPropertyChangeListener(new PropertyChangeListener() {
 							public void propertyChange(PropertyChangeEvent e) {
-								firePropertyChange(prop, e.getOldValue(), e.getNewValue());
+								firePropertyChange(prop + "." + e.getPropertyName(), 
+										e.getOldValue(), e.getNewValue());
 							}
 						});
 						

@@ -5,36 +5,149 @@ import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
 import org.getcomposer.core.ComposerPackage;
+import org.getcomposer.core.VersionedPackage;
+import org.getcomposer.core.collection.Dependencies;
+import org.getcomposer.core.collection.Persons;
 import org.getcomposer.core.collection.Psr0;
 import org.getcomposer.core.objects.Autoload;
+import org.getcomposer.core.objects.JsonObject;
 import org.getcomposer.core.objects.Namespace;
+import org.getcomposer.core.objects.Person;
 import org.junit.Test;
 
-import junit.framework.TestCase;
+public class ListenerTest extends ComposertTestCase {
 
-public class ListenerTest extends TestCase {
-
-	private ComposerPackage composerPackage;
+	private ComposerPackage pkg;
+	private String property;
+	private Object oldValue;
+	private Object newValue;
+	private int changes = 0;
+	
 	private HashMap<String, Integer> listenerCounter;
 	
-	protected void setUp() {
+	@Override
+	protected void setUp() throws Exception {
+		pkg = createDummyPackage();
 		listenerCounter = new HashMap<String, Integer>();
-		composerPackage = new ComposerPackage();
-		composerPackage.addPropertyChangeListener(new PropertyChangeListener() {
-			public void propertyChange(PropertyChangeEvent evt) {
-				String prop = evt.getPropertyName();
+		changes = 0;
+		pkg.addPropertyChangeListener(new PropertyChangeListener() {
+			public void propertyChange(PropertyChangeEvent e) {
+				property = e.getPropertyName();
+				oldValue = e.getOldValue();
+				newValue = e.getNewValue();
+				changes++;
 				
-				if (!listenerCounter.containsKey(prop)) {
-					listenerCounter.put(prop, 0);
+				if (!listenerCounter.containsKey(property)) {
+					listenerCounter.put(property, 0);
 				}
 				
-				listenerCounter.put(prop, listenerCounter.get(prop) + 1);
+				listenerCounter.put(property, listenerCounter.get(property) + 1);
 				
 				// debug output
-//				System.out.println("Prop Change: " + evt.getPropertyName() + ", old Value: " + evt.getOldValue() + ", new Value: " + evt.getNewValue());
+//				System.out.println("Prop Change: " + e.getPropertyName() + ", old Value: " + e.getOldValue() + ", new Value: " + e.getNewValue());
 			}
 		});
 	}
+	
+	@Test
+	public void testName() {
+		String name = "foo/bar";
+		
+		pkg.setName(name);
+		assertEquals(1, changes);
+		assertEquals("name", property);
+		assertEquals(name, newValue);
+		assertEquals(NAME, oldValue);
+		assertFalse(oldValue.equals(newValue));
+		
+		changes = 0;
+		pkg.remove("name");
+		assertEquals(1, changes);
+		assertEquals("name", property);
+		assertEquals(null, newValue);
+		assertEquals(name, oldValue);
+		assertFalse(oldValue.equals(newValue));
+		
+		changes = 0;
+		pkg.setName(NAME);
+		assertEquals(1, changes);
+		assertEquals("name", property);
+		assertEquals(NAME, newValue);
+		assertEquals(null, oldValue);
+		assertFalse(newValue.equals(oldValue));
+	}
+	
+	@Test
+	public void testAuthors() {
+		// set name of first author
+		String name = "hans";
+		Persons authors = pkg.getAuthors();
+		authors.get(0).setName("hans");
+		
+		assertEquals(1, changes);
+		assertEquals("authors.#0.name", property);
+		assertEquals(name, newValue);
+		assertEquals(PERSON1, oldValue);
+		assertFalse(oldValue.equals(newValue));
+		
+		
+		// add author
+		changes = 0;
+		Person p = new Person();
+		p.setName(name);
+		authors.add(p);
+		
+		assertEquals(1, changes);
+		assertEquals("authors.#2", property);
+		assertEquals(p, newValue);
+		assertEquals(null, oldValue);
+		assertFalse(newValue.equals(oldValue));
+		
+		
+		// change property to same value
+		changes = 0;
+		p.setName(name);
+		assertEquals(0, changes);
+		
+		
+		// remove an author
+		changes = 0;
+		p = authors.get(1);
+		authors.remove(p);
+		
+		assertEquals(1, changes);
+		assertEquals("authors.#1", property);
+		assertEquals(null, newValue);
+		assertEquals(p, oldValue);
+		assertFalse(oldValue.equals(newValue));
+	}
+	
+	@Test
+	public void testCustom() {
+		String p = "prop";
+		JsonObject o = new JsonObject();
+		
+		pkg.set(p, o);
+		assertEquals(1, changes);
+		assertEquals(p, property);
+		assertEquals(o, newValue);
+		assertEquals(null, oldValue);
+		assertFalse(newValue.equals(oldValue));
+		
+		
+		changes = 0;
+		String p2 = "prop2";
+		String v = "val";
+		o.set(p2, v);
+		
+		assertEquals(1, changes);
+		assertEquals(p+"."+p2, property);
+		assertEquals(v, newValue);
+		assertEquals(null, oldValue);
+		assertFalse(newValue.equals(oldValue));
+		
+	}
+	
 	
 	private int getCounter(String key) {
 		if (!listenerCounter.containsKey(key)) {
@@ -46,29 +159,29 @@ public class ListenerTest extends TestCase {
 	
 	@Test
 	public void testLicense() {
-		composerPackage.getLicense().add("MIT");
+		pkg.getLicense().add("MIT");
 
-		assertEquals(1, getCounter("license"));
+		assertEquals(1, getCounter("license.#2"));
 		
-		composerPackage.getLicense().add("EPL");
+		pkg.getLicense().add("EPL");
 		
-		assertEquals(2, getCounter("license"));
+		assertEquals(1, getCounter("license.#3"));
 	}
 	
 	@Test
 	public void testKeywords() {
-		composerPackage.getKeywords().add("foo");
+		pkg.getKeywords().add("fool");
 
-		assertEquals(1, getCounter("keywords"));
+		assertEquals(1, getCounter("keywords.#2"));
 		
-		composerPackage.getKeywords().add("bar");
+		pkg.getKeywords().add("bar");
 		
-		assertEquals(2, getCounter("keywords"));
+		assertEquals(1, getCounter("keywords.#3"));
 	}
 	
 	@Test
 	public void testAutoload() {
-		Autoload al = composerPackage.getAutoload();
+		Autoload al = pkg.getAutoload();
 		Psr0 psr = al.getPsr0();
 		
 		// psr
@@ -76,20 +189,34 @@ public class ListenerTest extends TestCase {
 		ns1.setNamespace("test");
 		psr.add(ns1);
 		
-		assertEquals(1, getCounter("autoload"));
+		assertEquals(1, getCounter("autoload.psr-0.test"));
 		
 		ns1.add("new/path");
 		
-		assertEquals(2, getCounter("autoload"));
+		assertEquals(1, getCounter("autoload.psr-0.test.#0"));
 		
 		// classmap
 		al.getClassMap().add("file/to/path.php");
 		
-		assertEquals(3, getCounter("autoload"));
+		assertEquals(1, getCounter("autoload.classmap.#3"));
 		
 		// files
 		al.getFiles().add("another/file/to/path.php");
 		
-		assertEquals(4, getCounter("autoload"));
+		assertEquals(1, getCounter("autoload.files.#1"));
+	}
+	
+	@Test
+	public void testDependencies() {
+		Dependencies require = pkg.getRequireDev();
+		
+		VersionedPackage phpunit = require.get(PHPUNIT);
+		phpunit.setVersion("1.2.3");
+		
+		assertEquals(1, changes);
+		assertEquals("require-dev.phpunit/phpunit.version", property);
+		assertEquals("1.2.3", newValue);
+		assertEquals(PHPUNIT_VERSION, oldValue);
+		assertFalse(oldValue.equals(newValue));
 	}
 }

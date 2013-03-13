@@ -1,21 +1,14 @@
 package org.getcomposer.core.objects;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import org.getcomposer.core.collection.JsonArray;
-import org.getcomposer.core.entities.JsonEntity;
-import org.getcomposer.core.entities.JsonValue;
 import org.getcomposer.core.entities.AbstractJsonObject;
+import org.getcomposer.core.entities.JsonValue;
 
 public class JsonObject extends AbstractJsonObject<JsonValue> {
 
@@ -46,16 +39,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	@Override
 	protected void initialize() {
 		super.initialize();
-
-		this.silentProps = getSilentProperties();
 	}
-
-	protected List<String> getSilentProperties() {
-		return new ArrayList<String>();
-	}
-
-	private transient Map<String, PropertyChangeListener> listeners = new HashMap<String, PropertyChangeListener>();
-	private transient List<String> silentProps;
 
 	/**
 	 * Returns whether the property is instance of the given type.
@@ -194,7 +178,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	}
 
 	/**
-	 * Returns the property value as entity.
+	 * Returns the property value as object.
 	 * 
 	 * @param property
 	 *            the property
@@ -215,88 +199,25 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 * @param value
 	 *            the new value
 	 */
-	@Override
 	public void set(String property, Object value) {
-		set(property, new JsonValue(value));
+		super.set(property, new JsonValue(value));
 	}
 
-	/**
-	 * Sets a new value for the given property.
-	 * 
-	 * @param property
-	 *            the property
-	 * @param value
-	 *            the new value
-	 */
-	public void set(final String property, JsonValue value) {
-
-		// remove listener on the current value if there is one yet
-		uninstallListener(property);
-
-		// install listener to be aware of changes
-		if ((value.isObject() || value.isArray())
-				&& !listeners.containsKey(property)) {
-			installListener(property, value);
-		}
-
-		if (silentProps.contains(property)) {
-			properties.put(property, value);
-		} else {
-			super.set(property, value);
-		}
-	}
-
-	private void installListener(final String property, JsonValue value) {
-		JsonEntity entity = getEntity(value);
-
-		if (value != null) {
-			listeners.put(property, new PropertyChangeListener() {
-				public void propertyChange(PropertyChangeEvent evt) {
-					firePropertyChange(property, evt.getOldValue(),
-							evt.getNewValue());
-				}
-			});
-
-			entity.addPropertyChangeListener(listeners.get(property));
-		}
-	}
-
-	private void uninstallListener(String property) {
-		if (listeners.containsKey(property)) {
-			if (has(property)) {
-				JsonEntity entity = getEntity(get(property));
-				if (entity != null) {
-					entity.removePropertyChangeListener(listeners.get(property));
-				}
-			}
-			listeners.remove(property);
-		}
-	}
-
-	private JsonEntity getEntity(JsonValue value) {
-		JsonEntity entity = null;
-
-		if (value.isArray()) {
-			entity = value.getAsArray();
-		}
-
-		if (value.isObject()) {
-			entity = value.getAsObject();
-		}
-
-		return entity;
-	}
-
-	/**
-	 * Removes the given property.
-	 * 
-	 * @param property
-	 *            the property
-	 */
-	public void remove(String property) {
-		uninstallListener(property);
-		super.remove(property);
-	}
+//	/**
+//	 * Sets a new value for the given property.
+//	 * 
+//	 * @param property
+//	 *            the property
+//	 * @param value
+//	 *            the new value
+//	 */
+//	public void set(String property, JsonValue value) {
+//		if (silentProps.contains(property)) {
+//			properties.put(property, value);
+//		} else {
+//			super.set(property, value);
+//		}
+//	}
 
 	protected void cloneProperties(JsonObject clone) {
 		for (Entry<String, JsonValue> entry : properties.entrySet()) {

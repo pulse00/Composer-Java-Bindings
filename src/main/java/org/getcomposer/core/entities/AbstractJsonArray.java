@@ -83,11 +83,9 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 	 * 
 	 * @param value the new value
 	 */
-	@SuppressWarnings("unchecked")
 	public void add(V value) {
-		List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
 		values.add(value);
-		firePropertyChange("values", oldValues, values);
+		firePropertyChange("#" + (values.size() - 1), null, value);
 		
 		if (value instanceof JsonEntity) {
 			((JsonEntity)value).addPropertyChangeListener(propListener);
@@ -99,11 +97,10 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 	 * 
 	 * @param value the value to remove
 	 */
-	@SuppressWarnings("unchecked")
 	public void remove(V value) {
-		List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
+		int index = values.indexOf(value);
 		values.remove(value);
-		firePropertyChange("values", oldValues, values);
+		firePropertyChange("#" + index, value, null);
 		
 		if (value instanceof JsonEntity) {
 			((JsonEntity)value).removePropertyChangeListener(propListener);

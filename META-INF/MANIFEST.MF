@@ -10,6 +10,7 @@ Export-Package: org.getcomposer.core;uses:="org.getcomposer.collection,org.getco
  org.getcomposer.core.entities,
  org.getcomposer.core.objects;uses:="org.getcomposer,org.getcomposer.collection",
  org.getcomposer.core.repositories;uses:="org.getcomposer.collection,org.getcomposer,org.getcomposer.entities",
+ org.getcomposer.core.utils,
  org.getcomposer.packages;uses:="org.getcomposer"
 Require-Bundle: org.junit
 Bundle-ClassPath: .,

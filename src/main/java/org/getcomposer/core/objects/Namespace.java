@@ -21,7 +21,7 @@ public class Namespace extends JsonObject {
 		listen();
 		paths.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
-				firePropertyChange(evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
+				firePropertyChange(getNamespace() +"."+ evt.getPropertyName(), evt.getOldValue(), evt.getNewValue());
 			}
 		});
 	}

@@ -26,18 +26,8 @@ public class JsonArray extends AbstractJsonArray<Object> {
 	public JsonArray(Reader reader) throws IOException {
 		fromJson(reader);
 	}
-
-	/**
-	 * Returns the values as an array of strings
-	 * 
-	 * @return
-	 */
-	public String[] toStringArray() {
-		String[] arr = new String[values.size()];
-		int i = 0;
-		for (Object val : values) {
-			arr[i++] = (String) val;
-		}
-		return arr;
+	
+	public <T> T[] toArray(T[] a) {
+		return values.toArray(a);
 	}
 }

@@ -85,11 +85,11 @@ public class ComposerPackage extends DistributedPackage {
 		listen();
 	}
 	
-	protected List<String> getSilentProperties() {
-		List<String> props = super.getSilentProperties();
-		props.addAll(Arrays.asList(new String[]{"bin", "keywords"}));
-		return props;
-	}
+//	protected List<String> getSilentProperties() {
+//		List<String> props = super.getSilentProperties();
+//		props.addAll(Arrays.asList(new String[]{"bin", "keywords"}));
+//		return props;
+//	}
 	
 	protected void parse(Object obj) {
 		if (obj instanceof JSONObject) {

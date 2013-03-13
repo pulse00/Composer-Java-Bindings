@@ -1,5 +1,7 @@
 package org.getcomposer.core.entities;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -15,6 +17,8 @@ import org.json.simple.JSONObject;
 public abstract class AbstractJsonObject<V> extends JsonEntity implements
 		JsonCollection {
 
+	
+	private transient Map<String, PropertyChangeListener> listeners = new HashMap<String, PropertyChangeListener>();
 	protected transient Map<String, V> properties = new HashMap<String, V>();
 	
 
@@ -162,10 +166,27 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 	 */
 	@SuppressWarnings("unchecked")
 	public void set(String property, Object value) {
-		Object oldValue = properties.get(property);
+		
+		// remove listener on the current value if there is one yet
+		uninstallListener(property);
+
+		JsonEntity entity = null;
+		// install listener to be aware of changes
+		if (value instanceof JsonValue) {
+			entity = getEntity((JsonValue) value);
+		} else if (value instanceof JsonEntity) {
+			entity = (JsonEntity) value;
+		}
+		
+		if (entity != null && !listeners.containsKey(property)) {
+			installListener(property, entity);
+		}
+
+		V oldValue = properties.get(property);
 		properties.put(property, (V) value);
-		firePropertyChange(property, oldValue, value);
+		firePropertyChange(property, oldValue, (V) value);
 	}
+	
 
 	/**
 	 * Removes the given property.
@@ -173,11 +194,53 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 	 * @param property
 	 *            the property
 	 */
-	@SuppressWarnings("unchecked")
 	public void remove(String property) {
-		Map<String, V> oldProperties = (Map<String, V>) ((HashMap<String, V>) properties)
-				.clone();
+		uninstallListener(property);
+		Object oldValue = get(property);
 		properties.remove(property);
-		firePropertyChange("properties", oldProperties, properties);
+		firePropertyChange(property, oldValue, null);
+	}
+	
+	private void installListener(final String property, JsonEntity entity) {
+		if (entity != null) {
+			listeners.put(property, new PropertyChangeListener() {
+				public void propertyChange(PropertyChangeEvent evt) {
+					firePropertyChange(property + "." + evt.getPropertyName(), 
+							evt.getOldValue(), evt.getNewValue());
+				}
+			});
+
+			entity.addPropertyChangeListener(listeners.get(property));
+		}
+	}
+
+	private void uninstallListener(String property) {
+		if (listeners.containsKey(property)) {
+			if (has(property)) {
+				JsonEntity entity = getEntity(get(property));
+				if (entity != null) {
+					entity.removePropertyChangeListener(listeners.get(property));
+				}
+			}
+			listeners.remove(property);
+		}
+	}
+
+	private JsonEntity getEntity(Object value) {
+		JsonEntity entity = null;
+		
+		if (value instanceof JsonValue) {
+			JsonValue val = (JsonValue) value; 
+			
+			if (val.isArray()) {
+				entity = val.getAsArray();
+			}
+
+			if (val.isObject()) {
+				entity = val.getAsObject();
+			}
+		}
+
+		return entity;
 	}
 }
