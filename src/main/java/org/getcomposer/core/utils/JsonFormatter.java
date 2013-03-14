@@ -59,7 +59,7 @@ public class JsonFormatter {
 				final Iterator<String> keys = ((Set<String>)obj.keySet()).iterator();
 				while (keys.hasNext()) {
 					final String key = keys.next();
-					write("\"" + JSONObject.escape(key) + "\" : ", indent + 1);
+					write("\"" + escape(key) + "\" : ", indent + 1);
 					visit(obj.get(key), indent + 1);
 					if (keys.hasNext()) {
 						writeln(",", 0);
@@ -82,7 +82,9 @@ public class JsonFormatter {
 					indent = 0;
 				}
 				if (object instanceof String) {
-					write("\"" + JSONObject.escape((String)object) + "\"", indent);
+					write("\"" + escape((String)object) + "\"", indent);
+				} else if (object instanceof Boolean || object instanceof Number) {
+					write(String.valueOf(object), indent);
 				} else {
 					write("\"" + JSONObject.escape(String.valueOf(object)) + "\"", indent);
 				}
@@ -99,6 +101,26 @@ public class JsonFormatter {
 				builder.append(indentationChar);
 			}
 			builder.append(data);
+		}
+		
+		private String escape(String string) {
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < string.length(); i++) {
+				char ch = string.charAt(i);
+				if (ch == '"') {
+					sb.append('\"');
+				} else if ((ch>='\u0000' && ch<='\u001F') || (ch>='\u007F' && ch<='\u009F') || (ch>='\u2000' && ch<='\u20FF')){
+					String ss=Integer.toHexString(ch);
+					sb.append("\\u");
+					for(int k=0;k<4-ss.length();k++){
+						sb.append('0');
+					}
+					sb.append(ss.toUpperCase());
+				} else {
+					sb.append(ch);
+				}
+			}
+			return sb.toString();
 		}
 
 		@Override

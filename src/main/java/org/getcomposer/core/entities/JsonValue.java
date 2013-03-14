@@ -137,7 +137,12 @@ public class JsonValue {
 	 * @return the value as integer
 	 */
 	public Integer getAsInteger() {
-		return Integer.valueOf((String)value);
+		if (value instanceof String) {
+			return Integer.valueOf((String)value);
+		} else if (value instanceof Long) {
+			return ((Long)value).intValue();
+		}
+		return (Integer)value;
 	}
 	
 	/**

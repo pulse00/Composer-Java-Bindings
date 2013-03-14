@@ -19,7 +19,7 @@ public class JsonWriterTest extends ComposertTestCase {
 	@Test
 	public void testToJson() {
 		assertNotNull(json);
-//		System.out.println(json);
+		System.out.println(json);
 	}
 	
 	@Test

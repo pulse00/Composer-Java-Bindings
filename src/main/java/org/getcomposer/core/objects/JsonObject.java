@@ -221,7 +221,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 
 	protected void cloneProperties(JsonObject clone) {
 		for (Entry<String, JsonValue> entry : properties.entrySet()) {
-			clone.set(entry.getKey(), entry.getValue());
+			clone.set(entry.getKey(), entry.getValue().getAsRaw());
 		}
 	}
 }
