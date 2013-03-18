@@ -1,6 +1,6 @@
 package org.getcomposer.core.repositories;
 
-public class SubversionRepository extends VcsRepository {
+public class SubversionRepository extends VcsRepository implements Cloneable {
 
 	public SubversionRepository() {
 		super("svn");
@@ -28,5 +28,15 @@ public class SubversionRepository extends VcsRepository {
 	
 	public void setTagsPath(String path) {
 		set("tags-path", path);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	public SubversionRepository clone() {
+		SubversionRepository clone = new SubversionRepository();
+		cloneProperties(clone);
+		return clone;
 	}
 }

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import org.getcomposer.core.MinimalPackage;
 
-public abstract class Repository extends MinimalPackage {
+public abstract class Repository extends MinimalPackage implements Cloneable {
 
 	public Repository(String type) {
 		set("type", type);
@@ -38,5 +38,15 @@ public abstract class Repository extends MinimalPackage {
 
 	public void setUrl(String url) {
 		set("url", url);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	public Repository clone() {
+		Repository clone = RepositoryFactory.create(getType());
+		cloneProperties(clone);
+		return clone;
 	}
 }

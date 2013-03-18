@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.getcomposer.core.annotation.Name;
 import org.getcomposer.core.collection.Dependencies;
@@ -40,11 +39,11 @@ import org.json.simple.JSONObject;
 public class ComposerPackage extends DistributedPackage {
 
 	private Dependencies require = new Dependencies();
-	private Repositories repositories = new Repositories();
-
 	@Name("require-dev")
 	private Dependencies requireDev = new Dependencies();
 
+	private Repositories repositories = new Repositories();
+	
 	private Support support = new Support();
 	private License license = new License();
 	

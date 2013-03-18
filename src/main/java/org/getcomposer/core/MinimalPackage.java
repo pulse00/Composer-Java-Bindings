@@ -87,4 +87,6 @@ public class MinimalPackage extends JsonObject {
 	public void setDescription(String description) {
 		set("description", description);
 	}
+	
+	
 }

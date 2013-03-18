@@ -14,7 +14,7 @@ import org.json.simple.JSONObject;
  * @author Thomas Gossmann <gos.si>
  *
  */
-public class ComposerRepository extends Repository {
+public class ComposerRepository extends Repository implements Cloneable {
 
 	private Map<String, Versions> packages;
 	private JsonObject options = new JsonObject();
@@ -56,5 +56,15 @@ public class ComposerRepository extends Repository {
 	 */
 	public JsonObject getOptions() {
 		return options;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	public ComposerRepository clone() {
+		ComposerRepository clone = new ComposerRepository();
+		cloneProperties(clone);
+		return clone;
 	}
 }

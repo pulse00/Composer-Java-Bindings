@@ -66,4 +66,14 @@ public class PackageRepository extends Repository {
 	public RepositoryPackage getPackage() {
 		return repositoryPackage;
 	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	public PackageRepository clone() {
+		PackageRepository clone = new PackageRepository();
+		cloneProperties(clone);
+		return clone;
+	}
 }

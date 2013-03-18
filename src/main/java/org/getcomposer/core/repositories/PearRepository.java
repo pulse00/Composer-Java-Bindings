@@ -1,6 +1,6 @@
 package org.getcomposer.core.repositories;
 
-public class PearRepository extends Repository {
+public class PearRepository extends Repository implements Cloneable {
 
 	public PearRepository() {
 		super("pear");
@@ -21,5 +21,15 @@ public class PearRepository extends Repository {
 	 */
 	public void setVendorAlias(String vendorAlias) {
 		set("vendor-alias", vendorAlias);
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
+	public PearRepository clone() {
+		PearRepository clone = new PearRepository();
+		cloneProperties(clone);
+		return clone;
 	}
 }

@@ -79,31 +79,57 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 	}
 	
 	/**
-	 * Adds an value to this values
+	 * Adds an value to the receiver's collection
 	 * 
 	 * @param value the new value
 	 */
 	public void add(V value) {
 		values.add(value);
-		firePropertyChange("#" + (values.size() - 1), null, value);
 		
 		if (value instanceof JsonEntity) {
 			((JsonEntity)value).addPropertyChangeListener(propListener);
 		}
+		
+		firePropertyChange("#" + (values.size() - 1), null, value);
 	}
 	
 	/**
-	 * Removes an value from this values
+	 * Removes a value from the receiver's collection
 	 * 
 	 * @param value the value to remove
 	 */
 	public void remove(V value) {
 		int index = values.indexOf(value);
 		values.remove(value);
-		firePropertyChange("#" + index, value, null);
 		
 		if (value instanceof JsonEntity) {
 			((JsonEntity)value).removePropertyChangeListener(propListener);
+		}
+		
+		firePropertyChange("#" + index, value, null);
+	}
+	
+	/**
+	 * If oldValue exists, replaces with newValue
+	 * 
+	 * @param oldValue
+	 * @param newValue
+	 */
+	public void replace(V oldValue, V newValue) {
+		if (values.contains(oldValue)) {
+			int index = values.indexOf(oldValue);
+			values.remove(oldValue);
+			values.add(index, newValue);
+			
+			if (oldValue instanceof JsonEntity) {
+				((JsonEntity)oldValue).removePropertyChangeListener(propListener);
+			}
+			
+			if (newValue instanceof JsonEntity) {
+				((JsonEntity)newValue).removePropertyChangeListener(propListener);
+			}
+			
+			firePropertyChange("#" + index, oldValue, newValue);
 		}
 	}
 	
