@@ -55,7 +55,9 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 	 * @see org.getcomposer.core.entities.JsonCollection#clear()
 	 */
 	public void clear() {
-		values.clear();
+		while (values.size() > 0) {
+			remove(get(0));
+		}
 	}
 	
 	/**
