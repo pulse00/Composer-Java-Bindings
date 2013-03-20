@@ -1,0 +1,8 @@
+org.getcomposer.core
+org.getcomposer.core.annotation
+org.getcomposer.core.collection
+org.getcomposer.core.entities
+org.getcomposer.core.objects
+org.getcomposer.core.repositories
+org.getcomposer.core.utils
+org.getcomposer.packages

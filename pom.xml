@@ -6,11 +6,27 @@
 	<artifactId>org.getcomposer.core</artifactId>
 	<packaging>eclipse-plugin</packaging>
 
-
 	<version>0.0.2</version>
 	<name>Java Composer API</name>
 	<description>Javabindings for the PHP dependency manager composer.</description>
 
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1</version>
+		</dependency>
+	</dependencies>
 	<organization>
 		<name>PDT Extension Group</name>
 		<url>http://pdt-extensions.org/</url>
@@ -18,7 +34,7 @@
 	<scm>
 		<url>https://github.com/pulse00/Composer-Java-Bindings.git</url>
 		<connection>git</connection>
-		<developerConnection>Robert Gruendler</developerConnection>
+		<developerConnection>Robert Gründler</developerConnection>
 		<tag>composer</tag>
 	</scm>
 	<ciManagement>
@@ -43,7 +59,7 @@
 			<url>http://download.eclipse.org/releases/juno</url>
 		</repository>
 	</repositories>
-	<build>
+	<build> 
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -73,4 +89,7 @@
 		</plugins>
 	</build>
 
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 </project>
