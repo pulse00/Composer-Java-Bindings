@@ -20,4 +20,7 @@ public class ComposerConstants {
 	public static final String[] STABILITIES = {STABLE, RC, BETA, ALPHA, DEV};
 	public static final String[] CONSTRAINTS = {"~", ">", ">=", "<", "<=", "!="};
 	public static final String[] LICENSES = {"Apache-2.0","BSD-2-Clause","BSD-3-Clause","BSD-4-Clause","GPL-2.0","GPL-2.0+","GPL-3.0","GPL-3.0+","LGPL-2.1","LGPL-2.1+","LGPL-3.0","LGPL-3.0+","MIT"};
+	
+	public final static String VENDOR_DIR_DEFAULT = "vendor";
+	public final static String BIN_DIR_DEFAULT = VENDOR_DIR_DEFAULT + "/bin";
 }

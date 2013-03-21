@@ -4,27 +4,14 @@ Bundle-Name: Composer Java Library
 Bundle-SymbolicName: org.getcomposer.core
 Bundle-Version: 0.0.2
 Bundle-Vendor: https://github.com/pulse00
-Export-Package: org.getcomposer.core;uses:="org.getcomposer.collection,org.getcomposer.entities",
+Export-Package: org.getcomposer.core;uses:="org.getcomposer.core.objects,org.getcomposer.core.collection,org.getcomposer.core.entities",
  org.getcomposer.core.annotation,
- org.getcomposer.core.collection;uses:="org.getcomposer,org.json.simple,org.getcomposer.entities",
- org.getcomposer.core.entities,
- org.getcomposer.core.objects;uses:="org.getcomposer,org.getcomposer.collection",
- org.getcomposer.core.repositories;uses:="org.getcomposer.collection,org.getcomposer,org.getcomposer.entities",
+ org.getcomposer.core.collection;uses:="org.getcomposer.core.objects,org.getcomposer.core.entities,org.getcomposer.core",
+ org.getcomposer.core.entities;uses:="org.getcomposer.core.objects,org.getcomposer.core.collection,org.json.simple",
+ org.getcomposer.core.objects;uses:="org.getcomposer.core.collection,org.getcomposer.core.entities",
+ org.getcomposer.core.repositories;uses:="org.getcomposer.core.objects,org.getcomposer.core.collection,org.getcomposer.core",
  org.getcomposer.core.utils,
- org.getcomposer.packages;uses:="org.getcomposer"
-Require-Bundle: org.junit,
- org.apache.httpcomponents.httpclient,
- org.apache.httpcomponents.httpcore
-Bundle-ClassPath: .,
- lib/json-simple-1.1.1.jar,
- lib/apache-httpclient/commons-codec-1.6.jar,
- lib/apache-httpclient/commons-logging-1.1.1.jar,
- lib/apache-httpclient/fluent-hc-4.2.3.jar,
- lib/apache-httpclient/httpasyncclient-4.0-beta3.jar,
- lib/apache-httpclient/httpasyncclient-cache-4.0-beta3.jar,
- lib/apache-httpclient/httpclient-4.2.3.jar,
- lib/apache-httpclient/httpclient-cache-4.2.3.jar,
- lib/apache-httpclient/httpcore-4.2.2.jar,
- lib/apache-httpclient/httpcore-nio-4.2.2.jar,
- lib/apache-httpclient/httpmime-4.2.3.jar
+ org.getcomposer.packages;uses:="org.getcomposer.core,javax.net.ssl"
+Require-Bundle: org.junit
+Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
