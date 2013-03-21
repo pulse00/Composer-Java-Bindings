@@ -43,7 +43,7 @@ public class Downloader extends AbstractDownloader {
 			HttpResponse response = null;
 	
 			if (httpGet.isAborted()) {
-				httpGet.reset();
+				httpGet.abort();
 				
 				if (httpGet.isAborted()) {
 					return null;

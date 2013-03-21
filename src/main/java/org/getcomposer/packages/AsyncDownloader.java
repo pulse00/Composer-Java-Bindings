@@ -65,7 +65,7 @@ public class AsyncDownloader extends AbstractDownloader {
 			
 			
 			if (httpGet.isAborted()) {
-				httpGet.reset();
+				httpGet.abort();
 			}
 			
 			client.execute(httpGet, new FutureCallback<HttpResponse>() {

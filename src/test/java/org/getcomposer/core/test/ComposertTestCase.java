@@ -43,7 +43,7 @@ public abstract class ComposertTestCase extends TestCase {
 	protected static String TARGET_DIR = "test/";
 	
 	// persons
-	protected static String PERSON1 = "Robert Gründler";
+	protected static String PERSON1 = "Robert Gruendler";
 	protected static String PERSON1_EMAIL = "r.gruendler@gmail.com";
 	protected static String PERSON1_ROLE = "owner";
 	

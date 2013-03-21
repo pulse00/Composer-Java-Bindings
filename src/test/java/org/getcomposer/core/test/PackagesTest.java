@@ -324,7 +324,6 @@ public class PackagesTest extends TestCase {
 					}
 				}
 				
-				@Override
 				public void aborted(String url) {
 					asyncAborts++;
 					
