@@ -4,7 +4,7 @@
 
 	<groupId>org.getcomposer</groupId>
 	<artifactId>org.getcomposer.core</artifactId>
-	<packaging>eclipse-plugin</packaging>
+	<packaging>jar</packaging>
 
 	<version>0.0.2</version>
 	<name>Java Composer API</name>
@@ -21,6 +21,11 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore-nio</artifactId>
+			<version>4.2.3</version>
+		</dependency>		
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>

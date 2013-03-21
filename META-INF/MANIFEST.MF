@@ -12,7 +12,9 @@ Export-Package: org.getcomposer.core;uses:="org.getcomposer.collection,org.getco
  org.getcomposer.core.repositories;uses:="org.getcomposer.collection,org.getcomposer,org.getcomposer.entities",
  org.getcomposer.core.utils,
  org.getcomposer.packages;uses:="org.getcomposer"
-Require-Bundle: org.junit
+Require-Bundle: org.junit,
+ org.apache.httpcomponents.httpclient,
+ org.apache.httpcomponents.httpcore
 Bundle-ClassPath: .,
  lib/json-simple-1.1.1.jar,
  lib/apache-httpclient/commons-codec-1.6.jar,
