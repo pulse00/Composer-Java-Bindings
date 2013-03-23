@@ -3,10 +3,14 @@ package org.getcomposer.packages;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 abstract public class AbstractDownloadClient {
 	
 	protected String baseUrl;
 	protected boolean baseUrlParamEncoding = false;
+	private Log log = LogFactory.getLog(AbstractDownloadClient.class);
 	
 	public AbstractDownloadClient() {
 	}
@@ -50,7 +54,7 @@ abstract public class AbstractDownloadClient {
 			}
 			return String.format(baseUrl, param);
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		return null;
 	}

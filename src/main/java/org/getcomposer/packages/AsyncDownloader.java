@@ -7,6 +7,8 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -25,6 +27,7 @@ public class AsyncDownloader extends AbstractDownloader {
 	private List<HttpGet> httpGets;
 	private AsyncClientInterface client;
 	private int lastSlot;
+	private Log log = LogFactory.getLog(AsyncDownloader.class);
 	
 	public AsyncDownloader() {
 		super();
@@ -44,7 +47,7 @@ public class AsyncDownloader extends AbstractDownloader {
 			client.start();
 			HttpClientParams.setRedirecting(client.getParams(), false);
 		} catch (IOReactorException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 
@@ -151,7 +154,7 @@ public class AsyncDownloader extends AbstractDownloader {
 		try {
 			httpGets.get(slot).abort();
 		} catch(Exception e) {
-//			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 	
@@ -162,7 +165,7 @@ public class AsyncDownloader extends AbstractDownloader {
 		try {
 			client.shutdown();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			log.error(e.getMessage());
 		}
 	}
 }

@@ -16,6 +16,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.getcomposer.core.annotation.Name;
 import org.getcomposer.core.objects.Autoload;
 import org.getcomposer.core.utils.JsonFormatter;
@@ -26,6 +28,8 @@ public abstract class JsonEntity extends Entity {
 	private transient Set<String> listening = new HashSet<String>();
 	@SuppressWarnings("rawtypes")
 	private transient Map<Class, Map<String, Field>> fieldNameCache = new HashMap<Class, Map<String, Field>>();
+	
+	private Log log = LogFactory.getLog(JsonEntity.class);
 
 	public JsonEntity() {
 		listen();
@@ -62,7 +66,7 @@ public abstract class JsonEntity extends Entity {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 	

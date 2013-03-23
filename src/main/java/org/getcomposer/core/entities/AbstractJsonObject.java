@@ -9,8 +9,11 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.getcomposer.core.collection.JsonArray;
 import org.getcomposer.core.objects.JsonObject;
+import org.getcomposer.httpclient.HttpAsyncClient;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -20,6 +23,7 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 	
 	private transient Map<String, PropertyChangeListener> listeners = new HashMap<String, PropertyChangeListener>();
 	protected transient Map<String, V> properties = new HashMap<String, V>();
+	private Log log = LogFactory.getLog(HttpAsyncClient.class);	
 	
 
 	@SuppressWarnings("unchecked")
@@ -58,7 +62,7 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 					entity.fromJson(json.get(property));
 					json.remove(property);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e);
 				}
 			}
 		}
@@ -91,7 +95,7 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 				try {
 					value = namedFields.get(entry).get(this);
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error(e);
 				}
 			}
 

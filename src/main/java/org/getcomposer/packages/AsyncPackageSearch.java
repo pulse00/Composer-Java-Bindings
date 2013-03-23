@@ -8,11 +8,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class AsyncPackageSearch extends AsyncDownloadClient {
+	
 	private int pageLimit = 3;
 	protected List<PackageSearchListenerInterface> listeners = new ArrayList<PackageSearchListenerInterface>();
 	private Map<String, Integer> counters = new HashMap<String, Integer>();
 	private Map<String, Boolean> aborts = new HashMap<String, Boolean>();
+	private Log log = LogFactory.getLog(AsyncPackageSearch.class);
 	
 	public AsyncPackageSearch() {
 		super();
@@ -30,7 +35,7 @@ public class AsyncPackageSearch extends AsyncDownloadClient {
 				try {
 					return URLDecoder.decode(url.replaceFirst(".+q=([^?&]+).*", "$1"), "UTF-8");
 				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
+					log.error(e);
 				}
 				
 				return null;

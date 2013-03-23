@@ -1,5 +1,7 @@
 package org.getcomposer.httpclient;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -21,7 +23,8 @@ public class HttpAsyncClient implements AsyncClientInterface {
 
 	private HttpClient client;
 	private HttpParams params;
-
+	private Log log = LogFactory.getLog(HttpAsyncClient.class);
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -54,9 +57,14 @@ public class HttpAsyncClient implements AsyncClientInterface {
 	public void execute(HttpGet httpGet, FutureCallback<HttpResponse> futureCallback) {
 
 		try {
+			if (httpGet == null) {
+				throw new RuntimeException("Cannot issue GET request with HttpGet object");
+			}
+			log.info("Executing GET request to " + httpGet.getURI().toString());
 			GetThread thread = new GetThread(client, httpGet, futureCallback);
 			thread.start();
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			futureCallback.failed(e);
 		}
 	}
