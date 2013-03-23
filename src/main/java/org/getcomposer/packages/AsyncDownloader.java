@@ -8,22 +8,22 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.params.HttpClientParams;
-import org.apache.http.concurrent.FutureCallback;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.nio.client.DefaultHttpAsyncClient;
-import org.apache.http.nio.client.HttpAsyncClient;
-import org.apache.http.nio.conn.ClientAsyncConnectionManager;
-import org.apache.http.nio.conn.scheme.AsyncScheme;
-import org.apache.http.nio.conn.scheme.AsyncSchemeRegistry;
-import org.apache.http.nio.conn.ssl.SSLLayeringStrategy;
 import org.apache.http.nio.reactor.IOReactorException;
+import org.getcomposer.httpclient.AsyncClientInterface;
+import org.getcomposer.httpclient.DefaultHttpAsyncClient;
+import org.getcomposer.httpclient.FutureCallback;
 
 public class AsyncDownloader extends AbstractDownloader {
 	
 	private List<HttpGet> httpGets;
-	private HttpAsyncClient client;
+	private AsyncClientInterface client;
 	private int lastSlot;
 	
 	public AsyncDownloader() {
@@ -58,7 +58,7 @@ public class AsyncDownloader extends AbstractDownloader {
 		try {
 			//if (url.startsWith("https://packagist.org") || url.startsWith("https://getcomposer.org")) {
 			if (url.startsWith("https://")) {
-				registerSSLContext(client);
+				registerSSLContext(client.getBackend());
 			}
 			
 			final HttpGet httpGet = new HttpGet(url);
@@ -112,7 +112,19 @@ public class AsyncDownloader extends AbstractDownloader {
 		return -1;
 	}
 
-	private void registerSSLContext(HttpAsyncClient client) throws Exception {	
+	private void registerSSLContext(HttpClient client) throws Exception {	
+		
+		
+		X509TrustManager tm = new ComposerTrustManager();
+		SSLContext ctx = SSLContext.getInstance("TLS");
+		ctx.init(null, new TrustManager[]{tm}, null);
+		SSLSocketFactory ssf = new SSLSocketFactory(ctx, SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+		ClientConnectionManager ccm = client.getConnectionManager();
+		SchemeRegistry sr = ccm.getSchemeRegistry();
+		sr.register(new Scheme("https", 443, ssf));
+		
+		// implementation for HttpAsyncClient
+		/*
 		X509TrustManager tm = new ComposerTrustManager();
 		SSLContext ctx = SSLContext.getInstance("TLS");
 		ctx.init(null,  new TrustManager[]{tm}, null);
@@ -120,6 +132,7 @@ public class AsyncDownloader extends AbstractDownloader {
 		ClientAsyncConnectionManager ccm = client.getConnectionManager();
 		AsyncSchemeRegistry sr = ccm.getSchemeRegistry();
 		sr.register(new AsyncScheme("https", 443, sls));
+		*/
 	}
 	
 	/**
