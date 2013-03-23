@@ -24,6 +24,7 @@ public class HttpAsyncClient implements AsyncClientInterface {
 	private HttpClient client;
 	private HttpParams params;
 	private Log log = LogFactory.getLog(HttpAsyncClient.class);
+	private GetThread thread;
 	
 	/*
 	 * (non-Javadoc)
@@ -61,7 +62,7 @@ public class HttpAsyncClient implements AsyncClientInterface {
 				throw new RuntimeException("Cannot issue GET request with HttpGet object");
 			}
 			log.info("Executing GET request to " + httpGet.getURI().toString());
-			GetThread thread = new GetThread(client, httpGet, futureCallback);
+			thread = new GetThread(client, httpGet, futureCallback);
 			thread.start();
 		} catch (Exception e) {
 			log.error(e.getMessage());

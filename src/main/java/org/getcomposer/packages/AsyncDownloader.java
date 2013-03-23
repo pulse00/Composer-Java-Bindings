@@ -152,9 +152,17 @@ public class AsyncDownloader extends AbstractDownloader {
 	 */
 	public void abort(int slot) {
 		try {
-			httpGets.get(slot).abort();
+			HttpGet httpGet = httpGets.get(slot);
+			httpGet.abort();
+			abortListeners(httpGet.getURI().toString());
 		} catch(Exception e) {
 			log.error(e.getMessage());
+		}
+	}
+	
+	protected void abortListeners(String url) {
+		for (DownloadListenerInterface listener : listeners) {
+			listener.aborted(url);
 		}
 	}
 	
