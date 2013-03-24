@@ -85,4 +85,12 @@ public class Autoload extends JsonObject {
 	public JsonArray getFiles() {
 		return files;
 	}
+
+	public void setPsr0(Psr0 psr0) {
+		this.psr0 = psr0;
+	}
+
+	public Namespace getNamespace() {
+		return (Namespace)psr0.iterator().next();
+	}
 }
