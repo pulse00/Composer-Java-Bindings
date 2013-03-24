@@ -2,10 +2,10 @@ package org.getcomposer.core.collection;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -20,7 +20,7 @@ import org.json.simple.JSONObject;
  * @see http://getcomposer.org/doc/04-schema.md#psr-0
  * @author Thomas Gossmann <gos.si>
  */
-public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Namespace> {
+public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<String> {
 
 	private transient PropertyChangeListener listener = new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -56,7 +56,8 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 	@Override
 	public Object prepareJson(LinkedList<String> fields) {
 		LinkedHashMap<String, Object> out = new LinkedHashMap<String, Object>();
-		for (Namespace nmspc : this) {
+		for (String ns : this) {
+			Namespace nmspc = this.get(ns);
 			Object value = "";
 			
 			if (nmspc.size() > 1) {
@@ -92,11 +93,24 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 		super.remove(namespace.getNamespace());
 	}
 	
-	public List<Namespace> getAll() {
-		return (List<Namespace>) properties.values();
+	public Collection<Namespace> getAll() {
+		return  properties.values();
 	}
 
-	public Iterator<Namespace> iterator() {
-		return (Iterator<Namespace>)properties.values().iterator();
+	public Iterator<String> iterator() {
+		return properties.keySet().iterator();
+	}
+	
+	public Namespace getFirst() {
+		
+		if (properties.values().iterator().hasNext()) {
+			return properties.values().iterator().next();
+		}
+		
+		return null;
+	}
+	
+	public boolean has(String namespace) {
+		return properties.containsKey(namespace);
 	}
 }

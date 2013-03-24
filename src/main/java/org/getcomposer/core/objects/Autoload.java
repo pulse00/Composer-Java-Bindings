@@ -55,13 +55,6 @@ public class Autoload extends JsonObject {
 		return super.prepareJson(fields);
 	}
 	
-	public String getPsr0Path() {
-		if (psr0.size() > 0) {
-			return ((Namespace)psr0.iterator().next()).getFirst();
-		}
-		return null;
-	}
-
 	public boolean hasPsr0() {
 		return psr0 != null;
 	}
@@ -89,8 +82,8 @@ public class Autoload extends JsonObject {
 	public void setPsr0(Psr0 psr0) {
 		this.psr0 = psr0;
 	}
-
-	public Namespace getNamespace() {
-		return (Namespace)psr0.iterator().next();
+	
+	public void clearPsr0() {
+		this.psr0 = new Psr0();
 	}
 }

@@ -66,6 +66,10 @@ public class Namespace extends JsonObject {
 		paths.remove(path);
 	}
 	
+	public void removeAll() {
+		paths.clear();
+	}
+	
 	public JsonArray getAll() {
 		return paths;
 	}
