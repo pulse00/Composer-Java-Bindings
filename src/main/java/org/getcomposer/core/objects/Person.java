@@ -147,15 +147,19 @@ public class Person extends JsonObject implements Cloneable {
 		return clone;
 	}
 	
+	/*
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Person) {
 			Person person = (Person) obj;
+			
 			return getName() != null && getName().equals(person.getName())
 					&& getEmail() != null && getEmail().equals(person.getEmail())
 					&& getHomepage() != null && getHomepage().equals(person.getHomepage())
 					&& getRole() != null && getRole().equals(person.getRole());	
 		}
+		
 		return false;
 	}
+	*/
 }
