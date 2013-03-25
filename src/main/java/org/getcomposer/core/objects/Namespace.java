@@ -26,6 +26,12 @@ public class Namespace extends JsonObject {
 		});
 	}
 	
+	public Namespace(String namespacename, String path) {
+		this();
+		setNamespace(namespacename);
+		add(path);
+	}
+	
 	@Override
 	public String prepareJson(LinkedList<String> fields) {
 		return paths.toJson();

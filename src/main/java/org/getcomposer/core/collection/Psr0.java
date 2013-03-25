@@ -31,6 +31,10 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 	public Psr0() {
 	}
 	
+	public Psr0(String json) {
+		parse(json);
+	}
+	
 	@SuppressWarnings("unchecked")
 	protected void parse(Object obj) {
 		clear();
