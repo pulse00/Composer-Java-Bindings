@@ -9,6 +9,7 @@ package org.getcomposer.core;
 
 public class ComposerConstants {
 	
+	public static final String COMPOSER_JSON = "composer.json";
 	public static final String SEARCH_URL = "https://packagist.org/search.json?q=%s";
 	public static final String PACKAGE_URL = "https://packagist.org/packages/%s.json";
 	public static final String PHAR_URL = "https://getcomposer.org/composer.phar";
