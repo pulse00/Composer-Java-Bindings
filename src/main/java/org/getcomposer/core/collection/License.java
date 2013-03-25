@@ -45,12 +45,12 @@ public class License extends AbstractJsonArray<String> {
 		}
 	}
 	
-	/**
-	 * Removes a license.
-	 * 
-	 * @return this
-	 */
-	public void remove(String license) {
-		super.remove(license);
-	}
+//	/**
+//	 * Removes a license.
+//	 * 
+//	 * @return this
+//	 */
+//	public void remove(String license) {
+//		super.remove(license);
+//	}
 }

@@ -58,6 +58,7 @@ public class Entity {
 	protected void firePropertyChange(String propertyName, Object oldValue,
 			Object newValue) {
 		
+		
 		if (oldValue instanceof JsonValue) {
 			oldValue = getRawObject((JsonValue)oldValue);
 		}

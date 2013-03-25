@@ -44,7 +44,7 @@ public class ListenerTest extends ComposertTestCase {
 				listenerCounter.put(property, listenerCounter.get(property) + 1);
 				
 				// debug output
-				System.out.println("Prop Change: " + e.getPropertyName() + ", old Value: " + e.getOldValue() + ", new Value: " + e.getNewValue());
+//				System.out.println("Prop Change: " + e.getPropertyName() + ", old Value: " + e.getOldValue() + ", new Value: " + e.getNewValue());
 			}
 		});
 	}
@@ -87,9 +87,9 @@ public class ListenerTest extends ComposertTestCase {
 		assertEquals(1, authors.indexOf(p1));
 		
 		assertEquals(1, changes);
-		assertEquals("authors.#0.name", property);
+		assertEquals("authors.#1.name", property);
 		assertEquals(name, newValue);
-		assertEquals(PERSON1, oldValue);
+		assertEquals(PERSON2, oldValue);
 		assertFalse(oldValue.equals(newValue));
 		
 		
@@ -161,13 +161,20 @@ public class ListenerTest extends ComposertTestCase {
 	
 	@Test
 	public void testLicense() {
-		pkg.getLicense().add("MIT");
-
+		pkg.getLicense().add("GPL");
 		assertEquals(1, getCounter("license.#2"));
 		
-		pkg.getLicense().add("EPL");
-		
+		pkg.getLicense().add("LGPL");
 		assertEquals(1, getCounter("license.#3"));
+		
+		changes = 0;
+		pkg.getLicense().add("MIT");
+		assertEquals(0, changes);
+		
+		pkg.getLicense().clear();
+		assertEquals(4, getCounter("license.#0"));
+		
+		
 	}
 	
 	@Test
