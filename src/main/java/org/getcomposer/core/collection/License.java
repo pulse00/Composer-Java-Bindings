@@ -22,6 +22,7 @@ public class License extends AbstractJsonArray<String> {
 	}
 	
 	protected void parse(Object obj) {
+		clear();
 		if (obj instanceof JSONArray) {
 			for (Object license : (JSONArray)obj) {
 				add((String)license);
@@ -39,7 +40,9 @@ public class License extends AbstractJsonArray<String> {
 	 * @return this
 	 */
 	public void add(String license) {
-		super.add(license);
+		if (!has(license)) {
+			super.add(license);
+		}
 	}
 	
 	/**

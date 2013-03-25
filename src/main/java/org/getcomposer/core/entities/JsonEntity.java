@@ -29,7 +29,7 @@ public abstract class JsonEntity extends Entity {
 	@SuppressWarnings("rawtypes")
 	private transient Map<Class, Map<String, Field>> fieldNameCache = new HashMap<Class, Map<String, Field>>();
 	
-	private Log log = LogFactory.getLog(JsonEntity.class);
+	private transient Log log = LogFactory.getLog(JsonEntity.class);
 
 	public JsonEntity() {
 		listen();

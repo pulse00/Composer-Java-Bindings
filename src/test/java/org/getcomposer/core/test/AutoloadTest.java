@@ -13,7 +13,7 @@ public class AutoloadTest extends ComposertTestCase {
 	public void testPsr0() throws IOException, URISyntaxException {
 		
 		ComposerPackage composerPackage = new ComposerPackage(loadFile("autoload.json"));
-		composerPackage.getAutoload().clearPsr0();
+		composerPackage.getAutoload().getPsr0().clear();
 		Namespace ns = new Namespace();
 		ns.setNamespace("foo");
 		ns.add("bar");
@@ -21,6 +21,6 @@ public class AutoloadTest extends ComposertTestCase {
 		assertEquals(1, composerPackage.getAutoload().getPsr0().size());
 		Namespace namespace = composerPackage.getAutoload().getPsr0().get("foo");
 		assertNotNull(namespace);
-		assertEquals("bar", namespace.getAll().get(0));
+		assertEquals("bar", namespace.getPaths().get(0));
 	}
 }

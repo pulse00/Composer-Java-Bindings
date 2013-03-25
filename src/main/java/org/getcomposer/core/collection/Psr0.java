@@ -20,7 +20,7 @@ import org.json.simple.JSONObject;
  * @see http://getcomposer.org/doc/04-schema.md#psr-0
  * @author Thomas Gossmann <gos.si>
  */
-public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<String> {
+public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Namespace> {
 
 	private transient PropertyChangeListener listener = new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -56,12 +56,11 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Stri
 	@Override
 	public Object prepareJson(LinkedList<String> fields) {
 		LinkedHashMap<String, Object> out = new LinkedHashMap<String, Object>();
-		for (String ns : this) {
-			Namespace nmspc = this.get(ns);
+		for (Namespace nmspc : this) {
 			Object value = "";
 			
 			if (nmspc.size() > 1) {
-				value = prepareJsonValue(nmspc.getAll());
+				value = prepareJsonValue(nmspc.getPaths());
 			} else if (nmspc.size() == 1) {
 				value = nmspc.getFirst();
 			}
@@ -79,8 +78,12 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Stri
 	 * @return this
 	 */
 	public void add(Namespace namespace) {
-		namespace.addPropertyChangeListener(listener);
-		super.set(namespace.getNamespace(), namespace);
+		if (has(namespace)) {
+			get(namespace.getNamespace()).addPaths(namespace.getPaths());
+		} else {
+			namespace.addPropertyChangeListener(listener);
+			super.set(namespace.getNamespace(), namespace);
+		}
 	}
 
 	/**
@@ -93,12 +96,12 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Stri
 		super.remove(namespace.getNamespace());
 	}
 	
-	public Collection<Namespace> getAll() {
-		return  properties.values();
+	public Collection<Namespace> getPaths() {
+		return properties.values();
 	}
 
-	public Iterator<String> iterator() {
-		return properties.keySet().iterator();
+	public Iterator<Namespace> iterator() {
+		return (Iterator<Namespace>)properties.values().iterator(); 
 	}
 	
 	public Namespace getFirst() {
@@ -112,5 +115,9 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Stri
 	
 	public boolean has(String namespace) {
 		return properties.containsKey(namespace);
+	}
+	
+	public boolean has(Namespace namespace) {
+		return has(namespace.getNamespace());
 	}
 }

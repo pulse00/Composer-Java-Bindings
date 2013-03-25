@@ -30,4 +30,9 @@ public class JsonArray extends AbstractJsonArray<Object> {
 	public <T> T[] toArray(T[] a) {
 		return values.toArray(a);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return values.equals(obj);
+	}
 }

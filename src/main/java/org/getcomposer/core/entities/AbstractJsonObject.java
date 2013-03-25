@@ -132,7 +132,9 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 	 * @see org.getcomposer.core.entities.JsonCollection#clear()
 	 */
 	public void clear() {
-		properties.clear();
+		while (properties.size() > 0) {
+			remove(properties.keySet().iterator().next());
+		}
 	}
 
 	/**

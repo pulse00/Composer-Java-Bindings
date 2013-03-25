@@ -44,7 +44,7 @@ public class ListenerTest extends ComposertTestCase {
 				listenerCounter.put(property, listenerCounter.get(property) + 1);
 				
 				// debug output
-//				System.out.println("Prop Change: " + e.getPropertyName() + ", old Value: " + e.getOldValue() + ", new Value: " + e.getNewValue());
+				System.out.println("Prop Change: " + e.getPropertyName() + ", old Value: " + e.getOldValue() + ", new Value: " + e.getNewValue());
 			}
 		});
 	}
@@ -82,7 +82,9 @@ public class ListenerTest extends ComposertTestCase {
 		// set name of first author
 		String name = "hans";
 		Persons authors = pkg.getAuthors();
-		authors.get(0).setName("hans");
+		Person p1 = authors.get(1);
+		p1.setName("hans");
+		assertEquals(1, authors.indexOf(p1));
 		
 		assertEquals(1, changes);
 		assertEquals("authors.#0.name", property);

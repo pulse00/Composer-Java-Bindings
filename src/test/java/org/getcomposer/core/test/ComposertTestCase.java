@@ -384,7 +384,6 @@ public abstract class ComposertTestCase extends TestCase {
 		assertNotNull(al);
 		
 		// psr0 tests
-		assertTrue(al.hasPsr0());
 		Psr0 psr = al.getPsr0();
 		
 		assertEquals(4, psr.size());
@@ -392,7 +391,7 @@ public abstract class ComposertTestCase extends TestCase {
 		assertEquals(NAMESPACE_PATH1, psr.get(NAMESPACE).getFirst());
 		
 		assertEquals(2, psr.get(NAMESPACE2).size());
-		assertEquals(NAMESPACE_PATH2, psr.get(NAMESPACE2).getAll().get(1));
+		assertEquals(NAMESPACE_PATH2, psr.get(NAMESPACE2).getPaths().get(1));
 		
 		assertEquals(1, psr.get(NAMESPACE3).size());
 		assertEquals("", psr.get(NAMESPACE3).getFirst());

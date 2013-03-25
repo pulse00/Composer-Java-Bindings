@@ -55,9 +55,9 @@ public class Autoload extends JsonObject {
 		return super.prepareJson(fields);
 	}
 	
-	public boolean hasPsr0() {
-		return psr0 != null;
-	}
+//	public boolean hasPsr0() {
+//		return psr0 != null;
+//	}
 	
 	public boolean hasClassMap() {
 		return classmap != null && classmap.size() > 0;
@@ -79,11 +79,11 @@ public class Autoload extends JsonObject {
 		return files;
 	}
 
-	public void setPsr0(Psr0 psr0) {
-		this.psr0 = psr0;
-	}
-	
-	public void clearPsr0() {
-		this.psr0 = new Psr0();
-	}
+//	public void setPsr0(Psr0 psr0) {
+//		this.psr0 = psr0;
+//	}
+//	
+//	public void clearPsr0() {
+//		this.psr0 = new Psr0();
+//	}
 }

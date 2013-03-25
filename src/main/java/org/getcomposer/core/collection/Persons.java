@@ -18,6 +18,7 @@ public class Persons extends AbstractJsonArray<Person> implements Iterable<Perso
 	}
 	
 	protected void parse(Object obj) {
+		clear();
 		if (obj instanceof JSONArray) {
 			for (Object pObj : (JSONArray)obj) {
 				if (pObj instanceof JSONObject) {
@@ -27,6 +28,20 @@ public class Persons extends AbstractJsonArray<Person> implements Iterable<Perso
 				}
 			}
 		}
+	}
+	
+	@Override
+	public boolean has(Person value) {
+		if (super.has(value)) {
+			return true;
+		}
+		
+		for (Person p : this) {
+			if (p.equals(value)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

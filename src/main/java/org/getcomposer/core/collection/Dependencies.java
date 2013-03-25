@@ -25,6 +25,7 @@ public class Dependencies extends AbstractJsonObject<VersionedPackage> implement
 	
 	@SuppressWarnings("unchecked")
 	protected void parse(Object obj) {
+		clear();
 		if (obj instanceof JSONObject) {
 			for (Entry<String, Object> entry : ((Map<String, Object>)((JSONObject)obj)).entrySet()) {
 				VersionedPackage dep = new VersionedPackage();
@@ -50,13 +51,24 @@ public class Dependencies extends AbstractJsonObject<VersionedPackage> implement
 	 * @return this
 	 */
 	public void add(VersionedPackage dependency) {
-		set(dependency.getName(), dependency);
+		if (!has(dependency)) {
+			set(dependency.getName(), dependency);
+		}
 	}
 	
 	public void addAll(Dependencies dependencies) {
 		for (VersionedPackage pkg : dependencies) {
 			add(pkg);
 		}
+	}
+	
+	
+	public boolean has(VersionedPackage dependency) {
+		if (super.has(dependency.getName())) {
+			return get(dependency.getName()).getVersion().equals(dependency.getVersion());
+		}
+		
+		return false;
 	}
 
 	/**

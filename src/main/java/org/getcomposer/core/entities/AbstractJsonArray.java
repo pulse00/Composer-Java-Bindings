@@ -25,9 +25,12 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 	protected void parse(Object obj) {
 		clear();
 		if (obj instanceof JSONArray) {
-			List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
-			values = (List<V>)obj;
-			firePropertyChange("values", oldValues, values);
+			for (Object item : (List<Object>)obj) {
+				add((V)item);
+			}
+//			List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
+//			values = (List<V>)obj;
+//			firePropertyChange("values", oldValues, values);
 		}
 	}
 
@@ -80,8 +83,12 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 		return values.get(index);
 	}
 	
+	public int indexOf(V value) {
+		return values.indexOf(value);
+	}
+	
 	/**
-	 * Adds an value to the receiver's collection
+	 * Adds a value to the receiver's collection
 	 * 
 	 * @param value the new value
 	 */

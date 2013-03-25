@@ -53,6 +53,14 @@ public class Namespace extends JsonObject {
 		paths.add(path);
 	}
 	
+	public void addPaths(JsonArray paths) {
+		for (Object path : paths) {
+			if (!has((String)path)) {
+				add((String)path);
+			}
+		}
+	}
+	
 	/**
 	 * Returns the path and if there are more than one, returns the first one.
 	 * 
@@ -70,10 +78,14 @@ public class Namespace extends JsonObject {
 		paths.clear();
 	}
 	
-	public JsonArray getAll() {
+	public JsonArray getPaths() {
 		return paths;
 	}
 	
+	/*
+	 * (non-Javadoc)
+	 * @see org.getcomposer.core.entities.AbstractJsonObject#size()
+	 */
 	public int size() {
 		return paths.size();
 	}
@@ -86,5 +98,19 @@ public class Namespace extends JsonObject {
 		Namespace clone = new Namespace();
 		cloneProperties(clone);
 		return clone;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Namespace) {
+			Namespace namespace = (Namespace) obj;
+			return getNamespace().equals(namespace.getNamespace())
+					&& getPaths().equals(namespace.getPaths());
+		}
+		return false;
 	}
 }
