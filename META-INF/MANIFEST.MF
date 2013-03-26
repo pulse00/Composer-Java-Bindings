@@ -4,14 +4,16 @@ Bundle-Name: Composer Java Library
 Bundle-SymbolicName: org.getcomposer.core
 Bundle-Version: 0.0.2
 Bundle-Vendor: https://github.com/pulse00
-Export-Package: org.getcomposer.core;uses:="org.getcomposer.core.objects,org.getcomposer.core.collection,org.getcomposer.core.entities",
+Export-Package: 
+ org.getcomposer.core,
  org.getcomposer.core.annotation,
- org.getcomposer.core.collection;uses:="org.getcomposer.core.objects,org.getcomposer.core.entities,org.getcomposer.core",
- org.getcomposer.core.entities;uses:="org.getcomposer.core.objects,org.getcomposer.core.collection,org.json.simple",
- org.getcomposer.core.objects;uses:="org.getcomposer.core.collection,org.getcomposer.core.entities",
- org.getcomposer.core.repositories;uses:="org.getcomposer.core.objects,org.getcomposer.core.collection,org.getcomposer.core",
+ org.getcomposer.core.collection,
+ org.getcomposer.core.entities,
+ org.getcomposer.core.objects,
+ org.getcomposer.core.repositories,
  org.getcomposer.core.utils,
- org.getcomposer.packages;uses:="org.getcomposer.core,javax.net.ssl"
+ org.getcomposer.httpclient,
+ org.getcomposer.packages
 Bundle-ClassPath: .
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.apache.httpcomponents.httpclient;bundle-version="4.1.0",
