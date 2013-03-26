@@ -1,7 +1,9 @@
 package org.getcomposer.core.repositories;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.getcomposer.core.collection.Versions;
@@ -42,6 +44,14 @@ public class ComposerRepository extends Repository implements Cloneable {
 		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
 	}
 	
+	@Override
+	protected List<String> getOwnProperties() {
+		String[] props = new String[]{"options"};
+		List<String> list = new ArrayList<String>(Arrays.asList(props));
+		list.addAll(super.getOwnProperties());
+		return list;
+	}
+
 	public Versions getVersions(String packageName) {
 		if (packages.containsKey(packageName)) {
 			return packages.get(packageName);

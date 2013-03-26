@@ -5,9 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ AutoloadTest.class, DependenciesTest.class, JsonArrayTest.class, JsonObjectTest.class,
-		JsonParserTest.class, JsonWriterTest.class, ListenerTest.class, PackagesTest.class, PersonsTest.class,
-		VersionTest.class })
+@SuiteClasses({ CoreTests.class, PackagesTest.class })
+
 public class AllTests {
 
 }

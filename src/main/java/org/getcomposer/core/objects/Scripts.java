@@ -1,5 +1,9 @@
 package org.getcomposer.core.objects;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.getcomposer.core.collection.JsonArray;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -35,6 +39,16 @@ public class Scripts extends JsonObject {
 		return new String[] {"pre-install-cmd", "post-install-cmd", "pre-update-cmd", "post-update-cmd",
 				"pre-package-install", "post-package-install", "pre-package-update",
 				"post-package-update", "pre-package-uninstall", "post-package-uninstall"};
+	}
+	
+	@Override
+	protected List<String> getOwnProperties() {
+		String[] props = new String[]{"pre-install-cmd", "post-install-cmd", "pre-update-cmd", "post-update-cmd",
+				"pre-package-install", "post-package-install", "pre-package-update",
+				"post-package-update", "pre-package-uninstall", "post-package-uninstall"};
+		List<String> list = new ArrayList<String>(Arrays.asList(props));
+		list.addAll(super.getOwnProperties());
+		return list;
 	}
 	
 	private void parseScripts(JSONObject json, String property) {

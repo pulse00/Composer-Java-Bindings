@@ -3,9 +3,12 @@ package org.getcomposer.core.entities;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -23,7 +26,7 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 	
 	private transient Map<String, PropertyChangeListener> listeners = new HashMap<String, PropertyChangeListener>();
 	protected transient Map<String, V> properties = new HashMap<String, V>();
-	private Log log = LogFactory.getLog(HttpAsyncClient.class);	
+	private transient Log log = LogFactory.getLog(HttpAsyncClient.class);	
 	
 
 	@SuppressWarnings("unchecked")
@@ -116,6 +119,10 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 
 		return out;
 	}
+	
+	protected List<String> getOwnProperties() {
+		return new ArrayList<String>();
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -132,8 +139,20 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 	 * @see org.getcomposer.core.entities.JsonCollection#clear()
 	 */
 	public void clear() {
-		while (properties.size() > 0) {
-			remove(properties.keySet().iterator().next());
+		List<String> ownProps = getOwnProperties();
+		
+		for (String key : properties.keySet().toArray(new String[]{})) {
+			if (ownProps.contains(key)) {
+				Object value = properties.get(key);
+				if (value instanceof JsonCollection) {
+					JsonCollection entity = (JsonCollection)value;
+					entity.clear();
+				} else {
+					remove(key);	
+				}
+			} else {
+				remove(key);
+			}
 		}
 	}
 
@@ -170,8 +189,22 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 	 * @param value
 	 *            the new value
 	 */
-	@SuppressWarnings("unchecked")
 	public void set(String property, Object value) {
+		set(property, value, true);
+	}
+	
+	/**
+	 * Sets a new value for the given property.
+	 * 
+	 * @param property
+	 *            the property
+	 * @param value
+	 *            the new value
+	 * @param notify
+	 *            whether listeners should be notified about the change
+	 */
+	@SuppressWarnings("unchecked")
+	protected void set(String property, Object value, boolean notify) {
 		
 		// remove listener on the current value if there is one yet
 		uninstallListener(property);
@@ -190,7 +223,9 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 
 		V oldValue = properties.get(property);
 		properties.put(property, (V) value);
-		firePropertyChange(property, oldValue, (V) value);
+		
+		if (notify)
+			firePropertyChange(property, oldValue, (V) value);
 	}
 	
 

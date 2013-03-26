@@ -10,8 +10,10 @@ package org.getcomposer.core;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.getcomposer.core.annotation.Name;
 import org.getcomposer.core.collection.Dependencies;
@@ -116,6 +118,14 @@ public class ComposerPackage extends DistributedPackage {
 	public Object prepareJson(LinkedList<String> fields) {
 		String[] order = new String[]{"authors", "version", "keywords", "homepage", "license", "require", "require-dev","autoload","target-dir","minimum-stability","support","repositories","config","scripts","extra","bin"};
 		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
+	}
+	
+	@Override
+	protected List<String> getOwnProperties() {
+		String[] props = new String[]{"keywords", "bin"};
+		List<String> list = new ArrayList<String>(Arrays.asList(props));
+		list.addAll(super.getOwnProperties());
+		return list;
 	}
 
 	/**

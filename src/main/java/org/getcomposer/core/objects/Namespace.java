@@ -2,7 +2,10 @@ package org.getcomposer.core.objects;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.getcomposer.core.collection.JsonArray;
 
@@ -35,6 +38,14 @@ public class Namespace extends JsonObject {
 	@Override
 	public String prepareJson(LinkedList<String> fields) {
 		return paths.toJson();
+	}
+	
+	@Override
+	protected List<String> getOwnProperties() {
+		String[] props = new String[]{"paths"};
+		List<String> list = new ArrayList<String>(Arrays.asList(props));
+		list.addAll(super.getOwnProperties());
+		return list;
 	}
 	
 	/**

@@ -72,11 +72,11 @@ public class Entity {
 	private Object getRawObject(JsonValue value) {
 		if (value.isArray()) {
 			return value.getAsArray();
-		} else if(value.isObject()) {
+		} else if (value.isObject()) {
 			return value.getAsObject();
-		} else if(value.isNumber()) {
+		} else if (value.isNumber()) {
 			return value.getAsNumber();
-		} else if(value.isBoolean()) {
+		} else if (value.isBoolean()) {
 			return value.getAsBoolean();
 		} else {
 			return value.getAsString();

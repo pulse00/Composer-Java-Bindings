@@ -50,7 +50,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 *            the type
 	 * @return <ul>
 	 *         <li><code>true</code> property is instance of type</li>
-	 *         <li><code>false</code> property is not an instance of type</li>
+	 *         <li><code>false</code> property is not an instance of type or it doesn't exist.</li>
 	 *         </ul>
 	 */
 	public boolean is(String property, Type type) {
@@ -68,7 +68,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 *            the property
 	 * @return <ul>
 	 *         <li><code>true</code> property is an array</li>
-	 *         <li><code>false</code> property is not an array</li>
+	 *         <li><code>false</code> property is not an array or it doesn't exist.</li>
 	 *         </ul>
 	 */
 	public boolean isArray(String property) {
@@ -81,12 +81,12 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	/**
 	 * Returns whether the property is instance of an entity.
 	 * 
-	 * @see #getAsEntity
+	 * @see #getAsObject
 	 * @param property
 	 *            the property
 	 * @return <ul>
 	 *         <li><code>true</code> property is an entity</li>
-	 *         <li><code>false</code> property is not an entity</li>
+	 *         <li><code>false</code> property is not an entity or it doesn't exist.</li>
 	 *         </ul>
 	 */
 	public boolean isObject(String property) {
@@ -97,14 +97,17 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	}
 
 	/**
-	 * Returns the property value as string.
+	 * Returns the property raw value or <code>null</code> if it has not been set.
 	 * 
 	 * @param property
 	 *            the property
 	 * @return the value
 	 */
 	public Object getAsRaw(String property) {
-		return get(property).getAsRaw();
+		if (has(property)) {
+			return get(property).getAsRaw();
+		}
+		return null;
 	}
 
 	/**
@@ -116,13 +119,13 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 */
 	public JsonArray getAsArray(String property) {
 		if (!has(property)) {
-			set(property, new JsonArray());
+			super.set(property, new JsonValue(new JsonArray()), false);
 		}
 		return get(property).getAsArray();
 	}
 
 	/**
-	 * Returns the property value as string.
+	 * Returns the property value as string or <code>null</code> if it has not been set.
 	 * 
 	 * @param property
 	 *            the property
@@ -136,7 +139,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	}
 
 	/**
-	 * Returns the property value as boolean.
+	 * Returns the property value as boolean or <code>null</code> if it has not been set.
 	 * 
 	 * @param property
 	 *            the property
@@ -150,7 +153,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	}
 
 	/**
-	 * Returns the property value as integer.
+	 * Returns the property value as integer or <code>null</code> if it has not been set.
 	 * 
 	 * @param property
 	 *            the property
@@ -164,7 +167,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	}
 
 	/**
-	 * Returns the property value as double.
+	 * Returns the property value as double or <code>null</code> if it has not been set.
 	 * 
 	 * @param property
 	 *            the property
@@ -186,7 +189,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 */
 	public JsonObject getAsObject(String property) {
 		if (!has(property)) {
-			set(property, new JsonObject());
+			super.set(property, new JsonValue(new JsonObject()), false);
 		}
 		return get(property).getAsObject();
 	}
