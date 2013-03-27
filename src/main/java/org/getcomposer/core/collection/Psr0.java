@@ -100,7 +100,7 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 		super.remove(namespace.getNamespace());
 	}
 	
-	public Collection<Namespace> getPaths() {
+	public Collection<Namespace> getNamespaces() {
 		return properties.values();
 	}
 

@@ -26,9 +26,4 @@ public class JsonArray extends AbstractJsonArray<Object> {
 	public JsonArray(Reader reader) throws IOException {
 		fromJson(reader);
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		return values.equals(obj);
-	}
 }

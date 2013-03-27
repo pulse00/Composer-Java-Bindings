@@ -3,7 +3,6 @@ package org.getcomposer.core.entities;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,9 +28,6 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 			for (Object item : (List<Object>)obj) {
 				add((V)item);
 			}
-//			List<V> oldValues = (List<V>) ((ArrayList<V>)values).clone();
-//			values = (List<V>)obj;
-//			firePropertyChange("values", oldValues, values);
 		}
 	}
 
@@ -153,6 +149,15 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 	
 	public List<V> toList() {
 		return values;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof AbstractJsonArray) {
+			return values.equals(((AbstractJsonArray<V>)obj).toList());
+		}
+		return false;
 	}
 	
 	/*

@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.getcomposer.core.collection.JsonArray;
+import org.getcomposer.core.collection.UniqueJsonArray;
 
 /**
  * Represents a namespace entry in the psr0 entity of a composer package.
@@ -18,7 +18,7 @@ import org.getcomposer.core.collection.JsonArray;
  */
 public class Namespace extends JsonObject {
 
-	private transient JsonArray paths = new JsonArray();
+	private transient UniqueJsonArray paths = new UniqueJsonArray();
 	
 	public Namespace() {
 		listen();
@@ -70,7 +70,14 @@ public class Namespace extends JsonObject {
 		paths.add(path);
 	}
 	
-	public void addPaths(JsonArray paths) {
+	/**
+	 * Clears the paths from this namespace
+	 */
+	public void clear() {
+		paths.clear();
+	}
+	
+	public void addPaths(UniqueJsonArray paths) {
 		for (Object path : paths) {
 			if (!has((String)path)) {
 				add((String)path);
@@ -95,7 +102,7 @@ public class Namespace extends JsonObject {
 		paths.clear();
 	}
 	
-	public JsonArray getPaths() {
+	public UniqueJsonArray getPaths() {
 		return paths;
 	}
 	
@@ -114,6 +121,7 @@ public class Namespace extends JsonObject {
 	public Namespace clone() {
 		Namespace clone = new Namespace();
 		cloneProperties(clone);
+		clone.addPaths(paths);
 		return clone;
 	}
 
@@ -125,8 +133,11 @@ public class Namespace extends JsonObject {
 	public boolean equals(Object obj) {
 		if (obj instanceof Namespace) {
 			Namespace namespace = (Namespace) obj;
-			return getNamespace().equals(namespace.getNamespace())
-					&& getPaths().equals(namespace.getPaths());
+			return namespace == this 
+					|| (getNamespace() == null 
+							? namespace.getNamespace() == null
+							: getNamespace().equals(namespace.getNamespace()))
+						&& getPaths().equals(namespace.getPaths());
 		}
 		return false;
 	}
