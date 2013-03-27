@@ -13,6 +13,8 @@ import org.getcomposer.core.entities.AbstractJsonObject;
 import org.getcomposer.core.objects.Namespace;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * Represents a psr-0 entity in a composer package.
@@ -31,8 +33,9 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 	public Psr0() {
 	}
 	
-	public Psr0(String json) {
-		parse(json);
+	public Psr0(String json) throws ParseException {
+		JSONParser parser = new JSONParser();
+		parse(parser.parse(json));
 	}
 	
 	@SuppressWarnings("unchecked")

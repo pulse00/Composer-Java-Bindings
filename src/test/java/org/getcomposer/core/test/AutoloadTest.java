@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.getcomposer.core.ComposerPackage;
+import org.getcomposer.core.collection.Psr0;
 import org.getcomposer.core.objects.Namespace;
+import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
 public class AutoloadTest extends ComposertTestCase {
@@ -22,6 +24,13 @@ public class AutoloadTest extends ComposertTestCase {
 		Namespace namespace = composerPackage.getAutoload().getPsr0().get("foo");
 		assertNotNull(namespace);
 		assertEquals("bar", namespace.getPaths().get(0));
+	}
+	
+	
+	public void testFromString() throws ParseException {
+		Psr0 psr0 = new Psr0("{ \"Foo\" : \"Bar\", \"What\" : \"Ever\"}");
+		assertEquals(2, psr0.size());
+		assertEquals("Foo", psr0.getFirst().getNamespace());
 	}
 	
 	@Test
