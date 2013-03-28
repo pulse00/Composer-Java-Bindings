@@ -26,7 +26,20 @@ public class AutoloadTest extends ComposertTestCase {
 		assertEquals("bar", namespace.getPaths().get(0));
 	}
 	
+	@Test
+	public void testPsr0Escaping() throws ParseException {
+		
+		Psr0 psr0 = new Psr0();
+		Namespace ns = new Namespace("Symfony\\Component\\Yaml", "symfony/yaml");
+		psr0.add(ns);
+		
+		String json = psr0.toJson();
+		psr0 = new Psr0(json);
+		assertEquals(1, psr0.getNamespaces().size());
+		
+	}
 	
+	@Test
 	public void testFromString() throws ParseException {
 		Psr0 psr0 = new Psr0("{ \"Foo\" : \"Bar\", \"What\" : \"Ever\"}");
 		assertEquals(2, psr0.size());
