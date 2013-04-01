@@ -64,11 +64,13 @@ public class Dependencies extends AbstractJsonObject<VersionedPackage> implement
 	
 	
 	public boolean has(VersionedPackage dependency) {
-		if (super.has(dependency.getName())) {
-			return get(dependency.getName()).getVersion().equals(dependency.getVersion());
-		}
-		
-		return false;
+		return super.has(dependency.getName());
+		// TODO: matches version, e.g. ~1 matches 1.0.1 but not 2.* and >1 matches 1.0.1 and 2.*
+//		if (super.has(dependency.getName())) {
+//			return get(dependency.getName()).getVersion().equals(dependency.getVersion());
+//		}
+//		
+//		return false;
 	}
 
 	/**

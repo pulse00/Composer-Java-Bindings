@@ -28,14 +28,13 @@ Export-Package: org.getcomposer.core;uses:="org.getcomposer.core.objec
  pache.http.client.params,org.apache.http.conn,org.apache.http.nio.rea
  ctor,org.getcomposer.core,org.apache.http.impl.client,org.getcomposer
  .core.repositories,org.json.simple";version="0.0.2.SNAPSHOT"
-Built-By: sobert
+Bundle-Version: 0.0.2.SNAPSHOT
 Tool: Bnd-0.0.357
 Bundle-Name: composer-java-api
-Created-By: 1.7.0_08-ea (Oracle Corporation)
-Bundle-Version: 0.0.2.SNAPSHOT
-Build-Jdk: 1.7.0_08-ea
-Bnd-LastModified: 1364509507470
+Bnd-LastModified: 1364849685700
+Created-By: 1.6.0_43 (Apple Inc.)
 Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.getcomposer.composer-java-api
 Import-Package: javax.net.ssl,org.apache.commons.logging,org.apache.ht
  tp,org.apache.http.client,org.apache.http.client.methods,org.apache.h
  ttp.client.params,org.apache.http.conn,org.apache.http.conn.scheme,or
@@ -47,6 +46,4 @@ Import-Package: javax.net.ssl,org.apache.commons.logging,org.apache.ht
  getcomposer.core.repositories;version="0.0",org.getcomposer.core.util
  s;version="0.0",org.getcomposer.httpclient;version="0.0",org.getcompo
  ser.packages;version="0.0",org.json.simple,org.json.simple.parser
-Bundle-SymbolicName: org.getcomposer.composer-java-api
-Originally-Created-By: 1.7.0_08-ea (Oracle Corporation)
 
