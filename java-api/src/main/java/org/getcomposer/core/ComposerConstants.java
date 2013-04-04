@@ -24,12 +24,12 @@ public class ComposerConstants {
 	public final static String VENDOR_DIR_DEFAULT = "vendor";
 	public final static String BIN_DIR_DEFAULT = VENDOR_DIR_DEFAULT + "/bin";
 	
-	/*
+	/**
 	 * Types taken from: https://github.com/composer/installers
 	 * 
 	 * Want your type here? Fork this plugin, add your type here and send a pull request.
 	 * You are reading this on github? Click the edit button above.
-	 */
+	 **/
 	public static final String[] TYPES = new String[] {
 		"library",
 		"metapackage",
@@ -68,6 +68,7 @@ public class ComposerConstants {
 		"silverstripe-module",
 		"silverstripe-theme",
 		"symfony1-plugin",
+		"symfony-bundle",
 		"typo3-flow-package",
 		"typo3-flow-framework",
 		"typo3-flow-plugin",
@@ -81,6 +82,9 @@ public class ComposerConstants {
 		"zend-extra"
 	};
 
+	/**
+	 * Taken from http://www.tldrlegal.com
+	 */
 	public static final String[] LICENSES = new String[] {
 		"Academic Free License v1.1 (AFL-1.1)",
 		"Academic Free License v1.2 (AFL-1.2)",
