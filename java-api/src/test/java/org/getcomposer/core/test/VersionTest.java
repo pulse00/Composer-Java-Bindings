@@ -1,12 +1,13 @@
 package org.getcomposer.core.test;
 
-import org.getcomposer.core.ComposerConstants;
-import org.getcomposer.core.RepositoryPackage;
-import org.getcomposer.core.collection.Versions;
-import org.getcomposer.core.entities.Version;
-import org.getcomposer.packages.PackageDownloader;
-import org.getcomposer.packages.PackagistDownloader;
 import org.junit.Test;
+
+import com.dubture.getcomposer.core.ComposerConstants;
+import com.dubture.getcomposer.core.RepositoryPackage;
+import com.dubture.getcomposer.core.collection.Versions;
+import com.dubture.getcomposer.core.entities.Version;
+import com.dubture.getcomposer.packages.PackageDownloader;
+import com.dubture.getcomposer.packages.PackagistDownloader;
 
 import junit.framework.TestCase;
 

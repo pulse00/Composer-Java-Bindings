@@ -1,7 +1,7 @@
 package org.getcomposer.core.test;
 
-import org.getcomposer.core.collection.Persons;
-import org.getcomposer.core.objects.Person;
+import com.dubture.getcomposer.core.collection.Persons;
+import com.dubture.getcomposer.core.objects.Person;
 
 import junit.framework.TestCase;
 

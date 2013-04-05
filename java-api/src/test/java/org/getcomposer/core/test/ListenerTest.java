@@ -4,16 +4,17 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
-import org.getcomposer.core.ComposerPackage;
-import org.getcomposer.core.VersionedPackage;
-import org.getcomposer.core.collection.Dependencies;
-import org.getcomposer.core.collection.Persons;
-import org.getcomposer.core.collection.Psr0;
-import org.getcomposer.core.objects.Autoload;
-import org.getcomposer.core.objects.JsonObject;
-import org.getcomposer.core.objects.Namespace;
-import org.getcomposer.core.objects.Person;
 import org.junit.Test;
+
+import com.dubture.getcomposer.core.ComposerPackage;
+import com.dubture.getcomposer.core.VersionedPackage;
+import com.dubture.getcomposer.core.collection.Dependencies;
+import com.dubture.getcomposer.core.collection.Persons;
+import com.dubture.getcomposer.core.collection.Psr0;
+import com.dubture.getcomposer.core.objects.Autoload;
+import com.dubture.getcomposer.core.objects.JsonObject;
+import com.dubture.getcomposer.core.objects.Namespace;
+import com.dubture.getcomposer.core.objects.Person;
 
 public class ListenerTest extends ComposertTestCase {
 

@@ -1,7 +1,8 @@
 package org.getcomposer.core.test;
 
-import org.getcomposer.core.ComposerPackage;
 import org.junit.Test;
+
+import com.dubture.getcomposer.core.ComposerPackage;
 
 public class JsonWriterTest extends ComposertTestCase {
 

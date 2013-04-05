@@ -1,6 +1,6 @@
 package org.getcomposer.core.test;
 
-import org.getcomposer.core.collection.JsonArray;
+import com.dubture.getcomposer.core.collection.JsonArray;
 
 import junit.framework.TestCase;
 

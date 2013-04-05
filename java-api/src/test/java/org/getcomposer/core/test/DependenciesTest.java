@@ -1,8 +1,9 @@
 package org.getcomposer.core.test;
 
-import org.getcomposer.core.VersionedPackage;
-import org.getcomposer.core.collection.Dependencies;
 import org.junit.Test;
+
+import com.dubture.getcomposer.core.VersionedPackage;
+import com.dubture.getcomposer.core.collection.Dependencies;
 
 import junit.framework.TestCase;
 

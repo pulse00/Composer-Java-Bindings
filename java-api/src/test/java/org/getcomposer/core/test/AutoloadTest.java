@@ -3,11 +3,12 @@ package org.getcomposer.core.test;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import org.getcomposer.core.ComposerPackage;
-import org.getcomposer.core.collection.Psr0;
-import org.getcomposer.core.objects.Namespace;
 import org.json.simple.parser.ParseException;
 import org.junit.Test;
+
+import com.dubture.getcomposer.core.ComposerPackage;
+import com.dubture.getcomposer.core.collection.Psr0;
+import com.dubture.getcomposer.core.objects.Namespace;
 
 public class AutoloadTest extends ComposertTestCase {
 	

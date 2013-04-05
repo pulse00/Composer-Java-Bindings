@@ -14,23 +14,24 @@ import java.util.concurrent.TimeUnit;
 
 import junit.framework.TestCase;
 
-import org.getcomposer.core.ComposerConstants;
-import org.getcomposer.core.MinimalPackage;
-import org.getcomposer.core.RepositoryPackage;
-import org.getcomposer.packages.AsyncDownloader;
-import org.getcomposer.packages.AsyncPackageSearch;
-import org.getcomposer.packages.AsyncPackagistDownloader;
-import org.getcomposer.packages.AsyncPackagistSearch;
-import org.getcomposer.packages.AsyncPharDownloader;
-import org.getcomposer.packages.DownloadListenerAdapater;
-import org.getcomposer.packages.PackageListenerInterface;
-import org.getcomposer.packages.PackageSearch;
-import org.getcomposer.packages.PackageSearchListenerInterface;
-import org.getcomposer.packages.PackagistDownloader;
-import org.getcomposer.packages.PackagistSearch;
-import org.getcomposer.packages.PharDownloader;
-import org.getcomposer.packages.SearchResult;
 import org.junit.Test;
+
+import com.dubture.getcomposer.core.ComposerConstants;
+import com.dubture.getcomposer.core.MinimalPackage;
+import com.dubture.getcomposer.core.RepositoryPackage;
+import com.dubture.getcomposer.packages.AsyncDownloader;
+import com.dubture.getcomposer.packages.AsyncPackageSearch;
+import com.dubture.getcomposer.packages.AsyncPackagistDownloader;
+import com.dubture.getcomposer.packages.AsyncPackagistSearch;
+import com.dubture.getcomposer.packages.AsyncPharDownloader;
+import com.dubture.getcomposer.packages.DownloadListenerAdapater;
+import com.dubture.getcomposer.packages.PackageListenerInterface;
+import com.dubture.getcomposer.packages.PackageSearch;
+import com.dubture.getcomposer.packages.PackageSearchListenerInterface;
+import com.dubture.getcomposer.packages.PackagistDownloader;
+import com.dubture.getcomposer.packages.PackagistSearch;
+import com.dubture.getcomposer.packages.PharDownloader;
+import com.dubture.getcomposer.packages.SearchResult;
 
 
 public class PackagesTest extends TestCase {

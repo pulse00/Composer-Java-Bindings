@@ -7,9 +7,10 @@
  ******************************************************************************/
 package org.getcomposer.core.test;
 
-import org.getcomposer.core.ComposerPackage;
-import org.getcomposer.core.RepositoryPackage;
 import org.junit.Test;
+
+import com.dubture.getcomposer.core.ComposerPackage;
+import com.dubture.getcomposer.core.RepositoryPackage;
 
 public class JsonParserTest extends ComposertTestCase {
 
