@@ -10,6 +10,11 @@ An example implementation can be found in the [Eclipse Composer Plugin](https://
 
 [![Build Status](https://secure.travis-ci.org/pulse00/Composer-Java-Bindings.png)](http://travis-ci.org/pulse00/Composer-Java-Bindings)
 
+
+### Contributors
+
+- [Thomas Gossmann](https://github.com/gossi)
+
 API Notes
 ---------
 
