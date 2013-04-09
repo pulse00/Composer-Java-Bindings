@@ -11,6 +11,18 @@ An example implementation can be found in the [Eclipse Composer Plugin](https://
 [![Build Status](https://secure.travis-ci.org/pulse00/Composer-Java-Bindings.png)](http://travis-ci.org/pulse00/Composer-Java-Bindings)
 
 
+### Maven Usage
+
+```xml
+	<dependencies>
+		<dependency>
+			<groupId>com.dubture</groupId>
+			<artifactId>composer-java-api</artifactId>
+			<version>0.0.3</version>
+		</dependency>
+	</dependencies>
+```
+
 ### Contributors
 
 - [Thomas Gossmann](https://github.com/gossi)
