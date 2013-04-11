@@ -3,45 +3,41 @@ Export-Package: com.dubture.getcomposer.core;uses:="com.dubture.getcom
  poser.core.objects,com.dubture.getcomposer.core.collection,com.dubtur
  e.getcomposer.core.annotation,org.json.simple,com.dubture.getcomposer
  .core.entities,com.dubture.getcomposer.core.repositories,com.dubture.
- getcomposer.packages";version="0.0.4.SNAPSHOT",com.dubture.getcompose
- r.core.annotation;version="0.0.4.SNAPSHOT",com.dubture.getcomposer.co
- re.collection;uses:="com.dubture.getcomposer.core.entities,com.dubtur
- e.getcomposer.core,org.json.simple,com.dubture.getcomposer.core.objec
- ts,org.json.simple.parser,com.dubture.getcomposer.core.repositories";
- version="0.0.4.SNAPSHOT",com.dubture.getcomposer.core.entities;uses:=
- "org.json.simple,com.dubture.getcomposer.core.objects,org.apache.comm
- ons.logging,com.dubture.getcomposer.core.collection,com.dubture.getco
- mposer.httpclient,com.dubture.getcomposer.core.utils,com.dubture.getc
- omposer.core.annotation,com.dubture.getcomposer.core";version="0.0.4.
- SNAPSHOT",com.dubture.getcomposer.core.objects;uses:="com.dubture.get
- composer.core.collection,com.dubture.getcomposer.core.annotation,org.
- json.simple,com.dubture.getcomposer.core.entities";version="0.0.4.SNA
- PSHOT",com.dubture.getcomposer.core.repositories;uses:="com.dubture.g
- etcomposer.core.objects,com.dubture.getcomposer.core.collection,org.j
- son.simple,com.dubture.getcomposer.core.annotation,com.dubture.getcom
- poser.core";version="0.0.4.SNAPSHOT",com.dubture.getcomposer.core.uti
- ls;uses:="org.json.simple";version="0.0.4.SNAPSHOT",com.dubture.getco
- mposer.httpclient;uses:="org.apache.http.params,org.apache.http.nio.r
- eactor,org.apache.http.client,org.apache.http.client.methods,org.apac
- he.http,org.apache.http.protocol,org.apache.http.impl.client,org.apac
- he.http.conn,org.apache.commons.logging";version="0.0.4.SNAPSHOT",com
- .dubture.getcomposer.packages;uses:="org.apache.commons.logging,javax
- .net.ssl,com.dubture.getcomposer.httpclient,org.apache.http.client.me
- thods,org.apache.http,org.apache.http.conn.scheme,org.apache.http.par
- ams,org.apache.http.conn.ssl,org.apache.http.client,org.apache.http.c
- lient.params,org.apache.http.conn,org.apache.http.nio.reactor,com.dub
- ture.getcomposer.core,org.apache.http.impl.client,com.dubture.getcomp
- oser.core.repositories,org.json.simple";version="0.0.4.SNAPSHOT"
-Bundle-Version: 0.0.4.SNAPSHOT
+ getcomposer.packages";version="0.0.4.201304112142",com.dubture.getcom
+ poser.core.annotation;version="0.0.4.201304112142",com.dubture.getcom
+ poser.core.collection;uses:="com.dubture.getcomposer.core.entities,co
+ m.dubture.getcomposer.core,org.json.simple,com.dubture.getcomposer.co
+ re.objects,org.json.simple.parser,com.dubture.getcomposer.core.reposi
+ tories";version="0.0.4.201304112142",com.dubture.getcomposer.core.ent
+ ities;uses:="org.json.simple,com.dubture.getcomposer.core.objects,org
+ .apache.commons.logging,com.dubture.getcomposer.core.collection,com.d
+ ubture.getcomposer.httpclient,com.dubture.getcomposer.core.utils,com.
+ dubture.getcomposer.core.annotation,com.dubture.getcomposer.core";ver
+ sion="0.0.4.201304112142",com.dubture.getcomposer.core.objects;uses:=
+ "com.dubture.getcomposer.core.collection,com.dubture.getcomposer.core
+ .annotation,org.json.simple,com.dubture.getcomposer.core.entities";ve
+ rsion="0.0.4.201304112142",com.dubture.getcomposer.core.repositories;
+ uses:="com.dubture.getcomposer.core.objects,com.dubture.getcomposer.c
+ ore.collection,org.json.simple,com.dubture.getcomposer.core.annotatio
+ n,com.dubture.getcomposer.core";version="0.0.4.201304112142",com.dubt
+ ure.getcomposer.core.utils;uses:="org.json.simple";version="0.0.4.201
+ 304112142",com.dubture.getcomposer.httpclient;uses:="org.apache.http.
+ params,org.apache.http.nio.reactor,org.apache.http.client,org.apache.
+ http.client.methods,org.apache.http,org.apache.http.protocol,org.apac
+ he.http.impl.client,org.apache.http.conn,org.apache.commons.logging";
+ version="0.0.4.201304112142",com.dubture.getcomposer.packages;uses:="
+ org.apache.commons.logging,javax.net.ssl,com.dubture.getcomposer.http
+ client,org.apache.http.client.methods,org.apache.http,org.apache.http
+ .conn.scheme,org.apache.http.params,org.apache.http.conn.ssl,org.apac
+ he.http.client,org.apache.http.client.params,org.apache.http.conn,org
+ .apache.http.nio.reactor,com.dubture.getcomposer.core,org.apache.http
+ .impl.client,com.dubture.getcomposer.core.repositories,org.json.simpl
+ e";version="0.0.4.201304112142"
+Bundle-Version: 0.0.4.201304112142
 Tool: Bnd-0.0.357
 Bundle-Name: composer-java-api
-<<<<<<< HEAD
-Bnd-LastModified: 1365516446769
-Created-By: 1.7.0_17 (Oracle Corporation)
-=======
-Bnd-LastModified: 1365706161299
+Bnd-LastModified: 1365709338705
 Created-By: 1.7.0_08-ea (Oracle Corporation)
->>>>>>> snapshot update
 Bundle-ManifestVersion: 2
 Bundle-Description: Sonatype helps open source projects to set up Mave
  n repositories on https://oss.sonatype.org/
