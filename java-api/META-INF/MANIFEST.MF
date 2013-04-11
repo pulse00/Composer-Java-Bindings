@@ -35,8 +35,13 @@ Export-Package: com.dubture.getcomposer.core;uses:="com.dubture.getcom
 Bundle-Version: 0.0.4.SNAPSHOT
 Tool: Bnd-0.0.357
 Bundle-Name: composer-java-api
+<<<<<<< HEAD
 Bnd-LastModified: 1365516446769
 Created-By: 1.7.0_17 (Oracle Corporation)
+=======
+Bnd-LastModified: 1365706161299
+Created-By: 1.7.0_08-ea (Oracle Corporation)
+>>>>>>> snapshot update
 Bundle-ManifestVersion: 2
 Bundle-Description: Sonatype helps open source projects to set up Mave
  n repositories on https://oss.sonatype.org/
