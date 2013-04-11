@@ -59,7 +59,7 @@ public class JsonFormatter {
 				final Iterator<String> keys = ((Set<String>)obj.keySet()).iterator();
 				while (keys.hasNext()) {
 					final String key = keys.next();
-					write("\"" + escape(key) + "\" : ", indent + 1);
+					write("\"" + JSONObject.escape(key) + "\" : ", indent + 1);
 					visit(obj.get(key), indent + 1);
 					if (keys.hasNext()) {
 						writeln(",", 0);
@@ -82,7 +82,7 @@ public class JsonFormatter {
 					indent = 0;
 				}
 				if (object instanceof String) {
-					write("\"" + escape((String)object) + "\"", indent);
+					write("\"" + JSONObject.escape(String.valueOf(object)) + "\"", indent);
 				} else if (object instanceof Boolean || object instanceof Number) {
 					write(String.valueOf(object), indent);
 				} else {
