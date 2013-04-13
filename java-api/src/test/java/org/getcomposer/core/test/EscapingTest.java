@@ -12,20 +12,31 @@ public class EscapingTest extends TestCase {
 	public void testScriptBackslashEscaping() {
 		
 		String json = "{\n" + 
-				"	\"keywords\" : [],\n" + 
+				"	\"name\" : \"pulse00/ffmpeg-bundle\",\n" + 
+				"	\"description\" : \"Symfony bundle to provide PHP-FFmpeg as a Symfony service (https://github.com/alchemy-fr/PHP-FFmpeg)\",\n" + 
+				"	\"type\" : \"symfony-bundle\",\n" + 
+				"	\"authors\" : [{\n" + 
+				"			\"name\" : \"Robert Gruendler\",\n" + 
+				"			\"email\" : \"r.gruendler@gmail.com\"\n" + 
+				"		}\n" + 
+				"	],\n" + 
+				"	\"keywords\" : [\n" + 
+				"		\"ffmpeg\",\n" + 
+				"		\"multimedia\"\n" + 
+				"	],\n" + 
+				"	\"license\" : [\n" + 
+				"		\"MIT\"\n" + 
+				"	],\n" + 
 				"	\"require\" : {\n" + 
-				"		\"php\" : \">=5.4\"\n" + 
+				"		\"php-ffmpeg/php-ffmpeg\" : \"0.2.1\"\n" + 
 				"	},\n" + 
 				"	\"autoload\" : {\n" + 
 				"		\"psr-0\" : {\n" + 
-				"			\"asdfasdfadsf\" : \"src\"\n" + 
+				"			\"Dubture\\\\FFmpegBundle\" : \"\"\n" + 
 				"		}\n" + 
 				"	},\n" + 
-				"	\"scripts\" : {\n" + 
-				"		\"post-install-cmd\" : [\n" + 
-				"			\"Sensio\\\\Bundle\\\\DistributionBundle\\\\Composer\\\\ScriptHandler::buildBootstrap\"\n" + 
-				"		]\n" + 
-				"	}\n" + 
+				"	\"target-dir\" : \"Dubture/FFmpegBundle\",\n" + 
+				"	\"minimum-stability\" : \"dev\"\n" + 
 				"}";
 		
 		ComposerPackage pkg = new ComposerPackage();
