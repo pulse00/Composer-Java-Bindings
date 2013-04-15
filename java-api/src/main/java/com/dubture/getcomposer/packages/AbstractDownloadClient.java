@@ -11,6 +11,7 @@ abstract public class AbstractDownloadClient {
 	protected String baseUrl;
 	protected boolean baseUrlParamEncoding = false;
 	private Log log = LogFactory.getLog(AbstractDownloadClient.class);
+	protected String filter = null;
 	
 	public AbstractDownloadClient() {
 	}
@@ -52,10 +53,24 @@ abstract public class AbstractDownloadClient {
 			if (baseUrlParamEncoding) {
 				param = URLEncoder.encode(param, "UTF-8");
 			}
-			return String.format(baseUrl, param);
+			String url = String.format(baseUrl, param);
+			
+			if (filter != null) {
+				if (url.contains("?")) {
+					url += "&type=" + filter;
+				} else {
+					url += "?type=" + filter;
+				}
+			}
+			
+			return url;
 		} catch (UnsupportedEncodingException e) {
 			log.error(e);
 		}
 		return null;
+	}
+	
+	public void setFilter(String filter) throws UnsupportedEncodingException {
+		this.filter = URLEncoder.encode(filter, "UTF-8");
 	}
 }
