@@ -17,12 +17,18 @@ public class JsonValue {
 	
 	public Object toJsonValue() {
 		if (isArray()) {
+			if (getAsArray().size() == 0) {
+				return null;
+			}
 			return getAsArray().prepareJson(new LinkedList<String>());
-		} else if(isObject()) {
+		} else if (isObject()) {
+			if (getAsObject().size() == 0) {
+				return null;
+			}
 			return getAsObject().prepareJson(new LinkedList<String>());
-		} else if(isNumber()) {
+		} else if (isNumber()) {
 			return getAsNumber();
-		} else if(isBoolean()) {
+		} else if (isBoolean()) {
 			return getAsBoolean();
 		} else {
 			return getAsString();
