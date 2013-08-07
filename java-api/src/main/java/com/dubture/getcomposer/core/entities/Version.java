@@ -410,7 +410,7 @@ public class Version extends Entity implements Comparable<Version> {
 		stability = version.getStability();
 		suffix = version.getSuffix();
 		prefix = version.getPrefix();
-		devPosition = END;
+		devPosition = version.getDevPosition();
 		
 		firePropertyChange("version", oldVersion, toString());
 	}

@@ -39,7 +39,7 @@ Bundle-Name: composer-java-api
 Created-By: 1.6.0_51 (Apple Inc.)
 Bundle-Version: 0.0.4.buildtimestamp
 Build-Jdk: 1.6.0_51
-Bnd-LastModified: 1372599943229
+Bnd-LastModified: 1375877198315
 Bundle-ManifestVersion: 2
 Bundle-Description: Sonatype helps open source projects to set up Mave
  n repositories on https://oss.sonatype.org/
