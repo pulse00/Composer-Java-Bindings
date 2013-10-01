@@ -1,10 +1,5 @@
 package com.dubture.getcomposer.core;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-
-import org.json.simple.JSONObject;
-
 import com.dubture.getcomposer.core.entities.Version;
 import com.dubture.getcomposer.core.objects.Autoload;
 import com.dubture.getcomposer.core.objects.Distribution;
@@ -16,33 +11,6 @@ public abstract class DistributedPackage extends VersionedPackage {
 	protected Distribution dist = new Distribution();
 	protected Source source = new Source();
 	protected transient Version detailedVersion = null;
-	
-	protected void parse(Object obj) {
-		if (obj instanceof JSONObject) {
-
-			JSONObject json = (JSONObject)obj;
-
-			// parsed from super:
-			// name, description, type, version
-			
-			parseField(json, "autoload");
-			parseField(json, "dist");
-			parseField(json, "source");
-			
-		}
-		
-		super.parse(obj);
-	}
-	
-	@Override
-	public Object prepareJson(LinkedList<String> fields) {
-		String[] before = new String[]{"name", "description", "type", "version"};
-		fields.addAll(0, new LinkedList<String>(Arrays.asList(before)));
-		
-		String[] after = new String[]{"autoload", "dist", "source"};
-		fields.addAll(new LinkedList<String>(Arrays.asList(after)));
-		return super.prepareJson(fields);
-	}
 
 	/**
 	 * Returns the <code>type</code> property.

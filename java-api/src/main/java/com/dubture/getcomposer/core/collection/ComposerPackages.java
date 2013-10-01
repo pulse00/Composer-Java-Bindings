@@ -6,6 +6,7 @@ import java.io.Reader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import com.dubture.getcomposer.core.ComposerPackage;
 import com.dubture.getcomposer.core.entities.AbstractJsonArray;
@@ -26,19 +27,19 @@ public class ComposerPackages extends AbstractJsonArray<ComposerPackage> {
 		fromJson(json);
 	}
 	
-	public ComposerPackages(String json) {
+	public ComposerPackages(String json) throws ParseException {
 		fromJson(json);
 	}
 	
-	public ComposerPackages(File file) throws IOException {
+	public ComposerPackages(File file) throws IOException, ParseException {
 		fromJson(file);
 	}
 	
-	public ComposerPackages(Reader reader) throws IOException {
+	public ComposerPackages(Reader reader) throws IOException, ParseException {
 		fromJson(reader);
 	}
 	
-	protected void parse(Object obj) {
+	protected void parseOld(Object obj) {
 		clear();
 		if (obj instanceof JSONObject) {
 			add(new ComposerPackage(obj));

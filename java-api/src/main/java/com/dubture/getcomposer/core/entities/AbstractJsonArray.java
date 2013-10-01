@@ -7,9 +7,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-
-
 public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCollection, Iterable<V> {
 	
 	protected List<V> values = new ArrayList<V>();
@@ -22,22 +19,23 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 	};
 	
 	@SuppressWarnings("unchecked")
-	protected void parse(Object obj) {
+	protected void doParse(Object obj) {
 		clear();
-		if (obj instanceof JSONArray) {
+		if (obj instanceof LinkedList) {
 			for (Object item : (List<Object>)obj) {
 				add((V)item);
 			}
 		}
 	}
 
-	public Object prepareJson(LinkedList<String> fields) {
+	@Override
+	protected Object buildJson() {
 		LinkedList<Object> out = new LinkedList<Object>();
 		for (V val : values) {
 			if (val == null) {
 				continue;
 			}
-			out.add(prepareJsonValue(val));
+			out.add(getJsonValue(val));
 		}
 		return out;
 	}

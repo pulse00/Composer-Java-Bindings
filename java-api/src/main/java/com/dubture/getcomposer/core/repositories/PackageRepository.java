@@ -3,10 +3,8 @@ package com.dubture.getcomposer.core.repositories;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Arrays;
-import java.util.LinkedList;
 
-import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import com.dubture.getcomposer.core.RepositoryPackage;
 import com.dubture.getcomposer.core.annotation.Name;
@@ -21,47 +19,24 @@ public class PackageRepository extends Repository {
 		listen();
 	}
 	
-	
 	public PackageRepository(Object json) {
-		super("package");
+		this();
 		fromJson(json);
-		listen();
 	}
 	
-	public PackageRepository(String json) {
-		super("package");
+	public PackageRepository(String json) throws ParseException {
+		this();
 		fromJson(json);
-		listen();
 	}
 	
-	public PackageRepository(File file) throws IOException {
-		super("package");
+	public PackageRepository(File file) throws IOException, ParseException {
+		this();
 		fromJson(file);
-		listen();
 	}
 	
-	public PackageRepository(Reader reader) throws IOException {
-		super("package");
+	public PackageRepository(Reader reader) throws IOException, ParseException {
+		this();
 		fromJson(reader);
-		listen();
-	}
-	
-	protected void parse(Object obj) {
-		if (obj instanceof JSONObject) {
-			JSONObject json = (JSONObject) obj;
-			
-			if (json.containsKey("package")) {
-				repositoryPackage.fromJson(json.get("package"));
-			}
-		}
-		
-		super.parse(obj);
-	}
-	
-	@Override
-	public Object prepareJson(LinkedList<String> fields) {
-		String[] order = new String[]{"package"};
-		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
 	}
 	
 	public RepositoryPackage getPackage() {

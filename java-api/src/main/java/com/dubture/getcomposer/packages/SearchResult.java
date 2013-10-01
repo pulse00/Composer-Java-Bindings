@@ -1,10 +1,8 @@
 package com.dubture.getcomposer.packages;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import com.dubture.getcomposer.core.MinimalPackage;
 
@@ -17,18 +15,18 @@ public class SearchResult {
 		fromJson(obj);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void fromJson(Object obj) {
-		if (obj instanceof JSONObject) {
-			JSONObject json = (JSONObject) obj;
+		if (obj instanceof LinkedHashMap) {
+			LinkedHashMap json = (LinkedHashMap) obj;
 			
 			next = (String)json.get("next");
 			total = json.get("total").toString();
-			results = new ArrayList<MinimalPackage>();
+			results = new LinkedList<MinimalPackage>();
 			Object r = json.get("results");
 			
-			if (r instanceof JSONArray) {
-				
-				for (Object p : (JSONArray) r) {
+			if (r instanceof LinkedList) {
+				for (Object p : (LinkedList) r) {
 					results.add(new MinimalPackage(p));
 				}
 			}

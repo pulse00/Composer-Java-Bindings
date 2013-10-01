@@ -9,9 +9,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.dubture.getcomposer.core.entities.AbstractJsonObject;
@@ -35,22 +32,21 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 	}
 	
 	public Psr0(String json) throws ParseException {
-		JSONParser parser = new JSONParser();
-		parse(parser.parse(json));
+		fromJson(json);
 	}
 	
-	@SuppressWarnings("unchecked")
-	protected void parse(Object obj) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected void doParse(Object obj) {
 		clear();
-		if (obj instanceof JSONObject) {
-			JSONObject json = (JSONObject) obj;
+		if (obj instanceof LinkedHashMap) {
+			LinkedHashMap json = (LinkedHashMap) obj;
 			
 			for (Entry<String, Object> entry : ((Map<String, Object>)json).entrySet()) {
 				Namespace nmspc = new Namespace();
 				nmspc.setNamespace(entry.getKey());
 				
-				if (entry.getValue() instanceof JSONArray) {
-					for (Object path : (JSONArray)entry.getValue()) {
+				if (entry.getValue() instanceof LinkedList) {
+					for (Object path : (LinkedList)entry.getValue()) {
 						nmspc.add((String)path);
 					}
 				} else {
@@ -62,13 +58,13 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 	}
 	
 	@Override
-	public Object prepareJson(LinkedList<String> fields) {
+	protected Object buildJson() {
 		LinkedHashMap<String, Object> out = new LinkedHashMap<String, Object>();
 		for (Namespace nmspc : this) {
 			Object value = "";
 			
 			if (nmspc.size() > 1) {
-				value = prepareJsonValue(nmspc.getPaths());
+				value = getJsonValue(nmspc.getPaths());
 			} else if (nmspc.size() == 1) {
 				value = nmspc.getFirst();
 			}

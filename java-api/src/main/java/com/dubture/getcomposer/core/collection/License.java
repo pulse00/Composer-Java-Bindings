@@ -7,7 +7,7 @@
  ******************************************************************************/
 package com.dubture.getcomposer.core.collection;
 
-import org.json.simple.JSONArray;
+import java.util.LinkedList;
 
 import com.dubture.getcomposer.core.entities.AbstractJsonArray;
 
@@ -22,10 +22,11 @@ public class License extends AbstractJsonArray<String> {
 	public License() {
 	}
 	
-	protected void parse(Object obj) {
+	@SuppressWarnings("rawtypes")
+	protected void parseOld(Object obj) {
 		clear();
-		if (obj instanceof JSONArray) {
-			for (Object license : (JSONArray)obj) {
+		if (obj instanceof LinkedList) {
+			for (Object license : (LinkedList)obj) {
 				add((String)license);
 			}
 		} else {
@@ -45,13 +46,4 @@ public class License extends AbstractJsonArray<String> {
 			super.add(license);
 		}
 	}
-	
-//	/**
-//	 * Removes a license.
-//	 * 
-//	 * @return this
-//	 */
-//	public void remove(String license) {
-//		super.remove(license);
-//	}
 }

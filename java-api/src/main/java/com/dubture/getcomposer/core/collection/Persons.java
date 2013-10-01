@@ -1,7 +1,7 @@
 package com.dubture.getcomposer.core.collection;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import com.dubture.getcomposer.core.entities.AbstractJsonArray;
 import com.dubture.getcomposer.core.objects.Person;
@@ -18,12 +18,13 @@ public class Persons extends AbstractJsonArray<Person> implements Iterable<Perso
 	public Persons() {
 	}
 	
-	protected void parse(Object obj) {
+	@SuppressWarnings("rawtypes")
+	protected void doParse(Object obj) {
 		clear();
-		if (obj instanceof JSONArray) {
-			for (Object pObj : (JSONArray)obj) {
-				if (pObj instanceof JSONObject) {
-					JSONObject p = (JSONObject)pObj;
+		if (obj instanceof LinkedList) {
+			for (Object pObj : (LinkedList)obj) {
+				if (pObj instanceof LinkedHashMap) {
+					LinkedHashMap p = (LinkedHashMap)pObj;
 					Person person = new Person(p);
 					add(person);
 				}

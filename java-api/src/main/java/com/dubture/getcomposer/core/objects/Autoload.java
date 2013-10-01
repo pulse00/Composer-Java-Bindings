@@ -7,11 +7,6 @@
  ******************************************************************************/
 package com.dubture.getcomposer.core.objects;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-
-import org.json.simple.JSONObject;
-
 import com.dubture.getcomposer.core.annotation.Name;
 import com.dubture.getcomposer.core.collection.JsonArray;
 import com.dubture.getcomposer.core.collection.Psr0;
@@ -33,32 +28,13 @@ public class Autoload extends JsonObject {
 	private Psr0 psr0 = new Psr0();
 	
 	public Autoload() {
+		super();
 		listen();
 	}
 	
-	protected void parse(Object obj) {
-		if (obj instanceof JSONObject) {
-			JSONObject json = (JSONObject) obj;
-			
-			parseField(json, "psr-0");
-			parseField(json, "classmap");
-			parseField(json, "files");
-		}
+	public boolean hasPsr0() {
+		return psr0 != null && psr0.size() > 0;
 	}
-	
-	@Override
-	public Object prepareJson(LinkedList<String> fields) {
-		if (classmap.size() == 0 && files.size() == 0 && psr0.size() == 0) {
-			return null;
-		}
-		String[] order = new String[]{"psr-0", "classmap", "files"};
-		fields.addAll(Arrays.asList(order));
-		return super.prepareJson(fields);
-	}
-	
-//	public boolean hasPsr0() {
-//		return psr0 != null;
-//	}
 	
 	public boolean hasClassMap() {
 		return classmap != null && classmap.size() > 0;
@@ -79,12 +55,4 @@ public class Autoload extends JsonObject {
 	public JsonArray getFiles() {
 		return files;
 	}
-
-//	public void setPsr0(Psr0 psr0) {
-//		this.psr0 = psr0;
-//	}
-//	
-//	public void clearPsr0() {
-//		this.psr0 = new Psr0();
-//	}
 }

@@ -1,5 +1,6 @@
 package org.getcomposer.core.test;
 
+import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
 import com.dubture.getcomposer.core.ComposerPackage;
@@ -24,37 +25,72 @@ public class JsonWriterTest extends ComposertTestCase {
 	
 	@Test
 	public void testComposerPackage() {
-		doTestComposerPackage(new ComposerPackage(json));
+		try {
+			doTestComposerPackage(new ComposerPackage(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 	
 	@Test
 	public void testDependencies() {
-		doTestDependencies(new ComposerPackage(json));
+		try {
+			doTestDependencies(new ComposerPackage(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 	
 	@Test
 	public void testAutoload() {
-		doTestAutoload(new ComposerPackage(json));
+		try {
+			doTestAutoload(new ComposerPackage(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 	
 	@Test
 	public void testConfig() {
-		doTestConfig(new ComposerPackage(json));
+		try {
+			doTestConfig(new ComposerPackage(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 	
 	@Test
 	public void testScripts() {
-		doTestScripts(new ComposerPackage(json));
+		try {
+			doTestScripts(new ComposerPackage(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 	
 	@Test
 	public void testSupport() {
-		doTestSupport(new ComposerPackage(json));
+		try {
+			doTestSupport(new ComposerPackage(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 
 	@Test
 	public void testRepositories() {
-		doTestRepositories(new ComposerPackage(json));
+		try {
+			doTestRepositories(new ComposerPackage(json));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			fail();
+		}
 	}
 	
 	@Test 

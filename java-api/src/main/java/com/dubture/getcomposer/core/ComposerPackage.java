@@ -12,10 +12,9 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 
 import com.dubture.getcomposer.core.annotation.Name;
 import com.dubture.getcomposer.core.collection.Dependencies;
@@ -64,61 +63,23 @@ public class ComposerPackage extends DistributedPackage {
 	}
 	
 	public ComposerPackage(Object json) {
-		super();
+		this();
 		fromJson(json);
-		listen();
 	}
 	
-	public ComposerPackage(String json) {
-		super();
+	public ComposerPackage(String json) throws ParseException {
+		this();
 		fromJson(json);
-		listen();
 	}
 	
-	public ComposerPackage(File file) throws IOException {
-		super();
+	public ComposerPackage(File file) throws IOException, ParseException {
+		this();
 		fromJson(file);
-		listen();
 	}
 	
-	public ComposerPackage(Reader reader) throws IOException {
-		super();
+	public ComposerPackage(Reader reader) throws IOException, ParseException {
+		this();
 		fromJson(reader);
-		listen();
-	}
-	
-//	protected List<String> getSilentProperties() {
-//		List<String> props = super.getSilentProperties();
-//		props.addAll(Arrays.asList(new String[]{"bin", "keywords"}));
-//		return props;
-//	}
-	
-	protected void parse(Object obj) {
-		if (obj instanceof JSONObject) {
-
-			JSONObject json = (JSONObject)obj;
-
-			// parsed from super:
-			// bin, homepage, keywords, minimum-stability, target-dir
-			
-			parseField(json, "require");
-			parseField(json, "require-dev");
-			parseField(json, "support");
-			parseField(json, "license");
-			parseField(json, "extra");
-			parseField(json, "authors");
-			parseField(json, "config");
-			parseField(json, "scripts");
-			parseField(json, "repositories");
-		}
-		
-		super.parse(obj);
-	}
-	
-	@Override
-	public Object prepareJson(LinkedList<String> fields) {
-		String[] order = new String[]{"authors", "version", "keywords", "homepage", "license", "require", "require-dev","autoload","target-dir","minimum-stability","support","repositories","config","scripts","extra","bin"};
-		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
 	}
 	
 	@Override

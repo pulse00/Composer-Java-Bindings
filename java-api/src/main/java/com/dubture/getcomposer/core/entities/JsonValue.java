@@ -1,7 +1,7 @@
 package com.dubture.getcomposer.core.entities;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.LinkedList;
 
 import com.dubture.getcomposer.core.collection.JsonArray;
 import com.dubture.getcomposer.core.objects.JsonObject;
@@ -20,12 +20,12 @@ public class JsonValue {
 			if (getAsArray().size() == 0) {
 				return null;
 			}
-			return getAsArray().prepareJson(new LinkedList<String>());
+			return buildJson(getAsArray());
 		} else if (isObject()) {
 			if (getAsObject().size() == 0) {
 				return null;
 			}
-			return getAsObject().prepareJson(new LinkedList<String>());
+			return buildJson(getAsObject());
 		} else if (isNumber()) {
 			return getAsNumber();
 		} else if (isBoolean()) {
@@ -33,6 +33,16 @@ public class JsonValue {
 		} else {
 			return getAsString();
 		}
+	}
+	
+	private Object buildJson(JsonCollection jsonObject) {
+		try {
+			Method mtd = JsonEntity.class.getDeclaredMethod("buildJson");
+			return mtd.invoke(jsonObject);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**

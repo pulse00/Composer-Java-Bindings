@@ -1,10 +1,6 @@
 package com.dubture.getcomposer.core.objects;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
-import java.util.Arrays;
-import java.util.LinkedList;
+import org.json.simple.parser.ParseException;
 
 
 /**
@@ -21,38 +17,18 @@ public class Person extends JsonObject implements Cloneable {
 	 * Creates an empty person
 	 */
 	public Person() {
+		super();
 		listen();
 	}
 	
 	public Person(Object json) {
-		super();
+		this();
 		fromJson(json);
-		listen();
 	}
 	
-	public Person(String json) {
-		super();
+	public Person(String json) throws ParseException {
+		this();
 		fromJson(json);
-		listen();
-	}
-	
-	public Person(File file) throws IOException {
-		super();
-		fromJson(file);
-		listen();
-	}
-	
-	public Person(Reader reader) throws IOException {
-		super();
-		fromJson(reader);
-		listen();
-	}
-	
-	@Override
-	public Object prepareJson(LinkedList<String> fields) {
-		String[] order = new String[]{"name", "email", "homepage", "role"};
-		fields.addAll(Arrays.asList(order));
-		return super.prepareJson(fields);
 	}
 
 	/**
