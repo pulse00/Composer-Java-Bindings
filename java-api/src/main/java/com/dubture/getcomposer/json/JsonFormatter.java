@@ -1,4 +1,4 @@
-package com.dubture.getcomposer.core.utils;
+package com.dubture.getcomposer.json;
 
 import java.util.Iterator;
 import java.util.List;

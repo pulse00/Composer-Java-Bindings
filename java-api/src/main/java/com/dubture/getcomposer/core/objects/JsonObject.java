@@ -6,11 +6,10 @@ import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Map.Entry;
 
-import org.json.simple.parser.ParseException;
-
 import com.dubture.getcomposer.core.collection.JsonArray;
 import com.dubture.getcomposer.core.entities.AbstractJsonObject;
 import com.dubture.getcomposer.core.entities.JsonValue;
+import com.dubture.getcomposer.json.ParseException;
 
 public class JsonObject extends AbstractJsonObject<JsonValue> {
 

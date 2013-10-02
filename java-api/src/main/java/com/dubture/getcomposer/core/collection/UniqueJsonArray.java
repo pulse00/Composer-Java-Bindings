@@ -4,9 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 
-import org.json.simple.parser.ParseException;
-
 import com.dubture.getcomposer.core.entities.AbstractUniqueJsonArray;
+import com.dubture.getcomposer.json.ParseException;
 
 public class UniqueJsonArray extends AbstractUniqueJsonArray<Object> {
 

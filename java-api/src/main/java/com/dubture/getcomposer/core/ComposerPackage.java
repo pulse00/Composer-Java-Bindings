@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.json.simple.parser.ParseException;
-
 import com.dubture.getcomposer.core.annotation.Name;
 import com.dubture.getcomposer.core.collection.Dependencies;
 import com.dubture.getcomposer.core.collection.JsonArray;
@@ -26,6 +24,7 @@ import com.dubture.getcomposer.core.objects.Config;
 import com.dubture.getcomposer.core.objects.Extra;
 import com.dubture.getcomposer.core.objects.Scripts;
 import com.dubture.getcomposer.core.objects.Support;
+import com.dubture.getcomposer.json.ParseException;
 
 /**
  * Represents a composer package. The source can either be a composer.json file

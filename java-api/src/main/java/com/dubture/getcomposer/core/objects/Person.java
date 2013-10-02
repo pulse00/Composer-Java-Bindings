@@ -1,7 +1,6 @@
 package com.dubture.getcomposer.core.objects;
 
-import org.json.simple.parser.ParseException;
-
+import com.dubture.getcomposer.json.ParseException;
 
 /**
  * Represents a person entry in a composer package that is used in authors 

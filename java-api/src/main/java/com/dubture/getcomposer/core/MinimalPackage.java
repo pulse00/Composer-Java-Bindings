@@ -4,10 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 
-import org.json.simple.parser.ParseException;
-
 import com.dubture.getcomposer.core.objects.JsonObject;
-
+import com.dubture.getcomposer.json.ParseException;
 
 /**
  * A package that can be read from a file or string and also dump to the latter one.

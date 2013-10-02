@@ -9,10 +9,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.json.simple.parser.ParseException;
-
 import com.dubture.getcomposer.core.entities.AbstractJsonObject;
 import com.dubture.getcomposer.core.objects.Namespace;
+import com.dubture.getcomposer.json.ParseException;
 
 /**
  * Represents a psr-0 entity in a composer package.

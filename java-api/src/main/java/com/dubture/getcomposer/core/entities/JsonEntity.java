@@ -20,13 +20,12 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import com.dubture.getcomposer.core.annotation.Name;
 import com.dubture.getcomposer.core.objects.Autoload;
-import com.dubture.getcomposer.core.utils.JsonFormatter;
-import com.dubture.getcomposer.core.utils.JsonParser;
+import com.dubture.getcomposer.json.JsonFormatter;
+import com.dubture.getcomposer.json.JsonParser;
+import com.dubture.getcomposer.json.ParseException;
 
 public abstract class JsonEntity extends Entity {
 
@@ -179,13 +178,13 @@ public abstract class JsonEntity extends Entity {
 	protected abstract void doParse(Object obj);
 
 	private void parse(String json) throws ParseException {
-		JSONParser parser = new JSONParser();
-		doParse(parser.parse(json, JsonParser.getContainerFactory()));
+		JsonParser parser = new JsonParser();
+		doParse(parser.parse(json));
 	}
 	
 	private void parse(Reader reader) throws IOException, ParseException {
-		JSONParser parser = new JSONParser();
-		doParse(parser.parse(reader, JsonParser.getContainerFactory()));
+		JsonParser parser = new JsonParser();
+		doParse(parser.parse(reader));
 	}
 	
 	public void fromJson(Object json) {

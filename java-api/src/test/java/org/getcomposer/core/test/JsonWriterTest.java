@@ -1,9 +1,9 @@
 package org.getcomposer.core.test;
 
-import org.json.simple.parser.ParseException;
 import org.junit.Test;
 
 import com.dubture.getcomposer.core.ComposerPackage;
+import com.dubture.getcomposer.json.ParseException;
 
 public class JsonWriterTest extends ComposertTestCase {
 

@@ -9,7 +9,7 @@ import org.json.simple.parser.ParseException;
 
 import com.dubture.getcomposer.core.RepositoryPackage;
 import com.dubture.getcomposer.core.repositories.PackageRepository;
-import com.dubture.getcomposer.core.utils.JsonParser;
+import com.dubture.getcomposer.json.JsonParser;
 
 class PackageHelper {
 	

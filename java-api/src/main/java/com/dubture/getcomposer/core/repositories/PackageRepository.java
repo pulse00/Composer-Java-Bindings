@@ -4,10 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 
-import org.json.simple.parser.ParseException;
-
 import com.dubture.getcomposer.core.RepositoryPackage;
 import com.dubture.getcomposer.core.annotation.Name;
+import com.dubture.getcomposer.json.ParseException;
 
 public class PackageRepository extends Repository {
 

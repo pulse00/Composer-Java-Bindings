@@ -4,11 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 
-import org.json.simple.parser.ParseException;
-
 import com.dubture.getcomposer.core.collection.Persons;
 import com.dubture.getcomposer.core.collection.Versions;
 import com.dubture.getcomposer.core.repositories.PackageRepository;
+import com.dubture.getcomposer.json.ParseException;
 import com.dubture.getcomposer.packages.PackagistDownloader;
 
 public class RepositoryPackage extends DistributedPackage {

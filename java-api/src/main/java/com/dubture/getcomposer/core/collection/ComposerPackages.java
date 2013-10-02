@@ -3,13 +3,12 @@ package com.dubture.getcomposer.core.collection;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import com.dubture.getcomposer.core.ComposerPackage;
 import com.dubture.getcomposer.core.entities.AbstractJsonArray;
+import com.dubture.getcomposer.json.ParseException;
 
 /**
  * A collection to manage multiple composer packages.
@@ -39,14 +38,15 @@ public class ComposerPackages extends AbstractJsonArray<ComposerPackage> {
 		fromJson(reader);
 	}
 	
-	protected void parseOld(Object obj) {
+	@SuppressWarnings("rawtypes")
+	protected void doParse(Object obj) {
 		clear();
-		if (obj instanceof JSONObject) {
+		if (obj instanceof LinkedHashMap) {
 			add(new ComposerPackage(obj));
-		} else if (obj instanceof JSONArray) {
-			JSONArray array = (JSONArray) obj;
+		} else if (obj instanceof LinkedList) {
+			LinkedList array = (LinkedList) obj;
 			for (Object entry : array) {
-				if (entry instanceof JSONObject) {
+				if (entry instanceof LinkedHashMap) {
 					add(new ComposerPackage(entry));
 				}
 			}
