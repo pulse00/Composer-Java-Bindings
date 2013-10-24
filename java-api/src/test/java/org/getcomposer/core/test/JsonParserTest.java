@@ -15,9 +15,20 @@ import org.junit.Test;
 
 import com.dubture.getcomposer.core.ComposerPackage;
 import com.dubture.getcomposer.core.RepositoryPackage;
+import com.dubture.getcomposer.json.ParseException;
 
 public class JsonParserTest extends ComposertTestCase {
 
+	@Test
+	public void testException() {
+		try {
+			new ComposerPackage("{\n\"bla\":\'arg\n}");
+			fail();
+		} catch (ParseException e) {
+			assertEquals("Unexpected character (') at position 8.", e.getMessage());
+		}
+	}
+	
 	@Test
 	public void testComposerPackage() {
 		try {

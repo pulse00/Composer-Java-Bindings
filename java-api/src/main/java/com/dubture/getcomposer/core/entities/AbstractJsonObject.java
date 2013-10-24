@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.dubture.getcomposer.core.ComposerPackage;
 import com.dubture.getcomposer.core.collection.JsonArray;
 import com.dubture.getcomposer.core.objects.JsonObject;
 import com.dubture.getcomposer.httpclient.HttpAsyncClient;
@@ -112,13 +113,25 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 				value = properties.get(entry);
 			}
 
+			// special on "keywords"
+			if (entry.equalsIgnoreCase("keywords")
+					&& this instanceof ComposerPackage
+					&& value instanceof JsonValue 
+					&& ((JsonValue) value).isArray()) {
+				JsonArray arr = ((JsonValue) value).getAsArray();
+					
+				if (arr.size() == 1) {
+					value = (String)arr.get(0);
+				}
+			}
+			
 			value = getJsonValue(value);
 
 			if (value == null || value.equals("")) {
 				continue;
 			}
-
-			// run value.toJson() if available
+			
+			// add to output
 			out.put(entry, value);
 		}
 
@@ -173,6 +186,9 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 				}
 			}
 		}
+		
+		// clear sort order
+		sortOrder.clear();
 	}
 
 	/**

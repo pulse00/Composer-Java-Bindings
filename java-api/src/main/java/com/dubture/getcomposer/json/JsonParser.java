@@ -36,7 +36,7 @@ public class JsonParser {
 		try {
 			return parser.parse(json, getContainerFactory());
 		} catch (org.json.simple.parser.ParseException e) {
-			throw new ParseException(e.getMessage());
+			throw buildException(e);
 		}
 	}
 	
@@ -44,7 +44,17 @@ public class JsonParser {
 		try {
 			return parser.parse(reader, getContainerFactory());
 		} catch (org.json.simple.parser.ParseException e) {
-			throw new ParseException(e.getMessage());
+			throw buildException(e);
 		}
 	}
+	
+	private ParseException buildException(org.json.simple.parser.ParseException e) {
+		ParseException pe = new ParseException(e.getMessage());
+		pe.setErrorType(e.getErrorType());
+		pe.setUnexpectedObject(e.getUnexpectedObject());
+		pe.setPosition(e.getPosition());
+		
+		return pe;
+	}
+	
 }

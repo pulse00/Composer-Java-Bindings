@@ -24,6 +24,34 @@ public class JsonWriterTest extends ComposertTestCase {
 	}
 	
 	@Test
+	public void testEmptyPackage() {
+		ComposerPackage pkg = new ComposerPackage();
+		assertEquals("{}", pkg.toJson());
+	}
+	
+	@Test
+	public void testKeywords() {
+		ComposerPackage pkg = new ComposerPackage();
+
+		pkg.getKeywords().add("bla");
+		assertEquals("{\n\t\"keywords\" : \"bla\"\n}", pkg.toJson());
+		
+		pkg.getKeywords().add("blubb");
+		assertEquals("{\n\t\"keywords\" : [\n\t\t\"bla\",\n\t\t\"blubb\"\n\t]\n}", pkg.toJson());
+	}
+	
+	@Test
+	public void testLicense() {
+		ComposerPackage pkg = new ComposerPackage();
+
+		pkg.getLicense().add("MIT");
+		assertEquals("{\n\t\"license\" : \"MIT\"\n}", pkg.toJson());
+		
+		pkg.getLicense().add("EPL");
+		assertEquals("{\n\t\"license\" : [\n\t\t\"MIT\",\n\t\t\"EPL\"\n\t]\n}", pkg.toJson());
+	}
+	
+	@Test
 	public void testComposerPackage() {
 		try {
 			doTestComposerPackage(new ComposerPackage(json));

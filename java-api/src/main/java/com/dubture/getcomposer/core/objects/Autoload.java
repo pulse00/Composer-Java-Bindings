@@ -55,4 +55,9 @@ public class Autoload extends JsonObject {
 	public JsonArray getFiles() {
 		return files;
 	}
+	
+	@Override
+	public int size() {
+		return super.size() + classmap.size() + files.size() + psr0.size();
+	}
 }

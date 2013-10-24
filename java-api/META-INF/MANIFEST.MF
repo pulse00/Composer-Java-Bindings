@@ -11,8 +11,8 @@ Export-Package: com.dubture.getcomposer.core;uses:="com.dubture.getcom
  .repositories";version="0.0.4.buildtimestamp",com.dubture.getcomposer
  .core.entities;uses:="com.dubture.getcomposer.core.objects,org.apache
  .commons.logging,com.dubture.getcomposer.core.collection,com.dubture.
- getcomposer.httpclient,com.dubture.getcomposer.core.annotation,com.du
- bture.getcomposer.json,com.dubture.getcomposer.core";version="0.0.4.b
+ getcomposer.httpclient,com.dubture.getcomposer.core,com.dubture.getco
+ mposer.core.annotation,com.dubture.getcomposer.json";version="0.0.4.b
  uildtimestamp",com.dubture.getcomposer.core.objects;uses:="com.dubtur
  e.getcomposer.core.collection,com.dubture.getcomposer.core.annotation
  ,com.dubture.getcomposer.core.entities,com.dubture.getcomposer.json";
@@ -37,10 +37,10 @@ Export-Package: com.dubture.getcomposer.core;uses:="com.dubture.getcom
 Built-By: thomas
 Tool: Bnd-0.0.357
 Bundle-Name: composer-java-api
-Created-By: 1.6.0_51 (Apple Inc.)
+Created-By: 1.6.0_65 (Apple Inc.)
 Bundle-Version: 0.0.4.buildtimestamp
-Build-Jdk: 1.6.0_51
-Bnd-LastModified: 1380725841042
+Build-Jdk: 1.6.0_65
+Bnd-LastModified: 1382614324556
 Bundle-ManifestVersion: 2
 Bundle-Description: Sonatype helps open source projects to set up Mave
  n repositories on https://oss.sonatype.org/
@@ -57,5 +57,5 @@ Import-Package: com.dubture.getcomposer.core;version="0.0",com.dubture
  http.impl.client,org.apache.http.nio.reactor,org.apache.http.params,o
  rg.apache.http.protocol,org.json.simple,org.json.simple.parser
 Bundle-SymbolicName: com.dubture.getcomposer.core
-Originally-Created-By: 1.6.0_51 (Apple Inc.)
+Originally-Created-By: 1.6.0_65 (Apple Inc.)
 

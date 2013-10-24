@@ -2,14 +2,13 @@ package com.dubture.getcomposer.core.entities;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCollection, Iterable<V> {
 	
-	protected List<V> values = new ArrayList<V>();
+	protected List<V> values = new LinkedList<V>();
 	
 	private transient PropertyChangeListener propListener = new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent e) {
@@ -21,7 +20,7 @@ public abstract class AbstractJsonArray<V> extends JsonEntity implements JsonCol
 	@SuppressWarnings("unchecked")
 	protected void doParse(Object obj) {
 		clear();
-		if (obj instanceof LinkedList) {
+		if (obj instanceof List) {
 			for (Object item : (List<Object>)obj) {
 				add((V)item);
 			}

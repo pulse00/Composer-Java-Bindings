@@ -22,7 +22,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.dubture.getcomposer.core.annotation.Name;
-import com.dubture.getcomposer.core.objects.Autoload;
 import com.dubture.getcomposer.json.JsonFormatter;
 import com.dubture.getcomposer.json.JsonParser;
 import com.dubture.getcomposer.json.ParseException;
@@ -159,7 +158,7 @@ public abstract class JsonEntity extends Entity {
 			return ((JsonValue)value).toJsonValue();
 		} else if (value instanceof JsonCollection) {
 			JsonCollection coll = (JsonCollection) value;
-			if (coll.size() > 0 || value instanceof Autoload) {
+			if (coll.size() > 0) {
 				// call buildJson - use reflection
 				try {
 					Method mtd = JsonEntity.class.getDeclaredMethod("buildJson");

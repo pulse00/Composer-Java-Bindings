@@ -123,6 +123,11 @@ public class JsonValue {
 	 * @return the value
 	 */
 	public JsonArray getAsArray() {
+		if (!(value instanceof JsonArray)) {
+			JsonArray val = new JsonArray();
+			val.add(value);
+			value = val;
+		}
 		return (JsonArray)value;
 	}
 	

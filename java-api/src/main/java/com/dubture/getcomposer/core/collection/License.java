@@ -23,7 +23,7 @@ public class License extends AbstractJsonArray<String> {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	protected void parseOld(Object obj) {
+	protected void doParse(Object obj) {
 		clear();
 		if (obj instanceof LinkedList) {
 			for (Object license : (LinkedList)obj) {
@@ -33,6 +33,15 @@ public class License extends AbstractJsonArray<String> {
 			add((String)obj);
 		}
 		
+	}
+	
+	@Override
+	protected Object buildJson() {
+		if (size() == 1) {
+			return (String)get(0);
+		}
+		
+		return super.buildJson();
 	}
 	
 	/**
