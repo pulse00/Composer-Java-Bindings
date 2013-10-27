@@ -9,31 +9,33 @@ import java.util.Map.Entry;
 import com.dubture.getcomposer.core.collection.JsonArray;
 import com.dubture.getcomposer.core.entities.AbstractJsonObject;
 import com.dubture.getcomposer.core.entities.JsonValue;
+import com.dubture.getcomposer.json.ParseException;
 
 public class JsonObject extends AbstractJsonObject<JsonValue> {
 
 	public JsonObject() {
+		super();
 		listen();
 	}
 
 	public JsonObject(Object json) {
+		this();
 		fromJson(json);
-		listen();
 	}
 
-	public JsonObject(String json) {
+	public JsonObject(String json) throws ParseException {
+		this();
 		fromJson(json);
-		listen();
 	}
 
-	public JsonObject(File file) throws IOException {
+	public JsonObject(File file) throws IOException, ParseException {
+		this();
 		fromJson(file);
-		listen();
 	}
 
-	public JsonObject(Reader reader) throws IOException {
+	public JsonObject(Reader reader) throws IOException, ParseException {
+		this();
 		fromJson(reader);
-		listen();
 	}
 
 	@Override

@@ -2,10 +2,9 @@ package com.dubture.getcomposer.core.objects;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import com.dubture.getcomposer.core.collection.JsonArray;
 
@@ -18,46 +17,41 @@ import com.dubture.getcomposer.core.collection.JsonArray;
  */
 public class Scripts extends JsonObject {
 
-	protected void parse(Object obj) {
-		if (obj instanceof JSONObject) {
+	@SuppressWarnings("rawtypes")
+	protected void doParse(Object obj) {
+		if (obj instanceof LinkedHashMap) {
 
-			JSONObject json = (JSONObject)obj;
+			LinkedHashMap json = (LinkedHashMap)obj;
 
-			parseScripts(json, "pre-install-cmd");
-			parseScripts(json, "post-install-cmd");
-			parseScripts(json, "pre-update-cmd");
-			parseScripts(json, "post-update-cmd");
-			parseScripts(json, "pre-package-install");
-			parseScripts(json, "post-package-install");
-			parseScripts(json, "pre-package-update");
-			parseScripts(json, "post-package-update");
-			parseScripts(json, "pre-package-uninstall");
-			parseScripts(json, "post-package-uninstall");
+			for (String event : getEvents()) {
+				parseScripts(json, event);
+			}
 		}
 	}
 	
 	public static String[] getEvents() {
-		return new String[] {"pre-install-cmd", "post-install-cmd", "pre-update-cmd", "post-update-cmd",
-				"pre-package-install", "post-package-install", "pre-package-update",
-				"post-package-update", "pre-package-uninstall", "post-package-uninstall"};
+		return new String[] {
+				"pre-install-cmd", "post-install-cmd", 
+				"pre-update-cmd", "post-update-cmd",
+				"pre-package-install", "post-package-install", 
+				"pre-package-update", "post-package-update", 
+				"pre-package-uninstall", "post-package-uninstall"};
 	}
 	
 	@Override
 	protected List<String> getOwnProperties() {
-		String[] props = new String[]{"pre-install-cmd", "post-install-cmd", "pre-update-cmd", "post-update-cmd",
-				"pre-package-install", "post-package-install", "pre-package-update",
-				"post-package-update", "pre-package-uninstall", "post-package-uninstall"};
-		List<String> list = new ArrayList<String>(Arrays.asList(props));
+		List<String> list = new ArrayList<String>(Arrays.asList(getEvents()));
 		list.addAll(super.getOwnProperties());
 		return list;
 	}
 	
-	private void parseScripts(JSONObject json, String property) {
+	@SuppressWarnings("rawtypes")
+	private void parseScripts(LinkedHashMap json, String property) {
 		if (json.containsKey(property)) {
 			JsonArray values;
 			Object value = json.get(property);
 			
-			if (value instanceof JSONArray) {
+			if (value instanceof LinkedList) {
 				values = new JsonArray(value);
 			} else {
 				values = new JsonArray();

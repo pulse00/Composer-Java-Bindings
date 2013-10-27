@@ -8,21 +8,23 @@ import java.io.IOException;
 import java.io.Reader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONValue;
 
 import com.dubture.getcomposer.core.annotation.Name;
-import com.dubture.getcomposer.core.objects.Autoload;
-import com.dubture.getcomposer.core.utils.JsonFormatter;
+import com.dubture.getcomposer.json.JsonFormatter;
+import com.dubture.getcomposer.json.JsonParser;
+import com.dubture.getcomposer.json.ParseException;
 
 public abstract class JsonEntity extends Entity {
 
@@ -31,6 +33,8 @@ public abstract class JsonEntity extends Entity {
 	private transient Map<Class, Map<String, Field>> fieldNameCache = new HashMap<Class, Map<String, Field>>();
 	
 	private transient Log log = LogFactory.getLog(JsonEntity.class);
+	
+	protected transient LinkedList<String> sortOrder = new LinkedList<String>();
 
 	public JsonEntity() {
 		listen();
@@ -45,7 +49,8 @@ public abstract class JsonEntity extends Entity {
 		try {
 			for (Field field : getFields(this.getClass())) {
 				if (JsonCollection.class.isAssignableFrom(field.getType())) {
-					final String prop = getFieldName(field);	
+					final String prop = getFieldName(field);
+					final JsonEntity sender = this;
 					
 					if (listening.contains(prop)) {
 						continue;
@@ -59,6 +64,17 @@ public abstract class JsonEntity extends Entity {
 							public void propertyChange(PropertyChangeEvent e) {
 								firePropertyChange(prop + "." + e.getPropertyName(), 
 										e.getOldValue(), e.getNewValue());
+								
+								// append to sort order - use reflection
+								if (sender instanceof AbstractJsonObject) {
+									try {
+										Method mtd = JsonEntity.class.getDeclaredMethod("appendSortOrder", String.class);
+										mtd.setAccessible(true);
+										mtd.invoke(sender, prop);
+									} catch (Exception e1) {
+										e1.printStackTrace();
+									}	
+								}
 							}
 						});
 						
@@ -99,6 +115,17 @@ public abstract class JsonEntity extends Entity {
 	}
 	
 	@SuppressWarnings("rawtypes")
+	protected List<String> getFieldNames(Class entity) {
+		ArrayList<String> names = new ArrayList<String>();
+		
+		for (Field field : getFields(entity)) {
+			names.add(getFieldName(field));
+		}
+		
+		return names;
+	}
+	
+	@SuppressWarnings("rawtypes")
 	protected Field getFieldByName(Class entity, String fieldName) {
 		
 		// create cache
@@ -120,19 +147,25 @@ public abstract class JsonEntity extends Entity {
 		return null;
 	}
 	
-	
-	// subclasses should implement that
-	protected abstract void parse(Object obj);
-	
-	public abstract Object prepareJson(LinkedList<String> fields);
-	
-	protected Object prepareJsonValue(Object value) {
+	protected void appendSortOrder(String name) {
+		if (!sortOrder.contains(name)) {
+			sortOrder.add(name);
+		}
+	}
+
+	protected Object getJsonValue(Object value) {
 		if (value instanceof JsonValue) {
 			return ((JsonValue)value).toJsonValue();
 		} else if (value instanceof JsonCollection) {
 			JsonCollection coll = (JsonCollection) value;
-			if (coll.size() > 0 || value instanceof Autoload) {
-				return ((JsonEntity)coll).prepareJson(new LinkedList<String>());
+			if (coll.size() > 0) {
+				// call buildJson - use reflection
+				try {
+					Method mtd = JsonEntity.class.getDeclaredMethod("buildJson");
+					return mtd.invoke(coll);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
 		} else {
 			return value;
@@ -141,23 +174,39 @@ public abstract class JsonEntity extends Entity {
 		return null;
 	}
 	
-	public String toJson() {
-		return JsonFormatter.format(prepareJson(new LinkedList<String>()));
+	protected abstract void doParse(Object obj);
+
+	private void parse(String json) throws ParseException {
+		JsonParser parser = new JsonParser();
+		doParse(parser.parse(json));
+	}
+	
+	private void parse(Reader reader) throws IOException, ParseException {
+		JsonParser parser = new JsonParser();
+		doParse(parser.parse(reader));
 	}
 	
 	public void fromJson(Object json) {
+		doParse(json);
+	}
+	
+	public void fromJson(String json) throws ParseException {
 		parse(json);
 	}
 	
-	public void fromJson(String json) {
-		parse(JSONValue.parse(json));
+	public void fromJson(File file) throws IOException, ParseException {
+		if (file.length() > 0) {
+			fromJson(new FileReader(file));
+		}
 	}
 	
-	public void fromJson(File file) throws IOException {
-		fromJson(new FileReader(file));
+	public void fromJson(Reader reader) throws IOException, ParseException {
+		parse(reader);
 	}
 	
-	public void fromJson(Reader reader) throws IOException {
-		parse(JSONValue.parse(reader));
+	protected abstract Object buildJson();
+	
+	public String toJson() {
+		return JsonFormatter.format(buildJson());
 	}
 }

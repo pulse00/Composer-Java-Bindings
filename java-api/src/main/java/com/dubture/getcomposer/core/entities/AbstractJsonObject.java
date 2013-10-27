@@ -13,9 +13,8 @@ import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
+import com.dubture.getcomposer.core.ComposerPackage;
 import com.dubture.getcomposer.core.collection.JsonArray;
 import com.dubture.getcomposer.core.objects.JsonObject;
 import com.dubture.getcomposer.httpclient.HttpAsyncClient;
@@ -25,69 +24,76 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 
 	
 	private transient Map<String, PropertyChangeListener> listeners = new HashMap<String, PropertyChangeListener>();
-	protected transient Map<String, V> properties = new HashMap<String, V>();
-	private transient Log log = LogFactory.getLog(HttpAsyncClient.class);	
+	protected transient Map<String, V> properties = new LinkedHashMap<String, V>();
+	private transient Log log = LogFactory.getLog(HttpAsyncClient.class);
 	
 
-	@SuppressWarnings("unchecked")
-	protected void parse(Object obj) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected void doParse(Object obj) {
 		clear();
-		if (obj instanceof JSONObject) {
-			for (Entry<String, Object> entry : ((Map<String, Object>) obj)
-					.entrySet()) {
-				parseValue((JSONObject) obj, entry.getKey());
+		if (obj instanceof LinkedHashMap) {
+			List<String> fields = getFieldNames(this.getClass());
+			LinkedHashMap json = (LinkedHashMap)obj;
+			for (Entry<String, Object> entry : ((Map<String, Object>) obj).entrySet()) {
+				String property = entry.getKey();
+				
+				if (fields.contains(property)) {
+					parseField(json, property);
+				} else {
+					Object value = null;
+					if (json.containsKey(property)) {
+						value = json.get(property);
+						
+						if (value instanceof LinkedList) {
+							value = new JsonArray(value);
+						} else if (value instanceof LinkedHashMap) {
+							value = new JsonObject(value);
+						}
+					}
+					set(property, value);
+				}
 			}
 		}
 	}
 
-	protected void parseValue(JSONObject json, String property) {
-		Object value = null;
-		if (json.containsKey(property)) {
-			value = json.get(property);
-			if (value instanceof JSONArray) {
-				value = new JsonArray(value);
-			} else if (value instanceof JSONObject) {
-				value = new JsonObject(value);
-			}
-		}
-		set(property, value);
-	}
-
-	protected void parseField(JSONObject json, String property) {
+	@SuppressWarnings("rawtypes")
+	protected void parseField(LinkedHashMap json, String property) {
 		if (json.containsKey(property)) {
 			Field field = getFieldByName(this.getClass(), property);
 
-			if (field != null
-					&& JsonEntity.class.isAssignableFrom(field.getType())) {
+			if (field != null && JsonEntity.class.isAssignableFrom(field.getType())) {
 				try {
 					field.setAccessible(true);
 					JsonEntity entity = (JsonEntity) field.get(this);
 					entity.fromJson(json.get(property));
-					json.remove(property);
 				} catch (Exception e) {
 					log.error(e);
 				}
 			}
 		}
 	}
-
-	public Object prepareJson(LinkedList<String> fields) {
-
-		// First: add properties that aren't in the hashmap yet
-		for (Entry<String, V> entry : properties.entrySet()) {
-			fields.add(entry.getKey());
-		}
-
-		// create an index to search for field names
+	
+	@Override
+	protected Object buildJson() {
+		LinkedList<String> propsOrder = new LinkedList<String>(sortOrder);
+		
+		// First: create an index to search for field names and add them to the props order
 		HashMap<String, Field> namedFields = new HashMap<String, Field>();
 		for (Field field : getFields(this.getClass())) {
 			field.setAccessible(true);
-			namedFields.put(getFieldName(field), field);
+			String fieldName = getFieldName(field);
+			namedFields.put(fieldName, field);
+			propsOrder.add(fieldName);
+		}
+		
+		// add properties that aren't in the hashmap yet
+		for (Entry<String, V> entry : properties.entrySet()) {
+			propsOrder.add(entry.getKey());
 		}
 
+		// Second: find property contents (either field or property key)
 		LinkedHashMap<String, Object> out = new LinkedHashMap<String, Object>();
-		// Second: find field contents (either field or property key)
-		for (String entry : fields) {
+		for (String entry : propsOrder) {
 			if (out.containsKey(entry)) {
 				continue;
 			}
@@ -107,13 +113,25 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 				value = properties.get(entry);
 			}
 
-			value = prepareJsonValue(value);
+			// special on "keywords"
+			if (entry.equalsIgnoreCase("keywords")
+					&& this instanceof ComposerPackage
+					&& value instanceof JsonValue 
+					&& ((JsonValue) value).isArray()) {
+				JsonArray arr = ((JsonValue) value).getAsArray();
+					
+				if (arr.size() == 1) {
+					value = (String)arr.get(0);
+				}
+			}
+			
+			value = getJsonValue(value);
 
 			if (value == null || value.equals("")) {
 				continue;
 			}
-
-			// run value.toJson() if available
+			
+			// add to output
 			out.put(entry, value);
 		}
 
@@ -139,6 +157,7 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 	 * @see com.dubture.getcomposer.core.entities.JsonCollection#clear()
 	 */
 	public void clear() {
+		// clear properties
 		List<String> ownProps = getOwnProperties();
 		
 		for (String key : properties.keySet().toArray(new String[]{})) {
@@ -154,6 +173,22 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 				remove(key);
 			}
 		}
+		
+		// clear fields
+		for (Field field : getFields(this.getClass())) {
+			if (field != null && JsonCollection.class.isAssignableFrom(field.getType())) {
+				try {
+					field.setAccessible(true);
+					JsonCollection entity = (JsonCollection) field.get(this);
+					entity.clear();
+				} catch (Exception e) {
+					log.error(e);
+				}
+			}
+		}
+		
+		// clear sort order
+		sortOrder.clear();
 	}
 
 	/**
@@ -223,6 +258,7 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 
 		V oldValue = properties.get(property);
 		properties.put(property, (V) value);
+		appendSortOrder(property);
 		
 		if (notify)
 			firePropertyChange(property, oldValue, (V) value);

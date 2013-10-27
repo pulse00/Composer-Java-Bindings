@@ -2,11 +2,8 @@ package com.dubture.getcomposer.core.collection;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.json.simple.JSONObject;
 
 import com.dubture.getcomposer.core.VersionedPackage;
 import com.dubture.getcomposer.core.entities.AbstractJsonObject;
@@ -24,11 +21,11 @@ public class Dependencies extends AbstractJsonObject<VersionedPackage> implement
 	public Dependencies() {
 	}
 	
-	@SuppressWarnings("unchecked")
-	protected void parse(Object obj) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	protected void doParse(Object obj) {
 		clear();
-		if (obj instanceof JSONObject) {
-			for (Entry<String, Object> entry : ((Map<String, Object>)((JSONObject)obj)).entrySet()) {
+		if (obj instanceof LinkedHashMap) {
+			for (Entry<String, Object> entry : ((Map<String, Object>)((LinkedHashMap)obj)).entrySet()) {
 				VersionedPackage dep = new VersionedPackage();
 				dep.setName(entry.getKey());
 				dep.setVersion((String)entry.getValue());
@@ -37,7 +34,7 @@ public class Dependencies extends AbstractJsonObject<VersionedPackage> implement
 		}
 	}
 	
-	public Object prepareJson(LinkedList<String> fields) {
+	protected Object buildJson() {
 		LinkedHashMap<String, Object> out = new LinkedHashMap<String, Object>();
 		for (VersionedPackage dep : this) {
 			out.put(dep.getName(), dep.getVersion());

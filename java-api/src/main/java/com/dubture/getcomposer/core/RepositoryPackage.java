@@ -3,14 +3,11 @@ package com.dubture.getcomposer.core;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Arrays;
-import java.util.LinkedList;
-
-import org.json.simple.JSONObject;
 
 import com.dubture.getcomposer.core.collection.Persons;
 import com.dubture.getcomposer.core.collection.Versions;
 import com.dubture.getcomposer.core.repositories.PackageRepository;
+import com.dubture.getcomposer.json.ParseException;
 import com.dubture.getcomposer.packages.PackagistDownloader;
 
 public class RepositoryPackage extends DistributedPackage {
@@ -26,46 +23,21 @@ public class RepositoryPackage extends DistributedPackage {
 	public RepositoryPackage(Object json) {
 		this();
 		fromJson(json);
-		listen();
 	}
 	
-	public RepositoryPackage(String json) {
+	public RepositoryPackage(String json) throws ParseException {
 		this();
 		fromJson(json);
-		listen();
 	}
 	
-	public RepositoryPackage(File file) throws IOException {
+	public RepositoryPackage(File file) throws IOException, ParseException {
 		this();
 		fromJson(file);
-		listen();
 	}
 	
-	public RepositoryPackage(Reader reader) throws IOException {
+	public RepositoryPackage(Reader reader) throws IOException, ParseException {
 		this();
 		fromJson(reader);
-		listen();
-	}
-	
-	protected void parse(Object obj) {
-		if (obj instanceof JSONObject) {
-
-			JSONObject json = (JSONObject)obj;
-
-			// parsed from super:
-			// repository
-			
-			parseField(json, "versions");
-			parseField(json, "maintainers");
-		}
-		
-		super.parse(obj);
-	}
-	
-	@Override
-	public Object prepareJson(LinkedList<String> fields) {
-		String[] order = new String[]{"maintainers", "repository", "versions"};
-		return super.prepareJson(new LinkedList<String>(Arrays.asList(order)));
 	}
 	
 	/**
@@ -75,8 +47,9 @@ public class RepositoryPackage extends DistributedPackage {
 	 * @param input
 	 * @return the deserialized package
 	 * @throws IOException 
+	 * @throws ParseException 
 	 */
-	public static RepositoryPackage fromPackageRepository(File input) throws IOException {
+	public static RepositoryPackage fromPackageRepository(File input) throws IOException, ParseException {
 		PackageRepository repo = new PackageRepository(input);
 		return repo.getPackage();
 	}

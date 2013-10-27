@@ -191,6 +191,7 @@ public class PackagesTest extends TestCase {
 	protected void assertSearchResult(String query) throws Exception {
 		
 		PackageSearch downloader = new PackagistSearch();
+		downloader.setPageLimit(1);
 		List<MinimalPackage> packages = downloader.search(query);
 
 		assertNotNull(packages);

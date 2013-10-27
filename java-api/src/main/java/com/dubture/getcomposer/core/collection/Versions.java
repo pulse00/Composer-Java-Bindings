@@ -3,14 +3,13 @@ package com.dubture.getcomposer.core.collection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
-
-import org.json.simple.JSONObject;
 
 import com.dubture.getcomposer.core.ComposerConstants;
 import com.dubture.getcomposer.core.ComposerPackage;
@@ -36,9 +35,9 @@ public class Versions extends AbstractIterableJsonObject<ComposerPackage> {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected void parse(Object obj) {
+	protected void doParse(Object obj) {
 		clear();
-		if (obj instanceof JSONObject) {
+		if (obj instanceof LinkedHashMap) {
 			for (Entry<String, Object> entry : ((Map<String, Object>)obj).entrySet()) {
 				ComposerPackage pkg = new ComposerPackage(entry.getValue());
 				set(entry.getKey(), pkg);

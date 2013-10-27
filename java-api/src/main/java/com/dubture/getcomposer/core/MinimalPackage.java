@@ -3,11 +3,9 @@ package com.dubture.getcomposer.core;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Arrays;
-import java.util.LinkedList;
 
 import com.dubture.getcomposer.core.objects.JsonObject;
-
+import com.dubture.getcomposer.json.ParseException;
 
 /**
  * A package that can be read from a file or string and also dump to the latter one.
@@ -23,34 +21,23 @@ public class MinimalPackage extends JsonObject {
 	}
 	
 	public MinimalPackage(Object json) {
-		super();
+		this();
 		fromJson(json);
-		listen();
 	}
 	
-	public MinimalPackage(String json) {
-		super();
+	public MinimalPackage(String json) throws ParseException {
+		this();
 		fromJson(json);
-		listen();
 	}
 	
-	public MinimalPackage(File file) throws IOException {
-		super();
+	public MinimalPackage(File file) throws IOException, ParseException {
+		this();
 		fromJson(file);
-		listen();
 	}
 	
-	public MinimalPackage(Reader reader) throws IOException {
-		super();
+	public MinimalPackage(Reader reader) throws IOException, ParseException {
+		this();
 		fromJson(reader);
-		listen();
-	}
-
-	@Override
-	public Object prepareJson(LinkedList<String> fields) {
-		String[] before = new String[]{"name", "description"};
-		fields.addAll(0, new LinkedList<String>(Arrays.asList(before)));
-		return super.prepareJson(fields);
 	}
 	
 	/**

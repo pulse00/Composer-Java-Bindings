@@ -1,7 +1,7 @@
 package com.dubture.getcomposer.core.collection;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import com.dubture.getcomposer.core.entities.AbstractJsonArray;
 import com.dubture.getcomposer.core.repositories.Repository;
@@ -18,12 +18,13 @@ public class Repositories extends AbstractJsonArray<Repository> {
 	public Repositories() {
 	}
 	
-	protected void parse(Object obj) {
+	@SuppressWarnings("rawtypes")
+	protected void doParse(Object obj) {
 		clear();
-		if (obj instanceof JSONArray) {
-			for (Object repo : (JSONArray) obj) {
-				if (repo instanceof JSONObject && ((JSONObject)repo).containsKey("type")) {
-					String type = (String)((JSONObject)repo).get("type");
+		if (obj instanceof LinkedList) {
+			for (Object repo : (LinkedList) obj) {
+				if (repo instanceof LinkedHashMap && ((LinkedHashMap)repo).containsKey("type")) {
+					String type = (String)((LinkedHashMap)repo).get("type");
 					Repository r = RepositoryFactory.create(type);
 					r.fromJson(repo);
 					add(r);

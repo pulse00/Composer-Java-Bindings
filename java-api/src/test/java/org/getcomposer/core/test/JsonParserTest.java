@@ -7,13 +7,28 @@
  ******************************************************************************/
 package org.getcomposer.core.test;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
 import org.junit.Test;
 
 import com.dubture.getcomposer.core.ComposerPackage;
 import com.dubture.getcomposer.core.RepositoryPackage;
+import com.dubture.getcomposer.json.ParseException;
 
 public class JsonParserTest extends ComposertTestCase {
 
+	@Test
+	public void testException() {
+		try {
+			new ComposerPackage("{\n\"bla\":\'arg\n}");
+			fail();
+		} catch (ParseException e) {
+			assertEquals("Unexpected character (') at position 8.", e.getMessage());
+		}
+	}
+	
 	@Test
 	public void testComposerPackage() {
 		try {
@@ -87,6 +102,30 @@ public class JsonParserTest extends ComposertTestCase {
 		try {
 			ComposerPackage phpPackage = new ComposerPackage(loadFile("empty.json"));
 			assertNotNull(phpPackage);
+		} catch (Exception e) {
+			e.printStackTrace();
+			fail();
+		}
+	}
+	
+	@SuppressWarnings("resource")
+	@Test
+	public void testParserOrder() {
+		try {
+			File core = loadFile("keeko-core.json");
+			BufferedReader reader = new BufferedReader(new FileReader(core));
+			StringBuilder out = new StringBuilder();
+			String line = null;
+			String ls = System.getProperty("line.separator");
+
+			while ((line = reader.readLine()) != null) {
+				out.append(line);
+				out.append(ls);
+			}
+			String contents = out.toString().trim();
+
+			ComposerPackage phpPackage = new ComposerPackage(core);
+			assertEquals(contents, phpPackage.toJson());
 		} catch (Exception e) {
 			e.printStackTrace();
 			fail();

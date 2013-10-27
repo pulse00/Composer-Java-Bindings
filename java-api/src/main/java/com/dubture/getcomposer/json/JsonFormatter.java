@@ -1,4 +1,4 @@
-package com.dubture.getcomposer.core.utils;
+package com.dubture.getcomposer.json;
 
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +50,7 @@ public class JsonFormatter {
 
 		}
 
-		private void visit(final Map<String, Object> obj, final int indent) {
+		private void visit(final Map<String, Object> obj, int indent) {
 			final int length = obj.size();
 			if (length == 0) {
 				write("{}", 0);
@@ -141,7 +141,7 @@ public class JsonFormatter {
                             break;
                     */
                     default:
-            //Reference: http://www.unicode.org/versions/Unicode5.1.0/
+                    		// Reference: http://www.unicode.org/versions/Unicode5.1.0/
                             if((ch>='\u0000' && ch<='\u001F') || (ch>='\u007F' && ch<='\u009F') || (ch>='\u2000' && ch<='\u20FF')){
                                     String ss=Integer.toHexString(ch);
                                     sb.append("\\u");
@@ -154,7 +154,7 @@ public class JsonFormatter {
                                     sb.append(ch);
                             }
                     }
-            }//for
+            }
             return sb.toString();
 	    }		
 	}

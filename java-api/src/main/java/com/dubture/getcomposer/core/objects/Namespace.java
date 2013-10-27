@@ -2,12 +2,13 @@ package com.dubture.getcomposer.core.objects;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.dubture.getcomposer.core.collection.UniqueJsonArray;
+import com.dubture.getcomposer.core.entities.JsonEntity;
 
 /**
  * Represents a namespace entry in the psr0 entity of a composer package.
@@ -21,6 +22,7 @@ public class Namespace extends JsonObject {
 	private transient UniqueJsonArray paths = new UniqueJsonArray();
 	
 	public Namespace() {
+		super();
 		listen();
 		paths.addPropertyChangeListener(new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent evt) {
@@ -36,8 +38,14 @@ public class Namespace extends JsonObject {
 	}
 	
 	@Override
-	public String prepareJson(LinkedList<String> fields) {
-		return paths.toJson();
+	protected Object buildJson() {
+		try {
+			Method mtd = JsonEntity.class.getDeclaredMethod("buildJson");
+			return mtd.invoke(paths);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@Override

@@ -1,8 +1,5 @@
 package com.dubture.getcomposer.core;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-
 import com.dubture.getcomposer.core.entities.Version;
 
 /**
@@ -16,13 +13,6 @@ import com.dubture.getcomposer.core.entities.Version;
 public class VersionedPackage extends MinimalPackage {
 
 	protected transient Version detailedVersion = null;
-
-	@Override
-	public Object prepareJson(LinkedList<String> fields) {
-		String[] before = new String[]{"version"};
-		fields.addAll(0, new LinkedList<String>(Arrays.asList(before)));
-		return super.prepareJson(fields);
-	}
 	
 	public Version getDetailedVersion() {
 		if (detailedVersion == null) {

@@ -7,7 +7,7 @@
  ******************************************************************************/
 package com.dubture.getcomposer.packages;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.dubture.getcomposer.core.MinimalPackage;
@@ -21,23 +21,22 @@ public class PackageSearch extends DownloadClient {
 	}
 
 	public List<MinimalPackage> search(String query) throws Exception {
-		List<MinimalPackage> packages = new ArrayList<MinimalPackage>();
+		List<MinimalPackage> packages = new LinkedList<MinimalPackage>();
 		SearchResult result = loadPackages(createUrl(query));
 		
 		if (result != null && result.results != null) {
 			packages.addAll(result.results);
 		}
 
-		int current = 0;
+		int current = 1;
 
-		while (result.next != null && result.next.length() > 0) {
+		while (current < pageLimit && result.next != null && result.next.length() > 0) {
 			result = loadPackages(result.next);
 
-			if ((result.results != null && result.results.size() == 0)
-					|| result.next == null || current++ > pageLimit) {
-				break;
+			if (result.results != null && result.results.size() > 0) {
+				packages.addAll(result.results);
 			}
-			packages.addAll(result.results);
+			current++;
 		}
 
 		return packages;
