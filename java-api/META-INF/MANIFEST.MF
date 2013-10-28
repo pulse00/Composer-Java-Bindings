@@ -11,8 +11,8 @@ Export-Package: com.dubture.getcomposer.core;uses:="com.dubture.getcom
  .repositories";version="0.0.4.buildtimestamp",com.dubture.getcomposer
  .core.entities;uses:="com.dubture.getcomposer.core.objects,org.apache
  .commons.logging,com.dubture.getcomposer.core.collection,com.dubture.
- getcomposer.httpclient,com.dubture.getcomposer.core,com.dubture.getco
- mposer.core.annotation,com.dubture.getcomposer.json";version="0.0.4.b
+ getcomposer.httpclient,com.dubture.getcomposer.core.annotation,com.du
+ bture.getcomposer.json,com.dubture.getcomposer.core";version="0.0.4.b
  uildtimestamp",com.dubture.getcomposer.core.objects;uses:="com.dubtur
  e.getcomposer.core.collection,com.dubture.getcomposer.core.annotation
  ,com.dubture.getcomposer.core.entities,com.dubture.getcomposer.json";
@@ -34,16 +34,15 @@ Export-Package: com.dubture.getcomposer.core;uses:="com.dubture.getcom
  dubture.getcomposer.core,org.apache.http.impl.client,com.dubture.getc
  omposer.core.repositories,org.json.simple.parser,com.dubture.getcompo
  ser.json";version="0.0.4.buildtimestamp"
-Built-By: thomas
+Bundle-Version: 0.0.4.buildtimestamp
 Tool: Bnd-0.0.357
 Bundle-Name: composer-java-api
+Bnd-LastModified: 1382897378757
 Created-By: 1.6.0_65 (Apple Inc.)
-Bundle-Version: 0.0.4.buildtimestamp
-Build-Jdk: 1.6.0_65
-Bnd-LastModified: 1382614324556
 Bundle-ManifestVersion: 2
 Bundle-Description: Sonatype helps open source projects to set up Mave
  n repositories on https://oss.sonatype.org/
+Bundle-SymbolicName: com.dubture.getcomposer.core
 Import-Package: com.dubture.getcomposer.core;version="0.0",com.dubture
  .getcomposer.core.annotation;version="0.0",com.dubture.getcomposer.co
  re.collection;version="0.0",com.dubture.getcomposer.core.entities;ver
@@ -56,6 +55,4 @@ Import-Package: com.dubture.getcomposer.core;version="0.0",com.dubture
  conn,org.apache.http.conn.scheme,org.apache.http.conn.ssl,org.apache.
  http.impl.client,org.apache.http.nio.reactor,org.apache.http.params,o
  rg.apache.http.protocol,org.json.simple,org.json.simple.parser
-Bundle-SymbolicName: com.dubture.getcomposer.core
-Originally-Created-By: 1.6.0_65 (Apple Inc.)
 
