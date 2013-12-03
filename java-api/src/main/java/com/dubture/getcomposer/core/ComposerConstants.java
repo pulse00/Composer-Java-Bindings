@@ -32,6 +32,7 @@ public class ComposerConstants {
 	 **/
 	public static final String[] TYPES = new String[] {
 		"library",
+		"project",
 		"metapackage",
 		"composer-plugin",
 		"agl-module",
