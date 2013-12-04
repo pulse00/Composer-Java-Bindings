@@ -64,4 +64,13 @@ public class ComposerPackages extends AbstractJsonArray<ComposerPackage> {
 			remove(pkg);
 		}
 	}
+	
+	public boolean has(String name) {
+		for (ComposerPackage pkg : values) {
+			if (pkg.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
