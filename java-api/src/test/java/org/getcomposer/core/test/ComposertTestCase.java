@@ -9,7 +9,7 @@ import com.dubture.getcomposer.core.RepositoryPackage;
 import com.dubture.getcomposer.core.VersionedPackage;
 import com.dubture.getcomposer.core.collection.Dependencies;
 import com.dubture.getcomposer.core.collection.JsonArray;
-import com.dubture.getcomposer.core.collection.Psr0;
+import com.dubture.getcomposer.core.collection.Psr;
 import com.dubture.getcomposer.core.collection.Repositories;
 import com.dubture.getcomposer.core.objects.Autoload;
 import com.dubture.getcomposer.core.objects.Config;
@@ -384,7 +384,7 @@ public abstract class ComposertTestCase extends TestCase {
 		assertNotNull(al);
 		
 		// psr0 tests
-		Psr0 psr = al.getPsr0();
+		Psr psr = al.getPsr0();
 		
 		assertEquals(4, psr.size());
 		assertEquals(1, psr.get(NAMESPACE).size());

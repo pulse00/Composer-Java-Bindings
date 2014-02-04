@@ -10,7 +10,7 @@ import com.dubture.getcomposer.core.ComposerPackage;
 import com.dubture.getcomposer.core.VersionedPackage;
 import com.dubture.getcomposer.core.collection.Dependencies;
 import com.dubture.getcomposer.core.collection.Persons;
-import com.dubture.getcomposer.core.collection.Psr0;
+import com.dubture.getcomposer.core.collection.Psr;
 import com.dubture.getcomposer.core.objects.Autoload;
 import com.dubture.getcomposer.core.objects.JsonObject;
 import com.dubture.getcomposer.core.objects.Namespace;
@@ -192,7 +192,7 @@ public class ListenerTest extends ComposertTestCase {
 	@Test
 	public void testAutoload() {
 		Autoload al = pkg.getAutoload();
-		Psr0 psr = al.getPsr0();
+		Psr psr = al.getPsr0();
 		
 		// psr
 		Namespace ns1 = new Namespace();

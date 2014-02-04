@@ -9,7 +9,7 @@ package com.dubture.getcomposer.core.objects;
 
 import com.dubture.getcomposer.core.annotation.Name;
 import com.dubture.getcomposer.core.collection.JsonArray;
-import com.dubture.getcomposer.core.collection.Psr0;
+import com.dubture.getcomposer.core.collection.Psr;
 
 
 /**
@@ -25,7 +25,10 @@ public class Autoload extends JsonObject {
 	private JsonArray files = new JsonArray();
 	
 	@Name("psr-0")
-	private Psr0 psr0 = new Psr0();
+	private Psr psr0 = new Psr();
+	
+	@Name("psr-4")
+	private Psr psr4 = new Psr();
 	
 	public Autoload() {
 		super();
@@ -36,28 +39,36 @@ public class Autoload extends JsonObject {
 		return psr0 != null && psr0.size() > 0;
 	}
 	
-	public boolean hasClassMap() {
-		return classmap != null && classmap.size() > 0;
+	public Psr getPsr0() {
+		return psr0;
+	}
+	
+	public boolean hasPsr4() {
+		return psr4 != null && psr4.size() > 0;
+	}
+	
+	public Psr getPsr4() {
+		return psr4;
 	}
 	
 	public boolean hasFiles() {
 		return files != null && files.size() > 0;
 	}
 	
-	public Psr0 getPsr0() {
-		return psr0;
+	public JsonArray getFiles() {
+		return files;
+	}
+	
+	public boolean hasClassMap() {
+		return classmap != null && classmap.size() > 0;
 	}
 	
 	public JsonArray getClassMap() {
 		return classmap;
 	}
 	
-	public JsonArray getFiles() {
-		return files;
-	}
-	
 	@Override
 	public int size() {
-		return super.size() + classmap.size() + files.size() + psr0.size();
+		return super.size() + classmap.size() + files.size() + psr0.size() + psr4.size();
 	}
 }

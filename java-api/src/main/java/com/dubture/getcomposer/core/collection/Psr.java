@@ -19,7 +19,7 @@ import com.dubture.getcomposer.json.ParseException;
  * @see http://getcomposer.org/doc/04-schema.md#psr-0
  * @author Thomas Gossmann <gos.si>
  */
-public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Namespace> {
+public class Psr extends AbstractJsonObject<Namespace> implements Iterable<Namespace> {
 
 	private transient PropertyChangeListener listener = new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -27,10 +27,10 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 		}
 	};
 	
-	public Psr0() {
+	public Psr() {
 	}
 	
-	public Psr0(String json) throws ParseException {
+	public Psr(String json) throws ParseException {
 		fromJson(json);
 	}
 	

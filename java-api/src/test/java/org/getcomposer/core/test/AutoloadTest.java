@@ -6,7 +6,7 @@ import java.net.URISyntaxException;
 import org.junit.Test;
 
 import com.dubture.getcomposer.core.ComposerPackage;
-import com.dubture.getcomposer.core.collection.Psr0;
+import com.dubture.getcomposer.core.collection.Psr;
 import com.dubture.getcomposer.core.objects.Namespace;
 import com.dubture.getcomposer.json.ParseException;
 
@@ -34,19 +34,19 @@ public class AutoloadTest extends ComposertTestCase {
 	@Test
 	public void testPsr0Escaping() throws ParseException {
 		
-		Psr0 psr0 = new Psr0();
+		Psr psr0 = new Psr();
 		Namespace ns = new Namespace("Symfony\\Component\\Yaml", "symfony/yaml");
 		psr0.add(ns);
 		
 		String json = psr0.toJson();
-		psr0 = new Psr0(json);
+		psr0 = new Psr(json);
 		assertEquals(1, psr0.getNamespaces().size());
 		
 	}
 	
 	@Test
 	public void testFromString() throws ParseException {
-		Psr0 psr0 = new Psr0("{ \"Foo\" : \"Bar\", \"What\" : \"Ever\"}");
+		Psr psr0 = new Psr("{ \"Foo\" : \"Bar\", \"What\" : \"Ever\"}");
 		assertEquals(2, psr0.size());
 		assertEquals("Foo", psr0.getFirst().getNamespace());
 	}
