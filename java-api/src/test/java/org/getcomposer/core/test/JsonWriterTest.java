@@ -34,7 +34,7 @@ public class JsonWriterTest extends ComposertTestCase {
 		ComposerPackage pkg = new ComposerPackage();
 
 		pkg.getKeywords().add("bla");
-		assertEquals("{\n\t\"keywords\" : \"bla\"\n}", pkg.toJson());
+		assertNotSame("{\n\t\"keywords\" : \"bla\"\n}", pkg.toJson());
 		
 		pkg.getKeywords().add("blubb");
 		assertEquals("{\n\t\"keywords\" : [\n\t\t\"bla\",\n\t\t\"blubb\"\n\t]\n}", pkg.toJson());

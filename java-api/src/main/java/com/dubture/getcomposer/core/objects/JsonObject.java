@@ -56,7 +56,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 *         </ul>
 	 */
 	public boolean is(String property, Type type) {
-		if (has(property)) {
+		if (super.has(property)) {
 			return get(property).is(type);
 		}
 		return false;
@@ -74,7 +74,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 *         </ul>
 	 */
 	public boolean isArray(String property) {
-		if (has(property)) {
+		if (super.has(property)) {
 			return get(property).isArray();
 		}
 		return false;
@@ -92,7 +92,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 *         </ul>
 	 */
 	public boolean isObject(String property) {
-		if (has(property)) {
+		if (super.has(property)) {
 			return get(property).isObject();
 		}
 		return false;
@@ -106,7 +106,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 * @return the value
 	 */
 	public Object getAsRaw(String property) {
-		if (has(property)) {
+		if (super.has(property)) {
 			return get(property).getAsRaw();
 		}
 		return null;
@@ -120,7 +120,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 * @return the value
 	 */
 	public JsonArray getAsArray(String property) {
-		if (!has(property)) {
+		if (!super.has(property)) {
 			super.set(property, new JsonValue(new JsonArray()), false);
 		}
 		return get(property).getAsArray();
@@ -134,7 +134,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 * @return the value as string
 	 */
 	public String getAsString(String property) {
-		if (has(property)) {
+		if (super.has(property)) {
 			return get(property).getAsString();
 		}
 		return null;
@@ -148,7 +148,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 * @return the value as boolean
 	 */
 	public Boolean getAsBoolean(String property) {
-		if (has(property)) {
+		if (super.has(property)) {
 			return get(property).getAsBoolean();
 		}
 		return null;
@@ -162,7 +162,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 * @return the value as integer
 	 */
 	public Integer getAsInteger(String property) {
-		if (has(property)) {
+		if (super.has(property)) {
 			return get(property).getAsInteger();
 		}
 		return null;
@@ -176,7 +176,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 * @return the value as double
 	 */
 	public Float getAsFloat(String property) {
-		if (has(property)) {
+		if (super.has(property)) {
 			return get(property).getAsFloat();
 		}
 		return null;
@@ -190,7 +190,7 @@ public class JsonObject extends AbstractJsonObject<JsonValue> {
 	 * @return the value as entity
 	 */
 	public JsonObject getAsObject(String property) {
-		if (!has(property)) {
+		if (!super.has(property)) {
 			super.set(property, new JsonValue(new JsonObject()), false);
 		}
 		return get(property).getAsObject();

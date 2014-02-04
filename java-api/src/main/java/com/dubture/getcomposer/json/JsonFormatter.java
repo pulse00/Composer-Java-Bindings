@@ -109,10 +109,14 @@ public class JsonFormatter {
 		}
 		
 	    private static String escape(String s) {
+	    	if (s == null || s.isEmpty()) {
+	    		return "";
+	    	}
 	    	StringBuffer sb = new StringBuffer();
-            for(int i=0;i<s.length();i++){
-                    char ch=s.charAt(i);
-                    switch(ch){
+	    	
+            for (int i = 0; i < s.length(); i++) {
+                    char ch = s.charAt(i);
+                    switch(ch) {
                     case '"':
                             sb.append("\\\"");
                             break;

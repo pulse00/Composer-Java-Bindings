@@ -19,7 +19,7 @@ import com.dubture.getcomposer.json.ParseException;
  * @see http://getcomposer.org/doc/04-schema.md#psr-0
  * @author Thomas Gossmann <gos.si>
  */
-public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Namespace> {
+public class Psr extends AbstractJsonObject<Namespace> implements Iterable<Namespace> {
 
 	private transient PropertyChangeListener listener = new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent evt) {
@@ -27,10 +27,10 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 		}
 	};
 	
-	public Psr0() {
+	public Psr() {
 	}
 	
-	public Psr0(String json) throws ParseException {
+	public Psr(String json) throws ParseException {
 		fromJson(json);
 	}
 	
@@ -70,7 +70,7 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 			
 			out.put(nmspc.getNamespace(), value);
 		}
-			
+
 		return out;
 	}
 	
@@ -85,7 +85,7 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 			get(namespace.getNamespace()).addPaths(namespace.getPaths());
 		} else {
 			namespace.addPropertyChangeListener(listener);
-			super.set(namespace.getNamespace(), namespace);
+			set(namespace.getNamespace(), namespace);
 		}
 	}
 
@@ -108,12 +108,15 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 	}
 	
 	public Namespace getFirst() {
-		
 		if (properties.values().iterator().hasNext()) {
 			return properties.values().iterator().next();
 		}
 		
 		return null;
+	}
+	
+	public int size() {
+		return properties.keySet().size();
 	}
 	
 	public boolean has(String namespace) {
@@ -122,5 +125,31 @@ public class Psr0 extends AbstractJsonObject<Namespace> implements Iterable<Name
 	
 	public boolean has(Namespace namespace) {
 		return has(namespace.getNamespace());
+	}
+
+	public boolean hasPath(String path) {
+		for (Namespace nmspc : properties.values()) {
+			if (nmspc.has(path)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Returns the namespace for a given path or null if the path isn't found
+	 * 
+	 * @param path the path
+	 * @return the related namespace
+	 */
+	public Namespace getNamespaceForPath(String path) {
+		for (Namespace nmspc : properties.values()) {
+			if (nmspc.has(path)) {
+				return nmspc;
+			}
+		}
+		
+		return null;
 	}
 }

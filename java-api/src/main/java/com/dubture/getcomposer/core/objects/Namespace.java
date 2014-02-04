@@ -78,6 +78,11 @@ public class Namespace extends JsonObject {
 		paths.add(path);
 	}
 	
+	@Override
+	public boolean has(String path) {
+		return paths.has(path);
+	}
+	
 	/**
 	 * Clears the paths from this namespace
 	 */
@@ -101,7 +106,14 @@ public class Namespace extends JsonObject {
 	public String getFirst() {
 		return (String) paths.get(0);
 	}
+
+	public UniqueJsonArray getPaths() {
+		return paths;
+	}
 	
+	/**
+	 * Removes a path from the namespace
+	 */
 	public void remove(String path) {
 		paths.remove(path);
 	}
@@ -110,9 +122,7 @@ public class Namespace extends JsonObject {
 		paths.clear();
 	}
 	
-	public UniqueJsonArray getPaths() {
-		return paths;
-	}
+
 	
 	/*
 	 * (non-Javadoc)
