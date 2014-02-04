@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import junit.framework.TestCase;
+
 import com.dubture.getcomposer.core.ComposerPackage;
 import com.dubture.getcomposer.core.RepositoryPackage;
 import com.dubture.getcomposer.core.VersionedPackage;
@@ -26,8 +28,6 @@ import com.dubture.getcomposer.core.repositories.PackageRepository;
 import com.dubture.getcomposer.core.repositories.PearRepository;
 import com.dubture.getcomposer.core.repositories.SubversionRepository;
 import com.dubture.getcomposer.core.repositories.VcsRepository;
-
-import junit.framework.TestCase;
 
 public abstract class ComposertTestCase extends TestCase {
 	
@@ -55,8 +55,9 @@ public abstract class ComposertTestCase extends TestCase {
 	protected static String NAMESPACE = "gossi";
 	protected static String NAMESPACE2 = "Monolog";
 	protected static String NAMESPACE3 = "UniqueGlobalClass";
-	protected static String NAMESPACE_PATH1 = "src/";
+	protected static String NAMESPACE_PATH1 = "src/gossi";
 	protected static String NAMESPACE_PATH2 = "lib/";
+	protected static String NAMESPACE_PATH3 = "etc/";
 	protected static String[] AUTOLOAD_MAP = new String[]{NAMESPACE_PATH1, NAMESPACE_PATH2, "Something.php"};
 	protected static String[] AUTOLOAD_FILES = new String[]{"src/MyLibrary/functions.php"};
 	
@@ -212,7 +213,7 @@ public abstract class ComposertTestCase extends TestCase {
 
 		Namespace empty = new Namespace();
 		empty.setNamespace("");
-		empty.add(NAMESPACE_PATH1);
+		empty.add(NAMESPACE_PATH3);
 		autoload.getPsr0().add(empty);
 		
 		// classmap
@@ -397,7 +398,7 @@ public abstract class ComposertTestCase extends TestCase {
 		assertEquals("", psr.get(NAMESPACE3).getFirst());
 		
 		assertNotNull(psr.get(""));
-		assertEquals(NAMESPACE_PATH1, psr.get("").getFirst());
+		assertEquals(NAMESPACE_PATH3, psr.get("").getFirst());
 		
 		// classmap
 		assertTrue(al.hasClassMap());

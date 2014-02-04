@@ -7,28 +7,31 @@ import org.junit.Test;
 
 import com.dubture.getcomposer.core.ComposerPackage;
 import com.dubture.getcomposer.core.collection.Psr;
+import com.dubture.getcomposer.core.objects.Autoload;
 import com.dubture.getcomposer.core.objects.Namespace;
 import com.dubture.getcomposer.json.ParseException;
 
 public class AutoloadTest extends ComposertTestCase {
 	
 	@Test
+	public void testNamespace() {
+		Namespace ns = new Namespace();
+		ns.setNamespace("bla");
+		assertEquals("bla", ns.getNamespace());
+	}
+	
+	@Test
 	public void testPsr0() throws IOException, URISyntaxException {
-		try {
-			ComposerPackage composerPackage = new ComposerPackage(loadFile("autoload.json"));
-			composerPackage.getAutoload().getPsr0().clear();
-			Namespace ns = new Namespace();
-			ns.setNamespace("foo");
-			ns.add("bar");
-			composerPackage.getAutoload().getPsr0().add(ns);
-			assertEquals(1, composerPackage.getAutoload().getPsr0().size());
-			Namespace namespace = composerPackage.getAutoload().getPsr0().get("foo");
-			assertNotNull(namespace);
-			assertEquals("bar", namespace.getPaths().get(0));
-		} catch (ParseException e) {
-			e.printStackTrace();
-			fail();
-		}
+		ComposerPackage composerPackage = new ComposerPackage();
+		composerPackage.getAutoload().getPsr0().clear();
+		Namespace ns = new Namespace();
+		ns.setNamespace("foo");
+		ns.add("bar");
+		composerPackage.getAutoload().getPsr0().add(ns);
+		assertEquals(1, composerPackage.getAutoload().getPsr0().size());
+		Namespace namespace = composerPackage.getAutoload().getPsr0().get("foo");
+		assertNotNull(namespace);
+		assertEquals("bar", namespace.getPaths().get(0));
 	}
 	
 	@Test
@@ -45,10 +48,45 @@ public class AutoloadTest extends ComposertTestCase {
 	}
 	
 	@Test
+	public void testParse() throws IOException, ParseException, URISyntaxException {
+		ComposerPackage composerPackage = new ComposerPackage(loadFile("autoload.json"));
+		Autoload autoload = composerPackage.getAutoload();
+		
+		Psr psr0 = autoload.getPsr0();
+		assertNotNull(psr0);
+		assertEquals(4, psr0.size());
+		
+		assertTrue(psr0.has(""));
+		assertTrue(psr0.has("gossi"));
+		assertTrue(psr0.has("Monolog"));
+		assertTrue(psr0.has("UniqueGlobalClass"));
+		
+		assertEquals(2, psr0.get("Monolog").size());
+		assertEquals("etc/", psr0.get("").getFirst());
+		
+		assertEquals(3, autoload.getClassMap().size());
+		
+		assertEquals(1, autoload.getFiles().size());
+	}
+
+	@Test
 	public void testFromString() throws ParseException {
 		Psr psr0 = new Psr("{ \"Foo\" : \"Bar\", \"What\" : \"Ever\"}");
 		assertEquals(2, psr0.size());
 		assertEquals("Foo", psr0.getFirst().getNamespace());
+	}
+	
+	@Test
+	public void testSearch() throws IOException, ParseException, URISyntaxException {
+		ComposerPackage composerPackage = new ComposerPackage(loadFile("autoload.json"));
+		Autoload autoload = composerPackage.getAutoload();
+		Psr psr0 = autoload.getPsr0();
+		
+		assertTrue(psr0.hasPath("src/gossi"));
+		
+		Namespace ns = psr0.getNamespaceForPath("src/gossi");
+		assertNotNull(ns);
+		assertEquals("gossi", ns.getNamespace());
 	}
 	
 	@Test

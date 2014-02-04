@@ -247,8 +247,9 @@ public abstract class AbstractJsonObject<V> extends JsonEntity implements
 		properties.put(property, (V) value);
 		appendSortOrder(property);
 		
-		if (notify)
+		if (notify) {
 			firePropertyChange(property, oldValue, (V) value);
+		}
 	}
 	
 
