@@ -1,7 +1,7 @@
 Composer Java Bindings 
 ======================
 
-[![Build Status](https://ci.pdt-extensions.org/buildStatus/icon?job=composer-java-api)](https://ci.pdt-extensions.org/view/Plugins/job/composer-java-api/)
+[![Build Status](https://secure.travis-ci.org/pulse00/Composer-Java-Bindings.png)](http://travis-ci.org/pulse00/Composer-Java-Bindings)
 
 A Java API for the PHP dependency manager [Composer](http://getcomposer.org/) and it's main
 repository [packagist.org](http://packagist.org/).
