@@ -14,7 +14,7 @@
 
   <groupId>com.dubture</groupId>
   <artifactId>composer-java-api-parent</artifactId>
-  <version>0.0.5-SNAPSHOT</version>
+  <version>0.0.5</version>
   <packaging>pom</packaging>
 
   <scm>

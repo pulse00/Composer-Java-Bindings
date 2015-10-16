@@ -20,7 +20,7 @@ An example implementation can be found in the [Eclipse Composer Plugin](https://
 		<dependency>
 			<groupId>com.dubture</groupId>
 			<artifactId>composer-java-api</artifactId>
-			<version>0.0.3</version>
+			<version>0.0.5</version>
 		</dependency>
 	</dependencies>
 ```
