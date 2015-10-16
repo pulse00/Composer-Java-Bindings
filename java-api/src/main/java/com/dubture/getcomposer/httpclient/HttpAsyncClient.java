@@ -6,6 +6,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.SystemDefaultHttpClient;
 import org.apache.http.nio.reactor.IOReactorException;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
@@ -33,7 +34,7 @@ public class HttpAsyncClient implements AsyncClientInterface {
 	 */
 	@Override
 	public void start() throws IOReactorException {
-		client = new DefaultHttpClient();
+		client = new SystemDefaultHttpClient();
 		params = new BasicHttpParams();
 	}
 
