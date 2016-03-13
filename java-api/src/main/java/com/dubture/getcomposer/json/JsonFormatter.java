@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.json.simple.JSONObject;
+import com.google.gson.Gson;
+
 
 public class JsonFormatter {
-
+	
 	public static String format(final Object object) {
 		final JsonVisitor visitor = new JsonVisitor(1, '\t');
 		visitor.visit(object, 0);
@@ -23,6 +24,7 @@ public class JsonFormatter {
 	
 	private static class JsonVisitor {
 
+		private Gson gson = new Gson();
 		private final StringBuilder builder = new StringBuilder();
 		private final int indentationSize;
 		private final char indentationChar;
@@ -86,7 +88,7 @@ public class JsonFormatter {
 				} else if (object instanceof Boolean || object instanceof Number) {
 					write(String.valueOf(object), indent);
 				} else {
-					write("\"" + JSONObject.escape(String.valueOf(object)) + "\"", indent);
+				    write(gson.toJson(String.valueOf(object)), indent);
 				}
 			}
 		}

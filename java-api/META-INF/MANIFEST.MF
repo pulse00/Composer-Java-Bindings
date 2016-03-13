@@ -5,54 +5,54 @@ Export-Package: com.dubture.getcomposer.core;uses:="com.dubture.getcom
  poser.core.objects,com.dubture.getcomposer.json,com.dubture.getcompos
  er.core.annotation,com.dubture.getcomposer.core.collection,com.dubtur
  e.getcomposer.core.entities,com.dubture.getcomposer.packages,com.dubt
- ure.getcomposer.core.repositories";version="0.0.6.201510161036",com.d
- ubture.getcomposer.core.annotation;version="0.0.6.201510161036",com.d
+ ure.getcomposer.core.repositories";version="0.0.6.201603131733",com.d
+ ubture.getcomposer.core.annotation;version="0.0.6.201603131733",com.d
  ubture.getcomposer.core.collection;uses:="com.dubture.getcomposer.jso
  n,com.dubture.getcomposer.core.entities,com.dubture.getcomposer.core,
  com.dubture.getcomposer.core.objects,com.dubture.getcomposer.core.rep
- ositories";version="0.0.6.201510161036",com.dubture.getcomposer.core.
+ ositories";version="0.0.6.201603131733",com.dubture.getcomposer.core.
  entities;uses:="com.dubture.getcomposer.core.objects,com.dubture.getc
  omposer.httpclient,org.apache.commons.logging,com.dubture.getcomposer
  .core.collection,com.dubture.getcomposer.core.annotation,com.dubture.
- getcomposer.json,com.dubture.getcomposer.core";version="0.0.6.2015101
- 61036",com.dubture.getcomposer.core.objects;uses:="com.dubture.getcom
+ getcomposer.json,com.dubture.getcomposer.core";version="0.0.6.2016031
+ 31733",com.dubture.getcomposer.core.objects;uses:="com.dubture.getcom
  poser.core.annotation,com.dubture.getcomposer.core.collection,com.dub
  ture.getcomposer.json,com.dubture.getcomposer.core.entities";version=
- "0.0.6.201510161036",com.dubture.getcomposer.core.repositories;uses:=
+ "0.0.6.201603131733",com.dubture.getcomposer.core.repositories;uses:=
  "com.dubture.getcomposer.core.objects,com.dubture.getcomposer.core.co
  llection,com.dubture.getcomposer.json,com.dubture.getcomposer.core.an
- notation,com.dubture.getcomposer.core";version="0.0.6.201510161036",c
+ notation,com.dubture.getcomposer.core";version="0.0.6.201603131733",c
  om.dubture.getcomposer.httpclient;uses:="org.apache.http.client,org.a
  pache.http.nio.reactor,org.apache.http.params,org.apache.http.client.
  methods,org.apache.http,org.apache.http.protocol,org.apache.commons.l
  ogging,org.apache.http.conn,org.apache.http.impl.client";version="0.0
- .6.201510161036",com.dubture.getcomposer.json;uses:="org.json.simple,
- org.json.simple.parser";version="0.0.6.201510161036",com.dubture.getc
+ .6.201603131733",com.dubture.getcomposer.json;uses:="com.google.gson,
+ com.google.gson.stream";version="0.0.6.201603131733",com.dubture.getc
  omposer.packages;uses:="org.apache.commons.logging,javax.net.ssl,com.
  dubture.getcomposer.httpclient,org.apache.http.client.methods,org.apa
  che.http,org.apache.http.conn.ssl,org.apache.http.nio.reactor,org.apa
  che.http.conn,org.apache.http.client.params,org.apache.http.client,or
  g.apache.http.conn.scheme,org.apache.http.params,com.dubture.getcompo
- ser.core,org.apache.http.impl.client,com.dubture.getcomposer.json,org
- .json.simple.parser,com.dubture.getcomposer.core.repositories";versio
- n="0.0.6.201510161036"
+ ser.core,org.apache.http.impl.client,com.dubture.getcomposer.json,com
+ .dubture.getcomposer.core.repositories";version="0.0.6.201603131733"
 Bundle-SymbolicName: com.dubture.getcomposer.core
-Bundle-Version: 0.0.6.201510161036
+Bundle-Version: 0.0.6.201603131733
 Bundle-Name: composer-java-api
 Bundle-ManifestVersion: 2
-Bnd-LastModified: 1444991808956
+Bnd-LastModified: 1457890426211
 Import-Package: com.dubture.getcomposer.core;version="0.0",com.dubture
  .getcomposer.core.annotation;version="0.0",com.dubture.getcomposer.co
  re.collection;version="0.0",com.dubture.getcomposer.core.entities;ver
  sion="0.0",com.dubture.getcomposer.core.objects;version="0.0",com.dub
  ture.getcomposer.core.repositories;version="0.0",com.dubture.getcompo
  ser.httpclient;version="0.0",com.dubture.getcomposer.json;version="0.
- 0",com.dubture.getcomposer.packages;version="0.0",javax.net.ssl,org.a
- pache.commons.logging,org.apache.http,org.apache.http.client,org.apac
- he.http.client.methods,org.apache.http.client.params,org.apache.http.
- conn,org.apache.http.conn.scheme,org.apache.http.conn.ssl,org.apache.
- http.impl.client,org.apache.http.nio.reactor,org.apache.http.params,o
- rg.apache.http.protocol,org.json.simple,org.json.simple.parser
+ 0",com.dubture.getcomposer.packages;version="0.0",com.google.gson;ver
+ sion="2.2",com.google.gson.stream;version="2.2",javax.net.ssl,org.apa
+ che.commons.logging;version="1.1",org.apache.http,org.apache.http.cli
+ ent,org.apache.http.client.methods,org.apache.http.client.params,org.
+ apache.http.conn,org.apache.http.conn.scheme,org.apache.http.conn.ssl
+ ,org.apache.http.impl.client,org.apache.http.nio.reactor,org.apache.h
+ ttp.params,org.apache.http.protocol
 Created-By: 1.8.0_51 (Oracle Corporation)
 Tool: Bnd-0.0.357
 
