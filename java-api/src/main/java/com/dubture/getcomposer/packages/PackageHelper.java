@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import com.dubture.getcomposer.core.RepositoryPackage;
 import com.dubture.getcomposer.core.repositories.PackageRepository;
 import com.dubture.getcomposer.json.JsonParser;
+import com.dubture.getcomposer.json.ParseException;
 
 class PackageHelper {
 	
@@ -23,9 +21,9 @@ class PackageHelper {
 	static SearchResult getSearchResult(InputStream resource) {
 		InputStreamReader reader = new InputStreamReader(resource);
 
-		JSONParser parser = new JSONParser();
+		JsonParser parser = new JsonParser();
 		try {
-			return new SearchResult(parser.parse(reader, JsonParser.getContainerFactory()));
+			return new SearchResult(parser.parse(reader));
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
