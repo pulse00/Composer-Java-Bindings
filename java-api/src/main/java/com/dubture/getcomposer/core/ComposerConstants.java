@@ -12,7 +12,7 @@ public class ComposerConstants {
 	public static final String COMPOSER_JSON = "composer.json";
 	public static final String SEARCH_URL = "https://packagist.org/search.json?q=%s";
 	public static final String PACKAGE_URL = "https://packagist.org/packages/%s.json";
-	public static final String PHAR_URL = "https://getcomposer.org/composer.phar";
+	public static final String PHAR_URL = "http://getcomposer.org/download/1.0.0-alpha7/composer.phar";
 	public static final String STABLE = "stable";
 	public static final String RC = "RC";
 	public static final String BETA = "beta";
